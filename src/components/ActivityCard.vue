@@ -1,0 +1,56 @@
+<script setup lang="ts">
+// ActivityCard.vue
+// A reusable card that shows one travel activity.
+import { MapPin, Star, Clock, ArrowRight } from '@lucide/vue'
+import type { Activity } from '../data/activities'
+
+const props = defineProps<{
+  activity: Activity
+}>()
+</script>
+
+<template>
+  <article
+    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900"
+  >
+    <div class="relative h-48 overflow-hidden">
+      <img
+        :src="props.activity.image"
+        :alt="props.activity.name"
+        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+      />
+      <span class="absolute left-3 top-3 rounded-full bg-teal-600 px-3 py-1 text-xs font-semibold text-white">
+        {{ props.activity.category }}
+      </span>
+    </div>
+
+    <div class="flex flex-1 flex-col p-5">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ props.activity.name }}</h3>
+
+      <p class="mt-1 flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
+        <MapPin :size="14" class="text-teal-600 dark:text-teal-400" />
+        {{ props.activity.location }}
+      </p>
+
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+        <span class="flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 font-semibold text-amber-700 dark:bg-amber-400/10 dark:text-amber-400">
+          <Star :size="13" class="fill-amber-500 text-amber-500" />
+          {{ props.activity.rating }}
+        </span>
+        <span class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+          <Clock :size="14" class="text-teal-600 dark:text-teal-400" />
+          {{ props.activity.duration }}
+        </span>
+        <span class="ml-auto font-bold text-teal-600 dark:text-teal-400">${{ props.activity.price }}</span>
+      </div>
+
+      <router-link
+        :to="`/activity/${props.activity.id}`"
+        class="mt-4 flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+      >
+        View Activity
+        <ArrowRight :size="16" />
+      </router-link>
+    </div>
+  </article>
+</template>

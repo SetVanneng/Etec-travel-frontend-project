@@ -1,0 +1,34 @@
+/* ---------------------------------------------------------------------------
+   main.css
+   Tailwind is a "utility-first" CSS framework: instead of writing custom
+   CSS we mostly use small utility classes in the Vue templates. This file
+   only adds the three Tailwind layers plus a few small base rules.
+--------------------------------------------------------------------------- */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling when we jump to anchors. */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Improve image display and prevent layout jumps. */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Simple text overflow helper used on cards (clamps to 3 lines). */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
