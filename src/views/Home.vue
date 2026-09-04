@@ -100,7 +100,7 @@ const inspiration = [
 
         <p class="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300">
           <MapPin :size="15" class="text-teal-400" />
-          18 destinations, 14 hotels and 8 activities ready to browse
+          {{ destinations.length }} destinations, {{ hotels.length }} hotels and {{ activities.length }} activities ready to browse
         </p>
       </div>
     </section>
