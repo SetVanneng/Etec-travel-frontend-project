@@ -182,6 +182,50 @@ const inspiration = [
       </div>
     </section>
 
+    <!-- ================= BOOK A FLIGHT ================= -->
+    <section class="bg-slate-50 py-16 dark:bg-slate-800/40">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeading
+          title="Book a Flight"
+          subtitle="Find airlines that fly to your dream destination and book directly on their website."
+        />
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <router-link
+            v-for="item in [
+              { country: 'Japan', desc: 'Fly to Tokyo, Kyoto & beyond with JAL, ANA and more', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80' },
+              { country: 'France', desc: 'Paris awaits - fly direct with Air France', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80' },
+              { country: 'Thailand', desc: 'Budget flights to Phuket and Bangkok', image: 'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80' },
+            ]"
+            :key="item.country"
+            :to="`/airline-booking?country=${item.country}`"
+            class="group relative h-64 overflow-hidden rounded-2xl"
+          >
+            <img :src="item.image" :alt="item.country" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+            <div class="absolute bottom-0 flex items-end justify-between p-5">
+              <div>
+                <h3 class="text-lg font-bold text-white">{{ item.country }}</h3>
+                <p class="text-sm text-slate-300">{{ item.desc }}</p>
+              </div>
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white transition group-hover:scale-110">
+                <Plane :size="18" />
+              </span>
+            </div>
+          </router-link>
+        </div>
+        <div class="mt-10 text-center">
+          <router-link
+            to="/airline-booking"
+            class="inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
+          >
+            <Plane :size="16" />
+            Book a Flight
+            <ArrowRight :size="16" />
+          </router-link>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= TRAVEL INSPIRATION ================= -->
     <section class="bg-slate-900 py-16">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">

@@ -54,6 +54,7 @@ const contactItems = [
           <li><router-link to="/destinations" class="transition hover:text-teal-400">Destinations</router-link></li>
           <li><router-link to="/hotels" class="transition hover:text-teal-400">Hotels</router-link></li>
           <li><router-link to="/activities" class="transition hover:text-teal-400">Activities</router-link></li>
+          <li><router-link to="/airlines" class="transition hover:text-teal-400">Airlines</router-link></li>
           <li><router-link to="/my-trips" class="transition hover:text-teal-400">My Trips</router-link></li>
         </ul>
       </div>

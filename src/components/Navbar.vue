@@ -34,6 +34,7 @@ const navLinks = [
   { label: 'Destinations', path: '/destinations' },
   { label: 'Hotels', path: '/hotels' },
   { label: 'Activities', path: '/activities' },
+  { label: 'Airlines', path: '/airlines' },
   { label: 'Favorites', path: '/favorites' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },

@@ -7,7 +7,7 @@ import { useRoute, useRouter } from 'vue-router'
 import L from 'leaflet'
 import {
   MapPin, Star, Calendar, DollarSign, Heart, ArrowLeft,
-  Compass, BedDouble, ArrowRight, AlertCircle, Navigation, LocateFixed,
+  Compass, BedDouble, ArrowRight, AlertCircle, Navigation, LocateFixed, Plane, ExternalLink,
 } from '@lucide/vue'
 import { getDestinationById } from '../data/destinations'
 import { getHotelsByDestination } from '../data/hotels'
@@ -245,6 +245,15 @@ function openInMaps(): void {
           >
             Book a Trip Here
             <ArrowRight :size="16" />
+          </router-link>
+
+          <router-link
+            :to="`/airline-booking?country=${destination.country}`"
+            class="mt-4 inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-bold text-teal-600 transition hover:bg-teal-600 hover:text-white dark:text-teal-400 dark:hover:text-white"
+          >
+            <Plane :size="16" />
+            Book Flight to {{ destination.country }}
+            <ExternalLink :size="14" />
           </router-link>
         </div>
 
