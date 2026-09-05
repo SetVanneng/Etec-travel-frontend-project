@@ -3,9 +3,21 @@
 // The root component. It only lays out the site shell:
 // Navbar on top, the current page in the middle, Footer at the bottom
 // and the floating toast notifications.
+import { nextTick, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import AOS from 'aos'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import ToastHost from './components/ToastHost.vue'
+
+const route = useRoute()
+// Re-scan the DOM after the first page renders and whenever the route changes,
+// because AOS only sees elements that exist when it checks the DOM.
+const refreshAnimations = () => {
+  nextTick(() => AOS.refreshHard())
+}
+onMounted(refreshAnimations)
+watch(() => route.path, refreshAnimations)
 </script>
 
 <template>

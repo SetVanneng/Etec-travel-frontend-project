@@ -61,7 +61,12 @@ const filteredHotels = computed(() => {
         {{ filteredHotels.length }} {{ filteredHotels.length === 1 ? 'hotel' : 'hotels' }} found
       </p>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <HotelCard v-for="hotel in filteredHotels" :key="hotel.id" :hotel="hotel" />
+        <HotelCard
+          v-for="(hotel, index) in filteredHotels"
+          :key="hotel.id"
+          :hotel="hotel"
+          :delay="index * 60"
+        />
       </div>
     </div>
   </div>

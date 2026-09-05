@@ -4,13 +4,21 @@
 import { MapPin, Star, Clock, ArrowRight } from '@lucide/vue'
 import type { Activity } from '../data/activities'
 
-const props = defineProps<{
-  activity: Activity
-}>()
+const props = withDefaults(
+  defineProps<{
+    activity: Activity
+    delay?: number
+  }>(),
+  {
+    delay: 0,
+  },
+)
 </script>
 
 <template>
   <article
+    data-aos="fade-up"
+    :data-aos-delay="props.delay"
     class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900"
   >
     <div class="relative h-48 overflow-hidden">

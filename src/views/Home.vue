@@ -108,7 +108,7 @@ const inspiration = [
     <!-- ================= WHY CHOOSE US ================= -->
     <section class="border-b border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-900">
       <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-3 sm:px-6">
-        <div v-for="item in highlights" :key="item.title" class="flex items-start gap-4">
+        <div v-for="item in highlights" :key="item.title" data-aos="fade-up" class="flex items-start gap-4">
           <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <component :is="item.icon" :size="22" />
           </span>
@@ -127,7 +127,12 @@ const inspiration = [
         subtitle="The most loved places around the world, ready to explore."
       />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <DestinationCard v-for="destination in popularDestinations" :key="destination.id" :destination="destination" />
+        <DestinationCard
+          v-for="(destination, index) in popularDestinations"
+          :key="destination.id"
+          :destination="destination"
+          :delay="index * 60"
+        />
       </div>
       <div class="mt-10 text-center">
         <router-link
@@ -148,7 +153,12 @@ const inspiration = [
           subtitle="Hand-picked stays with top guest ratings."
         />
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <HotelCard v-for="hotel in featuredHotels" :key="hotel.id" :hotel="hotel" />
+          <HotelCard
+            v-for="(hotel, index) in featuredHotels"
+            :key="hotel.id"
+            :hotel="hotel"
+            :delay="index * 60"
+          />
         </div>
         <div class="mt-10 text-center">
           <router-link
@@ -169,7 +179,12 @@ const inspiration = [
         subtitle="Experiences you will remember forever."
       />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <ActivityCard v-for="activity in popularActivities" :key="activity.id" :activity="activity" />
+        <ActivityCard
+          v-for="(activity, index) in popularActivities"
+          :key="activity.id"
+          :activity="activity"
+          :delay="index * 60"
+        />
       </div>
       <div class="mt-10 text-center">
         <router-link
@@ -198,6 +213,7 @@ const inspiration = [
             ]"
             :key="item.country"
             :to="`/airline-booking?country=${item.country}`"
+            data-aos="fade-up"
             class="group relative h-64 overflow-hidden rounded-2xl"
           >
             <img :src="item.image" :alt="item.country" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
@@ -240,6 +256,7 @@ const inspiration = [
             v-for="item in inspiration"
             :key="item.title"
             to="/destinations"
+            data-aos="fade-up"
             class="group relative h-72 overflow-hidden rounded-2xl"
           >
             <img :src="item.image" :alt="item.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
@@ -252,7 +269,7 @@ const inspiration = [
         </div>
 
         <!-- Call to action -->
-        <div class="mt-12 flex flex-col items-center justify-between gap-4 rounded-2xl border border-slate-700 bg-slate-800/60 p-8 text-center sm:flex-row sm:text-left">
+        <div class="mt-12 flex flex-col items-center justify-between gap-4 rounded-2xl border border-slate-700 bg-slate-800/60 p-8 text-center sm:flex-row sm:text-left" data-aos="fade-up">
           <div class="flex items-center gap-4">
             <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-600 text-white">
               <Plane :size="24" />

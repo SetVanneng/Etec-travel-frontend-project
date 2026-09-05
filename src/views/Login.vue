@@ -57,6 +57,7 @@ function submitLogin(): void {
     </div>
 
     <form
+      data-aos="fade-up"
       class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8 dark:border-slate-800 dark:bg-slate-900"
       @submit.prevent="submitLogin"
     >

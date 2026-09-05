@@ -126,21 +126,21 @@ const typeLabels: Record<string, string> = {
 
       <!-- How it works -->
       <div class="mb-10 grid gap-4 sm:grid-cols-3">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
+        <div data-aos="fade-up" class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <MapPin :size="20" />
           </span>
           <h3 class="mt-3 font-bold text-slate-900 dark:text-white">1. Choose Country</h3>
           <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Pick the country you want to fly to from the list below.</p>
         </div>
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
+        <div data-aos="fade-up" data-aos-delay="80" class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <Plane :size="20" />
           </span>
           <h3 class="mt-3 font-bold text-slate-900 dark:text-white">2. Pick an Airline</h3>
           <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Browse airlines that serve your destination with ratings and details.</p>
         </div>
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
+        <div data-aos="fade-up" data-aos-delay="160" class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <ExternalLink :size="20" />
           </span>
@@ -208,6 +208,7 @@ const typeLabels: Record<string, string> = {
               <div
                 v-for="airline in availableAirlines"
                 :key="airline.id"
+                data-aos="fade-up"
                 class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-teal-600"
               >
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-start">

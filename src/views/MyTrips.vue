@@ -72,6 +72,7 @@ function cancelTrip(booking: Booking): void {
     <!-- Empty state -->
     <div
       v-if="!hasAnyTrips"
+      data-aos="fade-up"
       class="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 py-24 text-center dark:border-slate-700"
     >
       <CalendarDays :size="52" class="text-slate-300 dark:text-slate-600" />
@@ -101,8 +102,10 @@ function cancelTrip(booking: Booking): void {
 
         <div class="space-y-4">
           <article
-            v-for="trip in upcomingTrips"
+            v-for="(trip, index) in upcomingTrips"
             :key="trip.id"
+            data-aos="fade-up"
+            :data-aos-delay="index * 60"
             class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
           >
             <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -163,8 +166,10 @@ function cancelTrip(booking: Booking): void {
 
         <div class="space-y-3">
           <article
-            v-for="trip in previousTrips"
+            v-for="(trip, index) in previousTrips"
             :key="trip.id"
+            data-aos="fade-up"
+            :data-aos-delay="index * 60"
             class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 opacity-80 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-slate-900"
           >
             <div>

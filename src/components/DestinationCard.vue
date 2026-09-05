@@ -7,15 +7,23 @@ import type { Destination } from '../data/destinations'
 import { useFavoriteStore } from '../stores/favoriteStore'
 
 // The parent component passes one destination as a "prop".
-const props = defineProps<{
-  destination: Destination
-}>()
+const props = withDefaults(
+  defineProps<{
+    destination: Destination
+    delay?: number
+  }>(),
+  {
+    delay: 0,
+  },
+)
 
 const favoriteStore = useFavoriteStore()
 </script>
 
 <template>
   <article
+    data-aos="fade-up"
+    :data-aos-delay="props.delay"
     class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900"
   >
     <!-- Image + favorite heart -->

@@ -89,7 +89,7 @@ function bookActivity(): void {
         </div>
 
         <!-- Price summary card -->
-        <aside class="h-fit space-y-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
+        <aside data-aos="fade-up" class="h-fit space-y-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 dark:bg-slate-800/60">
             <span class="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
               <Star :size="16" class="text-amber-500" /> Rating

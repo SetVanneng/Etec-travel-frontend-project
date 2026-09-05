@@ -103,8 +103,10 @@ const typeLabels: Record<string, string> = {
     <!-- Airlines grid -->
     <div v-if="filteredAirlines.length > 0" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <div
-        v-for="airline in filteredAirlines"
+        v-for="(airline, index) in filteredAirlines"
         :key="airline.id"
+        data-aos="fade-up"
+        :data-aos-delay="index * 60"
         class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-teal-600"
       >
         <div class="flex items-center gap-3">
@@ -161,7 +163,7 @@ const typeLabels: Record<string, string> = {
     </div>
 
     <!-- CTA to airline booking page -->
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:text-left">
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:text-left" data-aos="fade-up">
       <div class="flex items-center gap-4">
         <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-600 text-white">
           <Globe :size="24" />

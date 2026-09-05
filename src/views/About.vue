@@ -60,7 +60,7 @@ const team = [
     />
 
     <!-- Intro -->
-    <div class="overflow-hidden rounded-3xl bg-slate-900">
+    <div data-aos="fade-up" class="overflow-hidden rounded-3xl bg-slate-900">
       <div class="grid items-center gap-8 p-8 md:grid-cols-2 md:p-12">
         <div>
           <h2 class="text-2xl font-bold text-white">A little doorway to the world</h2>
@@ -87,7 +87,7 @@ const team = [
 
     <!-- Mission -->
     <div class="mt-10 grid gap-6 sm:grid-cols-2">
-      <div v-for="item in missionPoints" :key="item.title" class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+      <div v-for="item in missionPoints" :key="item.title" data-aos="fade-up" class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
         <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600/10 text-teal-600 dark:text-teal-400">
           <component :is="item.icon" :size="24" />
         </span>
@@ -99,7 +99,7 @@ const team = [
     <!-- Statistics -->
     <section class="mt-10 rounded-3xl bg-teal-600 px-6 py-10">
       <div class="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
-        <div v-for="item in stats" :key="item.label">
+        <div v-for="item in stats" :key="item.label" data-aos="fade-up">
           <component :is="item.icon" :size="28" class="mx-auto text-teal-100" />
           <p class="mt-2 text-3xl font-extrabold text-white">{{ item.value }}</p>
           <p class="text-sm text-teal-100">{{ item.label }}</p>
@@ -111,7 +111,7 @@ const team = [
     <section class="mt-16">
       <SectionHeading title="Why Choose Travel &amp; Explore" subtitle="Three simple reasons travellers pick us." />
       <div class="grid gap-6 sm:grid-cols-3">
-        <div v-for="item in reasons" :key="item.title" class="rounded-2xl border border-slate-200 p-6 text-center dark:border-slate-800">
+        <div v-for="item in reasons" :key="item.title" data-aos="fade-up" class="rounded-2xl border border-slate-200 p-6 text-center dark:border-slate-800">
           <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <component :is="item.icon" :size="26" />
           </span>
@@ -125,7 +125,7 @@ const team = [
     <section class="mt-16">
       <SectionHeading title="Meet the Team" subtitle="The friendly people behind the project (mock data)." />
       <div class="grid gap-6 sm:grid-cols-3">
-        <div v-for="member in team" :key="member.name" class="rounded-2xl border border-slate-200 p-6 text-center dark:border-slate-800">
+        <div v-for="member in team" :key="member.name" data-aos="fade-up" class="rounded-2xl border border-slate-200 p-6 text-center dark:border-slate-800">
           <span class="mx-auto flex h-20 w-20 items-center justify-center rounded-full text-2xl font-extrabold text-white" :class="member.color">
             {{ member.name.split(' ').map((part) => part[0]).join('') }}
           </span>

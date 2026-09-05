@@ -73,7 +73,12 @@ const filteredActivities = computed(() => {
     </div>
 
     <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <ActivityCard v-for="activity in filteredActivities" :key="activity.id" :activity="activity" />
+      <ActivityCard
+        v-for="(activity, index) in filteredActivities"
+        :key="activity.id"
+        :activity="activity"
+        :delay="index * 60"
+      />
     </div>
   </div>
 </template>

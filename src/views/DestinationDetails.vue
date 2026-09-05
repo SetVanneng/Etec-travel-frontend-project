@@ -201,19 +201,19 @@ function openInMaps(): void {
 
       <!-- Quick facts -->
       <div class="mt-8 grid gap-4 sm:grid-cols-3">
-        <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+        <div data-aos="fade-up" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
             <Star :size="16" class="text-amber-500" /> Rating
           </div>
           <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ destination.rating }} / 5</p>
         </div>
-        <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+        <div data-aos="fade-up" data-aos-delay="80" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
             <Calendar :size="16" class="text-teal-600 dark:text-teal-400" /> Best time to visit
           </div>
           <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ destination.bestTimeToVisit }}</p>
         </div>
-        <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+        <div data-aos="fade-up" data-aos-delay="160" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
             <DollarSign :size="16" class="text-emerald-600" /> Average budget
           </div>
@@ -258,7 +258,7 @@ function openInMaps(): void {
         </div>
 
         <!-- Right: location / map card -->
-        <aside class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-800/40">
+        <aside data-aos="fade-up" class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-800/40">
           <h3 class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
             <LocateFixed :size="18" class="text-teal-600 dark:text-teal-400" />
             Location &amp; Map
@@ -338,9 +338,14 @@ function openInMaps(): void {
         </div>
 
         <div v-if="nearbyHotels.length > 0" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <HotelCard v-for="hotel in nearbyHotels" :key="hotel.id" :hotel="hotel" />
+          <HotelCard
+            v-for="(hotel, index) in nearbyHotels"
+            :key="hotel.id"
+            :hotel="hotel"
+            :delay="index * 60"
+          />
         </div>
-        <p v-else class="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <p v-else data-aos="fade-up" class="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           No hotels listed for this destination yet.
         </p>
       </section>

@@ -78,7 +78,7 @@ function doLogout(): void {
     <!-- Profile -->
     <div v-else>
       <!-- Header card -->
-      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8 dark:border-slate-800 dark:bg-slate-900">
+      <div data-aos="fade-up" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8 dark:border-slate-800 dark:bg-slate-900">
         <div class="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           <img :src="authStore.user?.avatar" :alt="authStore.user?.name" class="h-20 w-20 rounded-full border-4 border-teal-500 object-cover" />
 
@@ -131,6 +131,8 @@ function doLogout(): void {
         <div class="mt-8 grid grid-cols-2 gap-4">
           <router-link
             to="/favorites"
+            data-aos="fade-up"
+            data-aos-delay="60"
             class="flex items-center gap-3 rounded-xl bg-slate-50 p-4 transition hover:bg-slate-100 dark:bg-slate-800/60 dark:hover:bg-slate-800"
           >
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500">
@@ -144,6 +146,8 @@ function doLogout(): void {
 
           <router-link
             to="/my-trips"
+            data-aos="fade-up"
+            data-aos-delay="120"
             class="flex items-center gap-3 rounded-xl bg-slate-50 p-4 transition hover:bg-slate-100 dark:bg-slate-800/60 dark:hover:bg-slate-800"
           >
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400">

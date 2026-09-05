@@ -46,7 +46,7 @@ function submitMessage(): void {
     <div class="grid gap-10 md:grid-cols-5">
       <!-- Contact info side -->
       <aside class="md:col-span-2">
-        <div class="rounded-2xl bg-slate-900 p-6 text-slate-300">
+        <div data-aos="fade-right" class="rounded-2xl bg-slate-900 p-6 text-slate-300">
           <h2 class="text-lg font-bold text-white">Let&apos;s talk travel</h2>
           <p class="mt-2 text-sm leading-relaxed text-slate-400">
             We read every message and try to answer within a day. For a demo
@@ -73,6 +73,7 @@ function submitMessage(): void {
 
       <!-- Form -->
       <form
+        data-aos="fade-left"
         class="md:col-span-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8 dark:border-slate-800 dark:bg-slate-900"
         @submit.prevent="submitMessage"
       >

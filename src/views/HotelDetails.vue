@@ -132,7 +132,7 @@ function goBack(): void {
         </div>
 
         <!-- Right column: booking panel -->
-        <aside class="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
+        <aside data-aos="fade-up" class="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-start justify-between gap-3">
             <div>
               <h1 class="text-2xl font-bold text-slate-900 dark:text-white">{{ hotel.name }}</h1>

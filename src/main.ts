@@ -12,6 +12,15 @@ import App from './App.vue'
 import router from './router'
 import './assets/styles/main.css'
 import 'leaflet/dist/leaflet.css'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
+AOS.init({
+  duration: 700,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 80,
+})
 
 const app = createApp(App)
 

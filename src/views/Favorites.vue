@@ -61,9 +61,10 @@ function clearAll(): void {
     <!-- Favorite cards -->
     <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <DestinationCard
-        v-for="destination in favoriteStore.favorites"
+        v-for="(destination, index) in favoriteStore.favorites"
         :key="destination.id"
         :destination="destination"
+        :delay="index * 60"
       />
     </div>
   </div>

@@ -267,6 +267,7 @@ const inputClass =
     <div class="grid gap-8 lg:grid-cols-3">
       <!-- Main form panel -->
       <form
+        data-aos="fade-up"
         class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8 lg:col-span-2 dark:border-slate-800 dark:bg-slate-900"
         @submit.prevent="currentStep === steps.length - 1 ? submitBooking() : next()"
       >
@@ -536,7 +537,7 @@ const inputClass =
       </form>
 
       <!-- Price summary sidebar -->
-      <aside class="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
+      <aside data-aos="fade-up" data-aos-delay="100" class="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
         <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Price summary
         </h3>
