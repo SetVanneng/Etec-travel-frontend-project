@@ -61,10 +61,8 @@ const typeLabels: Record<string, string> = {
     </div>
 
     <!-- Search + filter bar -->
-    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-      <div class="flex-1">
-        <SearchBar v-model="searchQuery" placeholder="Search airlines by name or country..." />
-      </div>
+    <div class="mb-8 flex flex-col gap-4">
+      <SearchBar v-model="searchQuery" placeholder="Search airlines by name or country..." />
       <div class="flex flex-wrap gap-2">
         <button
           type="button"
