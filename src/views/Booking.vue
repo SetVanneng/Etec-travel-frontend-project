@@ -298,6 +298,7 @@ const inputClass =
                 type="date"
                 :min="today"
                 :class="inputClass"
+                class="[color-scheme:light] dark:[color-scheme:dark]"
               />
             </label>
             <label class="block">
@@ -309,6 +310,7 @@ const inputClass =
                 type="date"
                 :min="form.checkIn || today"
                 :class="inputClass"
+                class="[color-scheme:light] dark:[color-scheme:dark]"
               />
             </label>
           </div>
