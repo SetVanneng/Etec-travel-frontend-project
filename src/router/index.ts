@@ -28,8 +28,8 @@ const routes: RouteRecordRaw[] = [
   { path: '/my-trips', name: 'my-trips', component: () => import('../views/MyTrips.vue') },
   { path: '/about', name: 'about', component: () => import('../views/About.vue') },
   { path: '/contact', name: 'contact', component: () => import('../views/Contact.vue') },
-  // Catch-all: any unknown URL goes to the home page.
-  { path: '/:pathMatch(.*)*', redirect: '/' },
+  // Catch-all: any unknown URL shows a 404 page.
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFound.vue') },
 ]
 
 const router = createRouter({
