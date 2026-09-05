@@ -24,6 +24,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/favorites', name: 'favorites', component: () => import('../views/Favorites.vue') },
   { path: '/booking', name: 'booking', component: () => import('../views/Booking.vue') },
   { path: '/login', name: 'login', component: () => import('../views/Login.vue') },
+  { path: '/register', name: 'register', component: () => import('../views/Register.vue') },
   { path: '/profile', name: 'profile', component: () => import('../views/Profile.vue') },
   { path: '/my-trips', name: 'my-trips', component: () => import('../views/MyTrips.vue') },
   { path: '/about', name: 'about', component: () => import('../views/About.vue') },
