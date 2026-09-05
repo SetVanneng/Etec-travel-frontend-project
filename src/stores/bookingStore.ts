@@ -12,6 +12,8 @@ export interface Booking {
   id: number
   destination: string
   hotelName: string
+  /** Optional activity included in this stay (empty string when none). */
+  activityName: string
   checkIn: string // format: YYYY-MM-DD
   checkOut: string // format: YYYY-MM-DD
   guests: number

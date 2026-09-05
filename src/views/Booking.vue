@@ -87,11 +87,14 @@ const destinationName = computed(() => {
 })
 
 // If the user came from an activity page, remember which one so we can show
-// a friendly hint asking them to pick a hotel near it.
-const activityName = computed(() => {
+// a friendly hint asking them to pick a hotel near it, and include its price
+// in the total (activity.price is per person, so multiply by the guest count).
+const selectedActivity = computed(() => {
   const activity = route.query.activity
-  return typeof activity === 'string' ? getActivityById(Number(activity))?.name ?? '' : ''
+  return typeof activity === 'string' ? getActivityById(Number(activity)) : undefined
 })
+
+const activityName = computed(() => selectedActivity.value?.name ?? '')
 
 const hotelOptions = computed(() =>
   hotels.filter((hotel) => hotel.destinationId === form.destinationId),
@@ -124,11 +127,19 @@ const nights = computed(() => {
   return bookingStore.nights(form.checkIn, form.checkOut)
 })
 
-const totalPrice = computed(() => {
+// Hotel part: the chosen room's nightly rate times the number of nights.
+const stayTotal = computed(() => {
   const room = roomOptions.value.find((item) => item.name === form.roomType)
   const pricePerNight = room?.price ?? selectedHotel.value?.pricePerNight ?? 0
   return pricePerNight * nights.value
 })
+
+// Activity part: the activity price is per person, so it scales with guests.
+const activityTotal = computed(() =>
+  selectedActivity.value ? selectedActivity.value.price * form.guests : 0,
+)
+
+const totalPrice = computed(() => stayTotal.value + activityTotal.value)
 
 const today = new Date().toISOString().split('T')[0]
 
@@ -197,6 +208,7 @@ function submitBooking(): void {
     bookingStore.addBooking({
       destination: destinationName.value,
       hotelName: selectedHotel.value!.name,
+      activityName: selectedActivity.value?.name ?? '',
       checkIn: form.checkIn,
       checkOut: form.checkOut,
       guests: form.guests,
@@ -488,6 +500,13 @@ const inputClass =
               <span class="flex items-center gap-1.5"><HotelIcon :size="15" class="text-teal-600" />Hotel</span>
               <span class="font-medium">{{ selectedHotel?.name || '—' }}</span>
             </p>
+            <p
+              v-if="selectedActivity"
+              class="flex items-center justify-between text-slate-600 dark:text-slate-300"
+            >
+              <span class="flex items-center gap-1.5"><Compass :size="15" class="text-teal-600" />Activity</span>
+              <span class="font-medium">{{ selectedActivity.name }}</span>
+            </p>
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
               <span class="flex items-center gap-1.5"><BedDouble :size="15" class="text-teal-600" />Room</span>
               <span class="font-medium">{{ form.roomType || '—' }}</span>
@@ -550,6 +569,13 @@ const inputClass =
             <span>{{ form.roomType }}</span>
             <span>${{ roomOptions.find((r) => r.name === form.roomType)?.price }}/night</span>
           </p>
+          <p
+            v-if="selectedActivity"
+            class="flex items-center justify-between text-slate-600 dark:text-slate-300"
+          >
+            <span>Activity</span>
+            <span class="font-medium">{{ selectedActivity.name }}</span>
+          </p>
           <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
             <span>Nights</span>
             <span>
@@ -563,7 +589,21 @@ const inputClass =
         </div>
 
         <div class="mt-5 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
+          <p
+            v-if="selectedActivity"
+            class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
+          >
+            <span>Activity ({{ selectedActivity.name }})</span>
+            <span>${{ selectedActivity.price }} &times; {{ form.guests }}</span>
+          </p>
+          <p
+            v-if="nights > 0"
+            class="mt-1 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
+          >
+            <span>Hotel stay ({{ nights }} {{ nights === 1 ? 'night' : 'nights' }})</span>
+            <span>${{ stayTotal }}</span>
+          </p>
+          <p class="mt-2 flex items-center justify-between text-slate-600 dark:text-slate-300">
             <span class="flex items-center gap-1.5 font-semibold">
               <Info :size="16" class="text-teal-600 dark:text-teal-400" /> Total
             </span>

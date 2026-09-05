@@ -4,7 +4,7 @@
 // which is saved in localStorage) split into upcoming and previous trips.
 // Each trip can be cancelled.
 import { computed } from 'vue'
-import { CalendarDays, Hotel, Users, Plane, MapPin, Clock, CircleCheck, XCircle, AlertCircle } from '@lucide/vue'
+import { CalendarDays, Hotel, Users, Plane, MapPin, Clock, CircleCheck, XCircle, AlertCircle, Compass } from '@lucide/vue'
 import { useBookingStore } from '../stores/bookingStore'
 import { useAuthStore } from '../stores/authStore'
 import { notify } from '../utils/toast'
@@ -120,6 +120,13 @@ function cancelTrip(booking: Booking): void {
                   <Hotel :size="15" class="text-teal-600 dark:text-teal-400" />
                   {{ trip.destination }}
                 </p>
+                <p
+                  v-if="trip.activityName"
+                  class="mt-1 flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
+                >
+                  <Compass :size="15" class="text-teal-600 dark:text-teal-400" />
+                  Activity: {{ trip.activityName }}
+                </p>
 
                 <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                   <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
@@ -186,6 +193,13 @@ function cancelTrip(booking: Booking): void {
               </div>
               <p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                 {{ trip.destination }} &middot; {{ formatDate(trip.checkIn) }}
+              </p>
+              <p
+                v-if="trip.activityName"
+                class="mt-0.5 flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400"
+              >
+                <Compass :size="13" class="text-teal-600 dark:text-teal-400" />
+                {{ trip.activityName }}
               </p>
             </div>
             <div class="flex items-center gap-2">
