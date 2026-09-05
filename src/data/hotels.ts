@@ -633,6 +633,56 @@ export const hotels: Hotel[] = [
     ],
     available: true,
   },
+  {
+    id: 25,
+    name: 'Coral Reef Overwater Resort',
+    destinationId: 10,
+    location: 'North Mal\u00e9 Atoll',
+    city: 'Mal\u00e9',
+    country: 'Maldives',
+    rating: 4.9,
+    pricePerNight: 420,
+    image: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1582610116397-edb318620f90?auto=format&fit=crop&w=900&q=80',
+    ],
+    description:
+      'Stilted overwater bungalows above a vibrant house reef, steps from the best scuba and snorkelling spots in the Maldives.',
+    facilities: ['Free Wi-Fi', 'Overwater villas', 'House reef diving', 'Restaurant', 'Glass-bottom kayaks', 'Air conditioning'],
+    roomTypes: [
+      { name: 'Overwater Bungalow', price: 420, size: 45 },
+      { name: 'Reef View Villa', price: 520, size: 60 },
+      { name: 'Royal Oasis Suite', price: 890, size: 110 },
+    ],
+    available: true,
+  },
+  {
+    id: 26,
+    name: 'Jungle Canopy Eco Resort',
+    destinationId: 12,
+    location: 'Arenal, La Fortuna',
+    city: 'La Fortuna',
+    country: 'Costa Rica',
+    rating: 4.8,
+    pricePerNight: 150,
+    image: 'https://images.unsplash.com/photo-1495876498332-20385b523ae2?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1495876498332-20385b523ae2?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80',
+    ],
+    description:
+      'Eco-friendly lodges hidden in the rainforest canopy, right by the Arenal volcano and minutes from the famous zip-line circuits.',
+    facilities: ['Free Wi-Fi', 'Jungle pool', 'Zip-line operator on site', 'Hot springs', 'Bird watching deck', 'Restaurant'],
+    roomTypes: [
+      { name: 'Canopy Cabin', price: 150, size: 30 },
+      { name: 'Volcano View Room', price: 210, size: 40 },
+      { name: 'Rainforest Treehouse', price: 330, size: 65 },
+    ],
+    available: true,
+  },
 ]
 
 /** Returns one hotel by its id, or undefined if not found. */
