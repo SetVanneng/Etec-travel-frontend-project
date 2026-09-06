@@ -9,8 +9,10 @@ import {
 import SearchBar from '../components/SearchBar.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import { airlines, getAirlineCountries, type Airline } from '../data/airlines'
+import { useI18nStore } from '../stores/i18n'
 
 const router = useRouter()
+const i18n = useI18nStore()
 const searchQuery = ref('')
 const selectedCountry = ref('')
 
@@ -27,7 +29,7 @@ const filteredAirlines = computed(() => {
       (a) =>
         a.name.toLowerCase().includes(q) ||
         a.country.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q),
+        i18n.pick(a.description).toLowerCase().includes(q),
     )
   }
   return result
@@ -43,10 +45,11 @@ const typeColors: Record<string, string> = {
   regional: 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300',
 }
 
-const typeLabels: Record<string, string> = {
-  'flag-carrier': 'Flag Carrier',
-  'low-cost': 'Low Cost',
-  regional: 'Regional',
+// Maps an airline "type" value to a translation key for its label.
+const typeLabelKeys: Record<string, string> = {
+  'flag-carrier': 'airlines.flagCarrier',
+  'low-cost': 'airlines.lowCost',
+  regional: 'airlines.regional',
 }
 </script>
 
@@ -55,14 +58,14 @@ const typeLabels: Record<string, string> = {
     <!-- Header -->
     <div class="mb-8 text-center">
       <SectionHeading
-        title="Airlines"
-        subtitle="Browse airlines around the world and book flights directly on their websites."
+        :title="i18n.t('airlines.title')"
+        :subtitle="i18n.t('airlines.subtitle')"
       />
     </div>
 
     <!-- Search + filter bar -->
     <div class="mb-8 flex flex-col gap-4">
-      <SearchBar v-model="searchQuery" placeholder="Search airlines by name or country..." />
+      <SearchBar v-model="searchQuery" :placeholder="i18n.t('airlines.searchPlaceholder')" />
       <div class="flex flex-wrap gap-2">
         <button
           type="button"
@@ -74,7 +77,7 @@ const typeLabels: Record<string, string> = {
           "
           @click="selectedCountry = ''"
         >
-          All Countries
+          {{ i18n.t('airlines.allCountries') }}
         </button>
         <button
           v-for="country in countries"
@@ -88,14 +91,14 @@ const typeLabels: Record<string, string> = {
           "
           @click="selectedCountry = selectedCountry === country ? '' : country"
         >
-          {{ country }}
+          {{ i18n.t('countries.' + country) }}
         </button>
       </div>
     </div>
 
     <!-- Results count -->
     <p class="mb-6 text-sm text-slate-500 dark:text-slate-400">
-      Showing {{ filteredAirlines.length }} airline{{ filteredAirlines.length !== 1 ? 's' : '' }}
+      {{ i18n.t('airlines.showing', { count: filteredAirlines.length }) }}
     </p>
 
     <!-- Airlines grid -->
@@ -115,16 +118,16 @@ const typeLabels: Record<string, string> = {
             <h3 class="truncate text-sm font-bold text-slate-900 dark:text-white">{{ airline.name }}</h3>
             <p class="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
               <MapPin :size="12" class="text-teal-600 dark:text-teal-400" />
-              {{ airline.country }}
+              {{ i18n.t('countries.' + airline.country) }}
             </p>
           </div>
           <span class="rounded-full px-2 py-0.5 text-[10px] font-bold" :class="typeColors[airline.type]">
-            {{ typeLabels[airline.type] }}
+            {{ i18n.t(typeLabelKeys[airline.type]) }}
           </span>
         </div>
 
         <p class="mt-3 flex-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">
-          {{ airline.description }}
+          {{ i18n.pick(airline.description) }}
         </p>
 
         <div class="mt-4 flex items-center justify-between">
@@ -137,7 +140,7 @@ const typeLabels: Record<string, string> = {
             class="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-4 py-2 text-xs font-bold text-white transition hover:bg-teal-700"
             @click="openAirline(airline)"
           >
-            Book Flight
+            {{ i18n.t('airlines.bookFlight') }}
             <ExternalLink :size="12" />
           </button>
         </div>
@@ -147,16 +150,16 @@ const typeLabels: Record<string, string> = {
     <!-- Empty state -->
     <div v-else class="flex flex-col items-center justify-center py-20 text-center">
       <Plane :size="48" class="text-slate-300 dark:text-slate-600" />
-      <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">No airlines found</h3>
+      <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('airlines.noResultsTitle') }}</h3>
       <p class="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-        Try adjusting your search or clearing the filter.
+        {{ i18n.t('airlines.noResultsText') }}
       </p>
       <button
         type="button"
         class="mt-4 inline-flex items-center gap-2 rounded-xl border border-teal-600 px-5 py-2.5 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
         @click="searchQuery = ''; selectedCountry = ''"
       >
-        Clear filters
+        {{ i18n.t('common.clearFilters') }}
       </button>
     </div>
 
@@ -167,15 +170,15 @@ const typeLabels: Record<string, string> = {
           <Globe :size="24" />
         </span>
         <div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Know where you're flying?</h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400">Select a country and we'll show you all airlines that fly there.</p>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.t('airlines.knowWhereFlying') }}</h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('airlines.selectCountryHint') }}</p>
         </div>
       </div>
       <router-link
         to="/airline-booking"
         class="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
       >
-        Book a Flight
+        {{ i18n.t('airlines.bookFlight') }}
         <ArrowRight :size="16" />
       </router-link>
     </div>

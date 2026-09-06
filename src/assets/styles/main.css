@@ -9,14 +9,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Centralized typography / font system
+   ---------------------------------------------------------------------------
+   - --font-english       : the UI font for English (Inter, unchanged).
+   - --font-khmer         : the primary Khmer body font (Noto Sans Khmer).
+   - --font-khmer-display : the modern Khmer font used for headings
+                            (Kantumruy Pro).
+   - Tailwind's fontFamily.sans maps to --font-english so even `font-sans`
+     utilities switch to the Khmer stack automatically.
+   - When the i18n store sets <html lang="kh">, --font-english is re-pointed
+     at the Khmer font, so ALL text inherits a Khmer-capable font without
+     touching individual components.
+--------------------------------------------------------------------------- */
+:root {
+  --font-english: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-khmer: 'Noto Sans Khmer', 'Kantumruy Pro', system-ui, -apple-system,
+    sans-serif;
+  --font-khmer-display: 'Kantumruy Pro', 'Noto Sans Khmer', system-ui,
+    sans-serif;
+}
+
 /* Smooth scrolling when we jump to anchors. */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--font-english);
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------------------
+   Khmer (ខ្មែរ) typography
+   Activated automatically by <html lang="kh">, which the i18n store sets.
+--------------------------------------------------------------------------- */
+
+/* Use the Khmer font stack for everything once the page is in Khmer. */
+html[lang='km'] {
+  --font-english: var(--font-khmer);
+}
+
+/* Khmer glyphs are taller (ascenders + stacked subscripts), so give text a
+   little extra room to breathe and avoid clipping. */
+html[lang='km'] body {
+  line-height: 1.75;
+}
+
+/* Khmer headings use the modern Kantumruy Pro face and a looser line-height
+   (overrides Tailwind's tight leading-tight/leading-snug utilities). */
+html[lang='km'] h1,
+html[lang='km'] h2,
+html[lang='km'] h3,
+html[lang='km'] h4,
+html[lang='km'] h5,
+html[lang='km'] h6 {
+  font-family: var(--font-khmer-display);
+  line-height: 1.45;
+}
+
+/* Khmer is a complex script: keep letter-spacing natural and long compound
+   names on small screens wrap instead of overflowing cards. */
+html[lang='km'],
+html[lang='km'] * {
+  letter-spacing: normal;
+  overflow-wrap: break-word;
 }
 
 /* Improve image display and prevent layout jumps. */
@@ -31,4 +88,32 @@ img {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Language-switch loading overlay + page transition
+--------------------------------------------------------------------------- */
+
+/* Fade the full-screen loading overlay in/out. */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Crossfade + subtle slide when navigating or switching language. */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }

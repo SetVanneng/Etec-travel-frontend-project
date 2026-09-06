@@ -10,9 +10,11 @@ import {
 } from '@lucide/vue'
 import { destinations } from '../data/destinations'
 import { getAirlinesByCountry, type Airline } from '../data/airlines'
+import { useI18nStore } from '../stores/i18n'
 
 const route = useRoute()
 const router = useRouter()
+const i18n = useI18nStore()
 
 const isLoading = ref(true)
 const selectedCountry = ref('')
@@ -81,10 +83,11 @@ const typeColors: Record<string, string> = {
   regional: 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300',
 }
 
-const typeLabels: Record<string, string> = {
-  'flag-carrier': 'Flag Carrier',
-  'low-cost': 'Low Cost',
-  regional: 'Regional',
+// Maps an airline "type" value to a translation key for its label.
+const typeLabelKeys: Record<string, string> = {
+  'flag-carrier': 'airlines.flagCarrier',
+  'low-cost': 'airlines.lowCost',
+  regional: 'airlines.regional',
 }
 </script>
 
@@ -106,21 +109,20 @@ const typeLabels: Record<string, string> = {
           @click="goBack"
         >
           <ArrowLeft :size="16" />
-          Back to destinations
+          {{ i18n.t('airlineBooking.backToDestinations') }}
         </button>
       </div>
 
       <div class="mb-10 text-center">
         <span class="inline-flex items-center gap-2 rounded-full bg-teal-600/10 px-4 py-1.5 text-sm font-semibold text-teal-700 dark:text-teal-300">
           <Plane :size="16" />
-          Flight Booking
+          {{ i18n.t('airlineBooking.badge') }}
         </span>
         <h1 class="mt-3 text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
-          Book Your Flight
+          {{ i18n.t('airlineBooking.title') }}
         </h1>
         <p class="mx-auto mt-3 max-w-xl text-slate-500 dark:text-slate-400">
-          Select your destination country and we'll show you airlines that fly there.
-          Click any airline to visit their website and book your flight.
+          {{ i18n.t('airlineBooking.subtitle') }}
         </p>
       </div>
 
@@ -130,22 +132,22 @@ const typeLabels: Record<string, string> = {
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <MapPin :size="20" />
           </span>
-          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">1. Choose Country</h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Pick the country you want to fly to from the list below.</p>
+          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">{{ i18n.t('airlineBooking.step1Title') }}</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('airlineBooking.step1Text') }}</p>
         </div>
         <div data-aos="fade-up" data-aos-delay="80" class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <Plane :size="20" />
           </span>
-          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">2. Pick an Airline</h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Browse airlines that serve your destination with ratings and details.</p>
+          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">{{ i18n.t('airlineBooking.step2Title') }}</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('airlineBooking.step2Text') }}</p>
         </div>
         <div data-aos="fade-up" data-aos-delay="160" class="rounded-2xl border border-slate-200 bg-white p-5 text-center dark:border-slate-800 dark:bg-slate-900">
           <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <ExternalLink :size="20" />
           </span>
-          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">3. Book on Their Site</h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">We redirect you to the airline's real website to complete your booking.</p>
+          <h3 class="mt-3 font-bold text-slate-900 dark:text-white">{{ i18n.t('airlineBooking.step3Title') }}</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('airlineBooking.step3Text') }}</p>
         </div>
       </div>
 
@@ -154,7 +156,7 @@ const typeLabels: Record<string, string> = {
         <div class="lg:col-span-1">
           <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
             <Globe :size="20" class="text-teal-600 dark:text-teal-400" />
-            Select Destination Country
+            {{ i18n.t('airlineBooking.selectCountry') }}
           </h2>
 
           <div class="space-y-1.5 max-h-[600px] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900">
@@ -171,12 +173,12 @@ const typeLabels: Record<string, string> = {
               @click="selectCountry(country)"
             >
               <MapPin :size="16" />
-              {{ country }}
+              {{ i18n.t('countries.' + country) }}
               <span
                 v-if="selectedCountry === country"
                 class="ml-auto rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold"
               >
-                {{ getAirlinesByCountry(country).length }} airline{{ getAirlinesByCountry(country).length !== 1 ? 's' : '' }}
+                {{ i18n.t('airlineBooking.airlineCount', { count: getAirlinesByCountry(country).length }) }}
               </span>
             </button>
           </div>
@@ -187,9 +189,9 @@ const typeLabels: Record<string, string> = {
           <!-- Empty state: no country selected -->
           <div v-if="!selectedCountry" class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 py-16 text-center dark:border-slate-700">
             <Plane :size="48" class="text-slate-300 dark:text-slate-600" />
-            <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">Select a country to begin</h3>
+            <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('airlineBooking.selectCountryToBegin') }}</h3>
             <p class="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-              Choose a destination country from the list on the left to see available airlines.
+              {{ i18n.t('airlineBooking.selectCountryText') }}
             </p>
           </div>
 
@@ -197,10 +199,10 @@ const typeLabels: Record<string, string> = {
           <div v-else-if="availableAirlines.length > 0">
             <div class="mb-4 flex items-center justify-between">
               <h2 class="text-lg font-bold text-slate-900 dark:text-white">
-                Airlines flying to {{ selectedCountry }}
+                {{ i18n.t('airlineBooking.airlinesFlyingTo', { country: i18n.t('countries.' + selectedCountry) }) }}
               </h2>
               <span class="rounded-full bg-teal-100 px-3 py-1 text-xs font-bold text-teal-700 dark:bg-teal-500/10 dark:text-teal-300">
-                {{ availableAirlines.length }} found
+                {{ i18n.t('airlineBooking.found', { count: availableAirlines.length }) }}
               </span>
             </div>
 
@@ -220,11 +222,11 @@ const typeLabels: Record<string, string> = {
                         class="rounded-full px-2.5 py-0.5 text-xs font-bold"
                         :class="typeColors[airline.type]"
                       >
-                        {{ typeLabels[airline.type] }}
+                        {{ i18n.t(typeLabelKeys[airline.type]) }}
                       </span>
                     </div>
 
-                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ airline.description }}</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ i18n.pick(airline.description) }}</p>
 
                     <div class="mt-3 flex flex-wrap items-center gap-4 text-sm">
                       <span class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
@@ -233,7 +235,7 @@ const typeLabels: Record<string, string> = {
                       </span>
                       <span class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
                         <MapPin :size="14" class="text-teal-600 dark:text-teal-400" />
-                        {{ airline.country }}
+                        {{ i18n.t('countries.' + airline.country) }}
                       </span>
                     </div>
                   </div>
@@ -245,7 +247,7 @@ const typeLabels: Record<string, string> = {
                     @click="openAirline(airline)"
                   >
                     <Plane :size="16" />
-                    Book on {{ airline.name.split('(')[0].trim() }}
+                    {{ i18n.t('airlineBooking.bookOn', { airline: airline.name.split('(')[0].trim() }) }}
                     <ExternalLink :size="14" />
                   </button>
                 </div>
@@ -255,7 +257,7 @@ const typeLabels: Record<string, string> = {
             <!-- Destinations in this country -->
             <div v-if="countryDestinations.length > 0" class="mt-8">
               <h3 class="mb-4 text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Destinations in {{ selectedCountry }}
+                {{ i18n.t('airlineBooking.destinationsIn', { country: i18n.t('countries.' + selectedCountry) }) }}
               </h3>
               <div class="grid gap-3 sm:grid-cols-2">
                 <router-link
@@ -264,10 +266,10 @@ const typeLabels: Record<string, string> = {
                   :to="`/destination/${dest.id}`"
                   class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 transition hover:border-teal-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-teal-600"
                 >
-                  <img :src="dest.image" :alt="dest.name" class="h-14 w-14 shrink-0 rounded-lg object-cover" />
+                  <img :src="dest.image" :alt="i18n.pick(dest.name)" class="h-14 w-14 shrink-0 rounded-lg object-cover" />
                   <div class="min-w-0">
-                    <p class="truncate text-sm font-bold text-slate-900 dark:text-white">{{ dest.name }}</p>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">{{ dest.location }}</p>
+                    <p class="truncate text-sm font-bold text-slate-900 dark:text-white">{{ i18n.pick(dest.name) }}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">{{ i18n.pick(dest.location) }}</p>
                   </div>
                   <ArrowRight :size="16" class="ml-auto shrink-0 text-slate-400" />
                 </router-link>
@@ -278,9 +280,9 @@ const typeLabels: Record<string, string> = {
           <!-- No airlines for country -->
           <div v-else class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 py-16 text-center dark:border-slate-700">
             <Plane :size="48" class="text-slate-300 dark:text-slate-600" />
-            <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">No airlines listed for {{ selectedCountry }}</h3>
+            <h3 class="mt-4 text-lg font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('airlineBooking.noAirlinesFor', { country: selectedCountry }) }}</h3>
             <p class="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-              We don't have airline data for this country yet. Try selecting another country.
+              {{ i18n.t('airlineBooking.noAirlinesText') }}
             </p>
           </div>
         </div>
@@ -290,8 +292,7 @@ const typeLabels: Record<string, string> = {
       <div class="mt-10 flex items-start justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
         <ShieldCheck :size="16" class="mt-0.5 shrink-0 text-teal-600 dark:text-teal-400" />
         <p>
-          This is a demo feature. Clicking an airline opens their real website in a new tab.
-          No actual flight search or payment is performed by this application.
+          {{ i18n.t('airlineBooking.disclaimer') }}
         </p>
       </div>
     </div>

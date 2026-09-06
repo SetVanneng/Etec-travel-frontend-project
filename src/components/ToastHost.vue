@@ -5,6 +5,9 @@
 import { Check, AlertCircle, Info, X } from '@lucide/vue'
 import { toasts, removeToast } from '../utils/toast'
 import type { ToastType } from '../utils/toast'
+import { useI18nStore } from '../stores/i18n'
+
+const i18n = useI18nStore()
 
 // Pick the right icon and color for each toast type.
 const styles: Record<ToastType, { icon: typeof Check; class: string }> = {
@@ -30,7 +33,7 @@ const styles: Record<ToastType, { icon: typeof Check; class: string }> = {
         <button
           type="button"
           class="shrink-0 text-slate-400 transition hover:text-slate-600 dark:hover:text-slate-200"
-          aria-label="Dismiss notification"
+          :aria-label="i18n.t('common.dismiss')"
           @click="removeToast(toast.id)"
         >
           <X :size="16" />

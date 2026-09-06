@@ -13,8 +13,10 @@ import ActivityCard from '../components/ActivityCard.vue'
 import { destinations } from '../data/destinations'
 import { hotels } from '../data/hotels'
 import { activities } from '../data/activities'
+import { useI18nStore } from '../stores/i18n'
 
 const router = useRouter()
+const i18n = useI18nStore()
 
 // Bound to the SearchBar inside the hero form (v-model example).
 const heroSearch = ref('')
@@ -36,27 +38,27 @@ function goToSearch(): void {
 
 // Dummy "why travel with us" row.
 const highlights = [
-  { icon: Compass, title: 'Hand-picked destinations', text: 'Every place is carefully chosen by our travel editors.' },
-  { icon: Star, title: '4.8 average guest rating', text: 'Thousands of happy travellers trust our recommendations.' },
-  { icon: TrendingUp, title: 'Best price promise', text: 'Transparent prices with no hidden fees. Ever.' },
+  { icon: Compass, titleKey: 'home.highlight1Title', textKey: 'home.highlight1Text' },
+  { icon: Star, titleKey: 'home.highlight2Title', textKey: 'home.highlight2Text' },
+  { icon: TrendingUp, titleKey: 'home.highlight3Title', textKey: 'home.highlight3Text' },
 ]
 
 // Inspiration strip images + captions.
 const inspiration = [
   {
     image: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=900&q=80',
-    title: 'Chase the sunrise',
-    text: 'Start your day at an epic viewpoint.',
+    titleKey: 'home.inspiration1Title',
+    textKey: 'home.inspiration1Text',
   },
   {
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
-    title: 'Feel the sand',
-    text: 'Long lazy days on world-class beaches.',
+    titleKey: 'home.inspiration2Title',
+    textKey: 'home.inspiration2Text',
   },
   {
     image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&q=80',
-    title: 'Pack your boots',
-    text: 'Trails that make you forget your phone.',
+    titleKey: 'home.inspiration3Title',
+    textKey: 'home.inspiration3Text',
   },
 ]
 </script>
@@ -74,33 +76,32 @@ const inspiration = [
       <div class="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center">
         <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-teal-200 backdrop-blur">
           <Sparkles :size="16" />
-          Your next adventure starts here
+          {{ i18n.t('home.badge') }}
         </p>
         <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-6xl">
-          Explore the World, <span class="text-teal-400">One Trip at a Time</span>
+          {{ i18n.t('home.titleStart') }} <span class="text-teal-400">{{ i18n.t('home.titleHighlight') }}</span>
         </h1>
         <p class="mx-auto mt-4 max-w-xl text-base text-slate-200 sm:text-lg">
-          Discover breathtaking destinations, book dream hotels and try
-          unforgettable activities - all in one place.
+          {{ i18n.t('home.subtitle') }}
         </p>
 
         <!-- Hero search form -->
         <form class="mt-8 flex flex-col gap-3 sm:flex-row" @submit.prevent="goToSearch">
           <div class="flex-1">
-            <SearchBar v-model="heroSearch" placeholder="Search a destination, e.g. Paris or Tokyo" />
+            <SearchBar v-model="heroSearch" :placeholder="i18n.t('home.searchPlaceholder')" />
           </div>
           <button
             type="submit"
             class="flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-6 py-3.5 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
           >
             <Search :size="18" />
-            Explore Now
+            {{ i18n.t('home.exploreNow') }}
           </button>
         </form>
 
         <p class="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300">
           <MapPin :size="15" class="text-teal-400" />
-          {{ destinations.length }} destinations, {{ hotels.length }} hotels and {{ activities.length }} activities ready to browse
+          {{ i18n.t('home.stats', { destinations: destinations.length, hotels: hotels.length, activities: activities.length }) }}
         </p>
       </div>
     </section>
@@ -108,13 +109,13 @@ const inspiration = [
     <!-- ================= WHY CHOOSE US ================= -->
     <section class="border-b border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-900">
       <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-3 sm:px-6">
-        <div v-for="item in highlights" :key="item.title" data-aos="fade-up" class="flex items-start gap-4">
+        <div v-for="item in highlights" :key="item.titleKey" data-aos="fade-up" class="flex items-start gap-4">
           <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-600/10 text-teal-600 dark:text-teal-400">
             <component :is="item.icon" :size="22" />
           </span>
           <div>
-            <h3 class="font-bold text-slate-900 dark:text-white">{{ item.title }}</h3>
-            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ item.text }}</p>
+            <h3 class="font-bold text-slate-900 dark:text-white">{{ i18n.t(item.titleKey) }}</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t(item.textKey) }}</p>
           </div>
         </div>
       </div>
@@ -123,8 +124,8 @@ const inspiration = [
     <!-- ================= POPULAR DESTINATIONS ================= -->
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
       <SectionHeading
-        title="Popular Destinations"
-        subtitle="The most loved places around the world, ready to explore."
+        :title="i18n.t('home.popularDestinations')"
+        :subtitle="i18n.t('home.popularDestinationsSub')"
       />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <DestinationCard
@@ -139,7 +140,7 @@ const inspiration = [
           to="/destinations"
           class="inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
         >
-          View All Destinations
+          {{ i18n.t('common.viewAllDestinations') }}
           <ArrowRight :size="16" />
         </router-link>
       </div>
@@ -149,8 +150,8 @@ const inspiration = [
     <section class="bg-slate-50 py-16 dark:bg-slate-800/40">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
-          title="Featured Hotels"
-          subtitle="Hand-picked stays with top guest ratings."
+          :title="i18n.t('home.featuredHotels')"
+          :subtitle="i18n.t('home.featuredHotelsSub')"
         />
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <HotelCard
@@ -165,7 +166,7 @@ const inspiration = [
             to="/hotels"
             class="inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
           >
-            View All Hotels
+            {{ i18n.t('common.viewAllHotels') }}
             <ArrowRight :size="16" />
           </router-link>
         </div>
@@ -175,8 +176,8 @@ const inspiration = [
     <!-- ================= POPULAR ACTIVITIES ================= -->
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
       <SectionHeading
-        title="Popular Activities"
-        subtitle="Experiences you will remember forever."
+        :title="i18n.t('home.popularActivities')"
+        :subtitle="i18n.t('home.popularActivitiesSub')"
       />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <ActivityCard
@@ -191,7 +192,7 @@ const inspiration = [
           to="/activities"
           class="inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
         >
-          View All Activities
+          {{ i18n.t('common.viewAllActivities') }}
           <ArrowRight :size="16" />
         </router-link>
       </div>
@@ -201,27 +202,27 @@ const inspiration = [
     <section class="bg-slate-50 py-16 dark:bg-slate-800/40">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
-          title="Book a Flight"
-          subtitle="Find airlines that fly to your dream destination and book directly on their website."
+          :title="i18n.t('home.bookAFlight')"
+          :subtitle="i18n.t('home.bookAFlightSub')"
         />
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <router-link
             v-for="item in [
-              { country: 'Japan', desc: 'Fly to Tokyo, Kyoto & beyond with JAL, ANA and more', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80' },
-              { country: 'France', desc: 'Paris awaits - fly direct with Air France', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80' },
-              { country: 'Thailand', desc: 'Budget flights to Phuket and Bangkok', image: 'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80' },
+              { country: 'Japan', descKey: 'home.flightJapan', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80' },
+              { country: 'France', descKey: 'home.flightFrance', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80' },
+              { country: 'Thailand', descKey: 'home.flightThailand', image: 'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80' },
             ]"
             :key="item.country"
             :to="`/airline-booking?country=${item.country}`"
             data-aos="fade-up"
             class="group relative h-64 overflow-hidden rounded-2xl"
           >
-            <img :src="item.image" :alt="item.country" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+            <img :src="item.image" :alt="i18n.t('countries.' + item.country)" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
             <div class="absolute bottom-0 flex items-end justify-between p-5">
               <div>
-                <h3 class="text-lg font-bold text-white">{{ item.country }}</h3>
-                <p class="text-sm text-slate-300">{{ item.desc }}</p>
+                <h3 class="text-lg font-bold text-white">{{ i18n.t('countries.' + item.country) }}</h3>
+                <p class="text-sm text-slate-300">{{ i18n.t(item.descKey) }}</p>
               </div>
               <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white transition group-hover:scale-110">
                 <Plane :size="18" />
@@ -235,7 +236,7 @@ const inspiration = [
             class="inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
           >
             <Plane :size="16" />
-            Book a Flight
+            {{ i18n.t('home.bookAFlight') }}
             <ArrowRight :size="16" />
           </router-link>
         </div>
@@ -246,24 +247,24 @@ const inspiration = [
     <section class="bg-slate-900 py-16">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <div class="mb-8 text-center">
-          <h2 class="text-2xl font-bold text-white sm:text-3xl">Travel Inspiration</h2>
+          <h2 class="text-2xl font-bold text-white sm:text-3xl">{{ i18n.t('home.travelInspiration') }}</h2>
           <p class="mx-auto mt-2 max-w-2xl text-sm text-slate-400">
-            A few ideas to get your wanderlust going.
+            {{ i18n.t('home.travelInspirationSub') }}
           </p>
         </div>
         <div class="grid gap-6 md:grid-cols-3">
           <router-link
             v-for="item in inspiration"
-            :key="item.title"
+            :key="item.titleKey"
             to="/destinations"
             data-aos="fade-up"
             class="group relative h-72 overflow-hidden rounded-2xl"
           >
-            <img :src="item.image" :alt="item.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+            <img :src="item.image" :alt="i18n.t(item.titleKey)" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
             <div class="absolute bottom-0 p-5">
-              <h3 class="text-lg font-bold text-white">{{ item.title }}</h3>
-              <p class="text-sm text-slate-300">{{ item.text }}</p>
+              <h3 class="text-lg font-bold text-white">{{ i18n.t(item.titleKey) }}</h3>
+              <p class="text-sm text-slate-300">{{ i18n.t(item.textKey) }}</p>
             </div>
           </router-link>
         </div>
@@ -275,15 +276,15 @@ const inspiration = [
               <Plane :size="24" />
             </span>
             <div>
-              <h3 class="text-lg font-bold text-white">Ready to plan your next trip?</h3>
-              <p class="text-sm text-slate-400">Browse destinations, pick a hotel and book in a few clicks.</p>
+              <h3 class="text-lg font-bold text-white">{{ i18n.t('home.ctaTitle') }}</h3>
+              <p class="text-sm text-slate-400">{{ i18n.t('home.ctaText') }}</p>
             </div>
           </div>
           <router-link
             to="/booking"
             class="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
           >
-            Start Planning
+            {{ i18n.t('home.startPlanning') }}
             <ArrowRight :size="16" />
           </router-link>
         </div>

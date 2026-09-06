@@ -6,7 +6,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        sans: ['var(--font-english)'],
+        khmer: ['var(--font-khmer)'],
+        'khmer-display': ['var(--font-khmer-display)'],
       },
       boxShadow: {
         soft: '0 10px 40px -12px rgba(2, 6, 23, 0.18)',

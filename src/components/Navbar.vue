@@ -4,12 +4,14 @@
 // dark/light theme toggle and login / profile button.
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Plane, Heart, Sun, Moon, Menu, X, LogIn } from '@lucide/vue'
+import { Plane, Heart, Sun, Moon, Menu, X, LogIn, Languages } from '@lucide/vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
 import { useAuthStore } from '../stores/authStore'
+import { useI18nStore } from '../stores/i18n'
 
 const favoriteStore = useFavoriteStore()
 const authStore = useAuthStore()
+const i18n = useI18nStore()
 const route = useRoute()
 const router = useRouter()
 
@@ -29,15 +31,16 @@ watch(isDark, (value) => {
 })
 
 // The links shown in the middle of the navbar.
+// "labelKey" points at a translation key; "path" is the route.
 const navLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'Destinations', path: '/destinations' },
-  { label: 'Hotels', path: '/hotels' },
-  { label: 'Activities', path: '/activities' },
-  { label: 'Airlines', path: '/airlines' },
-  { label: 'Favorites', path: '/favorites' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' },
+  { labelKey: 'nav.home', path: '/' },
+  { labelKey: 'nav.destinations', path: '/destinations' },
+  { labelKey: 'nav.hotels', path: '/hotels' },
+  { labelKey: 'nav.activities', path: '/activities' },
+  { labelKey: 'nav.airlines', path: '/airlines' },
+  { labelKey: 'nav.favorites', path: '/favorites' },
+  { labelKey: 'nav.about', path: '/about' },
+  { labelKey: 'nav.contact', path: '/contact' },
 ]
 
 // Small helper: returns true when a link belongs to the current page.
@@ -64,7 +67,7 @@ function closeMenu(): void {
           <Plane :size="22" />
         </span>
         <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-          Travel &amp; Explore
+          {{ i18n.t('app.name') }}
         </span>
       </router-link>
 
@@ -77,10 +80,10 @@ function closeMenu(): void {
           class="relative rounded-lg px-3 py-2 text-sm transition"
           :class="isActive(link.path) ? activeClasses : normalClasses"
         >
-          {{ link.label }}
+          {{ i18n.t(link.labelKey) }}
           <!-- Favorites count badge (only on the Favorites link) -->
           <span
-            v-if="link.label === 'Favorites' && favoriteStore.favoriteCount > 0"
+            v-if="link.path === '/favorites' && favoriteStore.favoriteCount > 0"
             class="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-xs font-bold text-white"
           >
             {{ favoriteStore.favoriteCount }}
@@ -88,13 +91,26 @@ function closeMenu(): void {
         </router-link>
       </div>
 
-      <!-- Right side: theme toggle + login/profile -->
+      <!-- Right side: theme toggle + language + login/profile -->
       <div class="flex items-center gap-2">
+        <!-- Language toggle -->
+        <button
+          type="button"
+          class="flex h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          :aria-label="i18n.t('nav.toggleLanguage')"
+          :title="i18n.t('nav.toggleLanguage')"
+          @click="i18n.setLocale(i18n.locale === 'km' ? 'en' : 'km')"
+        >
+          <Languages :size="18" class="text-teal-600 dark:text-teal-400" />
+          <span v-if="i18n.locale === 'km'">🇰🇭 ខ្មែរ</span>
+          <span v-else>🇬🇧 English</span>
+        </button>
+
         <!-- Dark / light mode toggle -->
         <button
           type="button"
           class="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          :aria-label="isDark ? i18n.t('nav.toggleThemeLight') : i18n.t('nav.toggleThemeDark')"
           @click="isDark = !isDark"
         >
           <Sun v-if="!isDark" :size="20" />
@@ -108,7 +124,7 @@ function closeMenu(): void {
           class="flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-teal-700"
         >
           <LogIn :size="18" />
-          <span class="hidden sm:inline">Login</span>
+          <span class="hidden sm:inline">{{ i18n.t('nav.login') }}</span>
         </router-link>
         <router-link
           v-else
@@ -127,7 +143,7 @@ function closeMenu(): void {
         <button
           type="button"
           class="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-          aria-label="Toggle navigation menu"
+          :aria-label="i18n.t('nav.toggleMenu')"
           @click="mobileOpen = !mobileOpen"
         >
           <Menu v-if="!mobileOpen" :size="20" />
@@ -150,9 +166,9 @@ function closeMenu(): void {
         @click="closeMenu"
       >
         <span>
-          {{ link.label }}
+          {{ i18n.t(link.labelKey) }}
           <span
-            v-if="link.label === 'Favorites' && favoriteStore.favoriteCount > 0"
+            v-if="link.path === '/favorites' && favoriteStore.favoriteCount > 0"
             class="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 text-xs font-bold text-white"
           >
             <Heart :size="12" class="mr-0.5" />{{ favoriteStore.favoriteCount }}

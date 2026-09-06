@@ -3,14 +3,16 @@
 // Shows all destinations the user added to favorites (Pinia store).
 import { Heart, Trash2, ArrowRight } from '@lucide/vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
+import { useI18nStore } from '../stores/i18n'
 import DestinationCard from '../components/DestinationCard.vue'
 import { notify } from '../utils/toast'
 
 const favoriteStore = useFavoriteStore()
+const i18n = useI18nStore()
 
 function clearAll(): void {
   favoriteStore.clearFavorites()
-  notify('All favorites were removed.', 'info')
+  notify(i18n.t('favorites.allRemoved'), 'info')
 }
 </script>
 
@@ -20,10 +22,10 @@ function clearAll(): void {
       <div>
         <h1 class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-white">
           <Heart :size="30" class="fill-rose-500 text-rose-500" />
-          My Favorites
+          {{ i18n.t('favorites.title') }}
         </h1>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          {{ favoriteStore.favoriteCount }} saved {{ favoriteStore.favoriteCount === 1 ? 'destination' : 'destinations' }}
+          {{ i18n.t('favorites.saved', { count: String(favoriteStore.favoriteCount) }) }}
         </p>
       </div>
       <button
@@ -33,7 +35,7 @@ function clearAll(): void {
         @click="clearAll"
       >
         <Trash2 :size="16" />
-        Clear All
+        {{ i18n.t('favorites.clearAll') }}
       </button>
     </div>
 
@@ -44,16 +46,16 @@ function clearAll(): void {
     >
       <Heart :size="52" class="text-slate-300 dark:text-slate-600" />
       <div>
-        <h2 class="text-xl font-bold text-slate-700 dark:text-slate-200">No favorites yet</h2>
+        <h2 class="text-xl font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('favorites.noTitle') }}</h2>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Tap the heart on any destination to save it here.
+          {{ i18n.t('favorites.noText') }}
         </p>
       </div>
       <router-link
         to="/destinations"
         class="mt-2 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
       >
-        Discover Destinations
+        {{ i18n.t('favorites.discover') }}
         <ArrowRight :size="16" />
       </router-link>
     </div>

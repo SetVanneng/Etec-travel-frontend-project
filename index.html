@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&family=Kantumruy+Pro:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script>
@@ -20,6 +20,14 @@
       if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
         document.documentElement.classList.add('dark')
       }
+    </script>
+    <script>
+      // Apply the saved language BEFORE Vue loads so Khmer typography kicks
+      // in immediately instead of flashing in the English font.
+      var savedLocale = localStorage.getItem('language') || localStorage.getItem('locale')
+      if (savedLocale === 'kh') savedLocale = 'km' // legacy value migration
+      document.documentElement.lang =
+        savedLocale === 'en' || savedLocale === 'km' ? savedLocale : 'en'
     </script>
   </head>
   <body>

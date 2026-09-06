@@ -8,8 +8,11 @@ import type { ActivityCategory } from '../data/activities'
 import { activities } from '../data/activities'
 import ActivityCard from '../components/ActivityCard.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
+import { useI18nStore } from '../stores/i18n'
 
 type FilterName = 'All' | ActivityCategory
+
+const i18n = useI18nStore()
 
 const filters: { name: FilterName; icon: Component }[] = [
   { name: 'All', icon: Ticket },
@@ -41,9 +44,9 @@ const filteredActivities = computed(() => {
 <template>
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
     <div class="mb-8 text-center">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Explore Activities</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ i18n.t('activities.title') }}</h1>
       <p class="mx-auto mt-2 max-w-xl text-sm text-slate-500 dark:text-slate-400">
-        Hikes, dives, food tours and more - pick your next experience.
+        {{ i18n.t('activities.subtitle') }}
       </p>
     </div>
 
@@ -61,15 +64,15 @@ const filteredActivities = computed(() => {
         @click="activeCategory = filter.name"
       >
         <component :is="filter.icon" :size="15" />
-        {{ filter.name }}
+        {{ i18n.categoryLabel(filter.name) }}
       </button>
     </div>
 
-    <LoadingSpinner v-if="isLoading" text="Loading experiences..." />
+    <LoadingSpinner v-if="isLoading" :text="i18n.t('activities.loading')" />
 
     <div v-else-if="filteredActivities.length === 0" class="flex flex-col items-center gap-3 py-20 text-center">
       <SearchX :size="48" class="text-slate-300 dark:text-slate-600" />
-      <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">No activities in this category</h3>
+      <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">{{ i18n.t('activities.noResultsTitle') }}</h3>
     </div>
 
     <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

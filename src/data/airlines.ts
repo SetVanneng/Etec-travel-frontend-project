@@ -2,7 +2,14 @@
 // airlines.ts
 // Mock/local data for airlines mapped to countries/destinations.
 // Each airline has a booking URL that opens the real airline website.
+//
+// Airline names are brand/proper nouns and stay untranslated. The `country`
+// field keeps a canonical English key (translated via `countries.*` message
+// keys), and `description` is localized as { en, km }.
 // ---------------------------------------------------------------------------
+
+import type { LocalizedText } from './localized'
+import { localized } from './localized'
 
 export interface Airline {
   id: number
@@ -14,7 +21,7 @@ export interface Airline {
   bookingUrl: string
   rating: number
   type: 'flag-carrier' | 'low-cost' | 'regional'
-  description: string
+  description: LocalizedText
 }
 
 export const airlines: Airline[] = [
@@ -28,7 +35,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.jal.co.jp/en/',
     rating: 4.7,
     type: 'flag-carrier',
-    description: 'Japan\'s flag carrier offering premium service, comfortable seats and connections across Asia and the world.',
+    description: localized(
+      'Japan\'s flag carrier offering premium service, comfortable seats and connections across Asia and the world.',
+      'រដ្ឋអាកាសចរណ៍ជាតិជប៉ុន ផ្តល់សេវាកម្មលំដាប់ខ្ពស់ កៅអីស្រួល និងការតភ្ជាប់ទៅកាន់អាស៊ី និងពិភពលោក។'
+    ),
   },
   {
     id: 2,
@@ -39,7 +49,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.ana.co.jp/en/us/',
     rating: 4.8,
     type: 'flag-carrier',
-    description: 'Japan\'s largest airline with a 5-star Skytrax rating and extensive domestic and international network.',
+    description: localized(
+      'Japan\'s largest airline with a 5-star Skytrax rating and extensive domestic and international network.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ធំជាងគេរបស់ជប៉ុន ជាមួយចំណាត់ថ្នាក់ Skytrax ៥ ផ្កាយ និងបណ្តាញធំទូលាយទាំងក្នុងស្រុក និងអន្តរជាតិ។'
+    ),
   },
   {
     id: 3,
@@ -50,7 +63,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.flypeach.com/',
     rating: 4.0,
     type: 'low-cost',
-    description: 'Japan\'s leading low-cost carrier offering affordable flights across Asia from Osaka Kansai.',
+    description: localized(
+      'Japan\'s leading low-cost carrier offering affordable flights across Asia from Osaka Kansai.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍តម្លៃទាបឈានមុខរបស់ជប៉ុន ផ្តល់ជើងហោះហើរតម្លៃសមរម្យទៅកាន់អាស៊ី ពីកានសាយអូសាកា។'
+    ),
   },
 
   // Indonesia (Bali)
@@ -63,7 +79,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.garuda-indonesia.com/en',
     rating: 4.5,
     type: 'flag-carrier',
-    description: 'Indonesia\'s national airline with 5-star service, connecting Bali to the world.',
+    description: localized(
+      'Indonesia\'s national airline with 5-star service, connecting Bali to the world.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិឥណ្ឌូនេស៊ី ជាមួយសេវាកម្ម ៥ ផ្កាយ តភ្ជាប់បាលីទៅកាន់ពិភពលោក។'
+    ),
   },
   {
     id: 5,
@@ -74,7 +93,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.lionair.co.id/en',
     rating: 3.8,
     type: 'low-cost',
-    description: 'Indonesia\'s largest private airline with extensive domestic coverage including Bali.',
+    description: localized(
+      'Indonesia\'s largest private airline with extensive domestic coverage including Bali.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ឯកជនធំជាងគេរបស់ឥណ្ឌូនេស៊ី ជាមួយការគ្របដណ្តប់ក្នុងស្រុកយ៉ាងទូលំទូលាយ រួមទាំងបាលី។'
+    ),
   },
 
   // Thailand
@@ -87,7 +109,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.thaiairways.com/en/',
     rating: 4.4,
     type: 'flag-carrier',
-    description: 'Thailand\'s flag carrier known for warm hospitality and comfortable flights to Bangkok and Phuket.',
+    description: localized(
+      'Thailand\'s flag carrier known for warm hospitality and comfortable flights to Bangkok and Phuket.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិថៃ ល្បីល្បាញដោយសារភាពរាក់ទាក់ និងជើងហោះហើរងាយស្រួលទៅកាន់បាងកក និងភូកេត។'
+    ),
   },
   {
     id: 7,
@@ -98,7 +123,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.airasia.com',
     rating: 4.1,
     type: 'low-cost',
-    description: 'Asia\'s largest low-cost airline offering budget-friendly flights across Southeast Asia.',
+    description: localized(
+      'Asia\'s largest low-cost airline offering budget-friendly flights across Southeast Asia.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍តម្លៃទាបធំជាងគេនៅអាស៊ី ផ្តល់ជើងហោះហើរតម្លៃសមរម្យទៅកាន់អាស៊ីអាគ្នេយ៍។'
+    ),
   },
 
   // South Korea
@@ -111,7 +139,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.koreanair.com/us/en',
     rating: 4.6,
     type: 'flag-carrier',
-    description: 'South Korea\'s flag carrier with a 5-star rating and global network via Seoul Incheon.',
+    description: localized(
+      'South Korea\'s flag carrier with a 5-star rating and global network via Seoul Incheon.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិកូរ៉េខាងត្បូង ជាមួយចំណាត់ថ្នាក់ ៥ ផ្កាយ និងបណ្តាញពិភពលោកតាមរយៈសេអ៊ូលអ៊ីនឆែន។'
+    ),
   },
 
   // France
@@ -124,7 +155,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.airfrance.com',
     rating: 4.3,
     type: 'flag-carrier',
-    description: 'France\'s flag carrier and a founding member of SkyTeam, offering flights to Paris and beyond.',
+    description: localized(
+      'France\'s flag carrier and a founding member of SkyTeam, offering flights to Paris and beyond.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិបារាំង និងជាសមាជិកស្ថាបនិក SkyTeam ផ្តល់ជើងហោះហើរទៅកាន់ប៉ារីស និងកន្លែងផ្សេងទៀត។'
+    ),
   },
 
   // Italy
@@ -137,7 +171,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.ita-airways.com',
     rating: 4.2,
     type: 'flag-carrier',
-    description: 'Italy\'s national airline (successor to Alitalia), connecting Rome and Milan to the world.',
+    description: localized(
+      'Italy\'s national airline (successor to Alitalia), connecting Rome and Milan to the world.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិអ៊ីតាលី (ស្នងពីអាលីតាលី) តភ្ជាប់រ៉ូម និងមីឡានទៅកាន់ពិភពលោក។'
+    ),
   },
 
   // Greece
@@ -150,7 +187,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.aegeanair.com',
     rating: 4.3,
     type: 'flag-carrier',
-    description: 'Greece\'s largest airline with direct flights to Santorini and other Greek islands.',
+    description: localized(
+      'Greece\'s largest airline with direct flights to Santorini and other Greek islands.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ធំជាងគេរបស់ក្រិក ជាមួយជើងហោះហើរផ្ទាល់ទៅកាន់សាន់តូរីនី និងកោះក្រិកផ្សេងទៀត។'
+    ),
   },
 
   // Switzerland
@@ -163,7 +203,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.swiss.com',
     rating: 4.5,
     type: 'flag-carrier',
-    description: 'Switzerland\'s national airline with premium service and connections via Zurich.',
+    description: localized(
+      'Switzerland\'s national airline with premium service and connections via Zurich.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិស្វីស ជាមួយសេវាកម្មលំដាប់ខ្ពស់ និងការតភ្ជាប់តាមរយៈទីក្រុងហ្សូរីហ្ស។'
+    ),
   },
 
   // Canada
@@ -176,7 +219,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.aircanada.com',
     rating: 4.3,
     type: 'flag-carrier',
-    description: 'Canada\'s flag carrier with extensive domestic and international routes to Banff region.',
+    description: localized(
+      'Canada\'s flag carrier with extensive domestic and international routes to Banff region.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិកាណាដា ជាមួយផ្លូវហោះហើរក្នុងស្រុក និងអន្តរជាតិដ៏ទូលំទូលាយទៅកាន់តំបន់បានហ្វ។'
+    ),
   },
 
   // Australia
@@ -189,7 +235,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.qantas.com',
     rating: 4.5,
     type: 'flag-carrier',
-    description: 'Australia\'s flag carrier "The Flying Kangaroo" - one of the world\'s oldest airlines.',
+    description: localized(
+      'Australia\'s flag carrier "The Flying Kangaroo" - one of the world\'s oldest airlines.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិអូស្ត្រាលី "កង់ហ្គូរូហើរ" ដែលជាក្រុមហ៊ុនអាកាសចរណ៍ចំណាស់ជាងគេមួយក្នុងពិភពលោក។'
+    ),
   },
 
   // New Zealand
@@ -202,7 +251,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.airnewzealand.co.nz',
     rating: 4.6,
     type: 'flag-carrier',
-    description: 'New Zealand\'s award-winning airline with a focus on customer experience.',
+    description: localized(
+      'New Zealand\'s award-winning airline with a focus on customer experience.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ដែលទទួលបានពានរង្វាន់របស់នូវែលសេឡង់ ជាមួយការផ្តោតលើបទពិសោធន៍អតិថិជន។'
+    ),
   },
 
   // USA
@@ -215,7 +267,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.united.com',
     rating: 4.1,
     type: 'flag-carrier',
-    description: 'Major US carrier with extensive domestic and international routes, including New York and California.',
+    description: localized(
+      'Major US carrier with extensive domestic and international routes, including New York and California.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ធំរបស់អាមេរិក ជាមួយផ្លូវហោះហើរក្នុងស្រុក និងអន្តរជាតិដ៏ទូលំទូលាយ រួមទាំងញូវយ៉ក និងកាលីហ្វ័រញ៉ា។'
+    ),
   },
 
   // Spain
@@ -228,7 +283,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.iberia.com',
     rating: 4.2,
     type: 'flag-carrier',
-    description: 'Spain\'s flag carrier connecting Barcelona and Madrid to destinations worldwide.',
+    description: localized(
+      'Spain\'s flag carrier connecting Barcelona and Madrid to destinations worldwide.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិអេស្ប៉ាញ តភ្ជាប់បារសេឡូណា និងម៉ាឌ្រីដទៅកាន់គោលដៅទូទាំងពិភពលោក។'
+    ),
   },
 
   // Portugal
@@ -241,7 +299,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.flytap.com',
     rating: 4.1,
     type: 'flag-carrier',
-    description: 'Portugal\'s national airline connecting Lisbon to Europe, Africa and the Americas.',
+    description: localized(
+      'Portugal\'s national airline connecting Lisbon to Europe, Africa and the Americas.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិព័រទុយហ្គាល់ តភ្ជាប់លីសបូនទៅអឺរ៉ុប អាហ្វ្រិក និងអាមេរិក។'
+    ),
   },
 
   // UAE
@@ -254,7 +315,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.emirates.com',
     rating: 4.7,
     type: 'flag-carrier',
-    description: 'World-renowned luxury airline based in Dubai with premium first-class suites.',
+    description: localized(
+      'World-renowned luxury airline based in Dubai with premium first-class suites.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ប្រណិតល្បីលើពិភពលោក មានមូលដ្ឋាននៅឌូបៃ ជាមួយស៊្វីតថ្នាក់ទីមួយប្រណិតៗ។'
+    ),
   },
 
   // Iceland
@@ -267,7 +331,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.icelandair.com',
     rating: 4.3,
     type: 'flag-carrier',
-    description: 'Iceland\'s main airline offering transatlantic flights with free stopover in Reykjavik.',
+    description: localized(
+      'Iceland\'s main airline offering transatlantic flights with free stopover in Reykjavik.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ចម្បងរបស់អ៊ីស្លង់ ផ្តល់ជើងហោះហើរអាត្លង់ទិក ជាមួយការឈប់សម្រាកឥតគិតថ្លៃនៅរេកយ៉ាវិក។'
+    ),
   },
 
   // Vietnam
@@ -280,7 +347,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.vietnamairlines.com',
     rating: 4.2,
     type: 'flag-carrier',
-    description: 'Vietnam\'s flag carrier with comfortable flights and connections to Hanoi.',
+    description: localized(
+      'Vietnam\'s flag carrier with comfortable flights and connections to Hanoi.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិវៀតណាម ជាមួយជើងហោះហើរងាយស្រួល និងការតភ្ជាប់ទៅហាណូយ។'
+    ),
   },
 
   // Cambodia
@@ -293,7 +363,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.aircambodia.com/en/',
     rating: 3.9,
     type: 'regional',
-    description: 'Cambodia\'s national airline connecting Phnom Penh and Siem Reap to regional destinations.',
+    description: localized(
+      'Cambodia\'s national airline connecting Phnom Penh and Siem Reap to regional destinations.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិកម្ពុជា តភ្ជាប់ភ្នំពេញ និងសៀមរាប ទៅកាន់គោលដៅក្នុងតំបន់។'
+    ),
   },
 
   // Morocco
@@ -306,7 +379,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.royalairmaroc.com',
     rating: 4.1,
     type: 'flag-carrier',
-    description: 'Morocco\'s national airline connecting Marrakech and Casablanca to Africa, Europe and beyond.',
+    description: localized(
+      'Morocco\'s national airline connecting Marrakech and Casablanca to Africa, Europe and beyond.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិម៉ារ៉ុក តភ្ជាប់ម៉ារ៉ាកេស និងកាហ្សាប្លង់កា ទៅកាន់អាហ្វ្រិក អឺរ៉ុប និងកន្លែងផ្សេងទៀត។'
+    ),
   },
 
   // Costa Rica
@@ -319,7 +395,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.copaair.com',
     rating: 4.0,
     type: 'regional',
-    description: 'Major Central American carrier connecting Costa Rica to the Americas via Panama City.',
+    description: localized(
+      'Major Central American carrier connecting Costa Rica to the Americas via Panama City.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍សំខាន់នៅអាមេរិកកណ្តាល តភ្ជាប់កូស្តារីកាទៅកាន់អាមេរិក តាមរយៈទីក្រុងប៉ាណាម៉ា។'
+    ),
   },
 
   // South Africa
@@ -332,7 +411,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.flysaa.com',
     rating: 4.0,
     type: 'flag-carrier',
-    description: 'South Africa\'s flag carrier connecting Cape Town to Africa and the world.',
+    description: localized(
+      'South Africa\'s flag carrier connecting Cape Town to Africa and the world.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិអាហ្វ្រិកខាងត្បូង តភ្ជាប់ខេបថោនទៅកាន់អាហ្វ្រិក និងពិភពលោក។'
+    ),
   },
 
   // Peru
@@ -345,7 +427,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.latamairlines.com',
     rating: 4.2,
     type: 'flag-carrier',
-    description: 'South America\'s largest airline with flights to Lima and connections to Machu Picchu.',
+    description: localized(
+      'South America\'s largest airline with flights to Lima and connections to Machu Picchu.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ធំជាងគេនៅអាមេរិកខាងត្បូង ជាមួយជើងហោះហើរទៅលីម៉ា និងការតភ្ជាប់ទៅម៉ាជូភីជូ។'
+    ),
   },
 
   // Chile
@@ -358,7 +443,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.latamairlines.com/cl/en',
     rating: 4.2,
     type: 'flag-carrier',
-    description: 'LATAM\'s Chilean branch connecting Santiago to Patagonia and global destinations.',
+    description: localized(
+      'LATAM\'s Chilean branch connecting Santiago to Patagonia and global destinations.',
+      'សាខាឈីលីរបស់ LATAM តភ្ជាប់សាន់ត្យាហ្គោទៅកាន់ប៉ាតាហ្គោនៀ និងគោលដៅពិភពលោក។'
+    ),
   },
 
   // Jordan
@@ -371,7 +459,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.rj.com',
     rating: 4.1,
     type: 'flag-carrier',
-    description: 'Jordan\'s national airline with connections to Amman and Petra.',
+    description: localized(
+      'Jordan\'s national airline with connections to Amman and Petra.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍ជាតិហ្ស៊កដានី ជាមួយការតភ្ជាប់ទៅអាំម៉ាន និងប៉េត្រា។'
+    ),
   },
 
   // Italy (Amalfi Coast)
@@ -384,7 +475,10 @@ export const airlines: Airline[] = [
     bookingUrl: 'https://www.ryanair.com',
     rating: 3.7,
     type: 'low-cost',
-    description: 'Europe\'s largest low-cost carrier with affordable flights to Italian cities.',
+    description: localized(
+      'Europe\'s largest low-cost carrier with affordable flights to Italian cities.',
+      'ក្រុមហ៊ុនអាកាសចរណ៍តម្លៃទាបធំជាងគេនៅអឺរ៉ុប ផ្តល់ជើងហោះហើរតម្លៃសមរម្យទៅកាន់ទីក្រុងអ៊ីតាលី។'
+    ),
   },
 ]
 

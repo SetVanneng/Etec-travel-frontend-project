@@ -3,6 +3,9 @@
 // Simple site footer with quick links, popular destinations and contact info.
 import { Plane, MapPin, Mail, Phone, Globe, AtSign, Share2, Send } from '@lucide/vue'
 import { destinations } from '../data/destinations'
+import { useI18nStore } from '../stores/i18n'
+
+const i18n = useI18nStore()
 
 const socials = [
   { name: 'Website', icon: Globe },
@@ -27,11 +30,10 @@ const contactItems = [
           <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white">
             <Plane :size="22" />
           </span>
-          <span class="text-lg font-bold text-white">Travel &amp; Explore</span>
+          <span class="text-lg font-bold text-white">{{ i18n.t('app.name') }}</span>
         </div>
         <p class="mt-4 text-sm leading-relaxed text-slate-400">
-          Discover amazing destinations, book great hotels and try unforgettable
-          activities - all in one place.
+          {{ i18n.t('footer.tagline') }}
         </p>
         <div class="mt-4 flex gap-2">
           <a
@@ -48,27 +50,27 @@ const contactItems = [
 
       <!-- Quick links -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Quick Links</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{{ i18n.t('footer.quickLinks') }}</h3>
         <ul class="mt-4 space-y-2 text-sm">
-          <li><router-link to="/" class="transition hover:text-teal-400">Home</router-link></li>
-          <li><router-link to="/destinations" class="transition hover:text-teal-400">Destinations</router-link></li>
-          <li><router-link to="/hotels" class="transition hover:text-teal-400">Hotels</router-link></li>
-          <li><router-link to="/activities" class="transition hover:text-teal-400">Activities</router-link></li>
-          <li><router-link to="/airlines" class="transition hover:text-teal-400">Airlines</router-link></li>
-          <li><router-link to="/my-trips" class="transition hover:text-teal-400">My Trips</router-link></li>
+          <li><router-link to="/" class="transition hover:text-teal-400">{{ i18n.t('nav.home') }}</router-link></li>
+          <li><router-link to="/destinations" class="transition hover:text-teal-400">{{ i18n.t('nav.destinations') }}</router-link></li>
+          <li><router-link to="/hotels" class="transition hover:text-teal-400">{{ i18n.t('nav.hotels') }}</router-link></li>
+          <li><router-link to="/activities" class="transition hover:text-teal-400">{{ i18n.t('nav.activities') }}</router-link></li>
+          <li><router-link to="/airlines" class="transition hover:text-teal-400">{{ i18n.t('nav.airlines') }}</router-link></li>
+          <li><router-link to="/my-trips" class="transition hover:text-teal-400">{{ i18n.t('nav.myTrips') }}</router-link></li>
         </ul>
       </div>
 
       <!-- Popular destinations -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Popular Destinations</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{{ i18n.t('footer.popularDestinations') }}</h3>
         <ul class="mt-4 space-y-2 text-sm">
           <li v-for="destination in destinations.slice(0, 5)" :key="destination.id">
             <router-link
               :to="`/destination/${destination.id}`"
               class="transition hover:text-teal-400"
             >
-              {{ destination.name }}, {{ destination.country }}
+              {{ i18n.pick(destination.name) }}, {{ i18n.t('countries.' + destination.country) }}
             </router-link>
           </li>
         </ul>
@@ -76,7 +78,7 @@ const contactItems = [
 
       <!-- Contact -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{{ i18n.t('footer.contact') }}</h3>
         <ul class="mt-4 space-y-3 text-sm">
           <li v-for="item in contactItems" :key="item.text" class="flex items-start gap-3">
             <component :is="item.icon" :size="18" class="mt-0.5 shrink-0 text-teal-400" />
@@ -87,7 +89,7 @@ const contactItems = [
     </div>
 
     <div class="border-t border-slate-800 py-5 text-center text-sm text-slate-500">
-      &copy; {{ new Date().getFullYear() }} Travel &amp; Explore. A frontend-only demo project. All data is mock.
+      &copy; {{ new Date().getFullYear() }} {{ i18n.t('app.name') }}. {{ i18n.t('footer.copyright') }}
     </div>
   </footer>
 </template>

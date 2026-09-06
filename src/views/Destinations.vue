@@ -11,13 +11,17 @@ import { destinations } from '../data/destinations'
 import SearchBar from '../components/SearchBar.vue'
 import DestinationCard from '../components/DestinationCard.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
+import { useI18nStore } from '../stores/i18n'
 
 const route = useRoute()
 const router = useRouter()
+const i18n = useI18nStore()
 
 type FilterName = 'All' | DestinationCategory
 
 // Category chips with a matching icon for each one.
+// "name" stays the raw English value (used to match the data),
+// the visible label comes from the "categories.*" translation keys.
 const filters: { name: FilterName; icon: Component }[] = [
   { name: 'All', icon: Compass },
   { name: 'Beaches', icon: Waves },
@@ -79,9 +83,9 @@ const filteredDestinations = computed(() => {
     const query = searchText.value.trim().toLowerCase()
     const matchesSearch =
       query === '' ||
-      destination.name.toLowerCase().includes(query) ||
-      destination.country.toLowerCase().includes(query) ||
-      destination.description.toLowerCase().includes(query)
+      i18n.pick(destination.name).toLowerCase().includes(query) ||
+      i18n.t('countries.' + destination.country).toLowerCase().includes(query) ||
+      i18n.pick(destination.description).toLowerCase().includes(query)
 
     return matchesCategory && matchesSearch
   })
@@ -94,15 +98,15 @@ const resultCount = computed(() => filteredDestinations.value.length)
 <template>
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
     <div class="mb-8 text-center">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Explore Destinations</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ i18n.t('destinations.title') }}</h1>
       <p class="mx-auto mt-2 max-w-xl text-sm text-slate-500 dark:text-slate-400">
-        Search for your dream holiday spot or filter by category.
+        {{ i18n.t('destinations.subtitle') }}
       </p>
     </div>
 
     <!-- Search + category chips -->
     <div class="mx-auto mb-10 max-w-2xl">
-      <SearchBar v-model="searchText" placeholder="Search a destination, e.g. Paris, Tokyo, Cambodia" />
+      <SearchBar v-model="searchText" :placeholder="i18n.t('destinations.searchPlaceholder')" />
 
       <div class="mt-5 flex flex-wrap justify-center gap-2">
         <button
@@ -118,34 +122,38 @@ const resultCount = computed(() => filteredDestinations.value.length)
           @click="activeCategory = filter.name"
         >
           <component :is="filter.icon" :size="15" />
-          {{ filter.name }}
+          {{ i18n.categoryLabel(filter.name) }}
         </button>
       </div>
     </div>
 
     <!-- Loading state -->
-    <LoadingSpinner v-if="isLoading" text="Finding the best destinations..." />
+    <LoadingSpinner v-if="isLoading" :text="i18n.t('destinations.finding')" />
 
     <!-- Empty state (v-else) -->
     <div v-else-if="resultCount === 0" class="flex flex-col items-center gap-3 py-20 text-center">
       <SearchX :size="48" class="text-slate-300 dark:text-slate-600" />
-      <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">No destinations found</h3>
+      <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">{{ i18n.t('destinations.noResultsTitle') }}</h3>
       <p class="text-sm text-slate-500 dark:text-slate-400">
-        Try a different search text or category.
+        {{ i18n.t('destinations.noResultsText') }}
       </p>
       <button
         type="button"
         class="mt-2 rounded-xl bg-teal-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
         @click="clearAll"
       >
-        Clear filters
+        {{ i18n.t('common.clearFilters') }}
       </button>
     </div>
 
     <!-- Result grid -->
     <div v-else>
       <p class="mb-6 text-sm text-slate-500 dark:text-slate-400">
-        {{ resultCount }} {{ resultCount === 1 ? 'destination' : 'destinations' }} found
+        {{
+          resultCount === 1
+            ? i18n.t('destinations.foundOne', { count: resultCount })
+            : i18n.t('destinations.found', { count: resultCount })
+        }}
       </p>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <DestinationCard

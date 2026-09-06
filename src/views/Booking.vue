@@ -20,20 +20,33 @@ import { hotels, getHotelById } from '../data/hotels'
 import { getActivityById } from '../data/activities'
 import { useBookingStore } from '../stores/bookingStore'
 import { useAuthStore } from '../stores/authStore'
+import { useI18nStore } from '../stores/i18n'
 import { notify } from '../utils/toast'
-import type { Hotel as HotelType } from '../data/hotels'
+import type { Hotel as HotelType, RoomType } from '../data/hotels'
 
 const route = useRoute()
 const router = useRouter()
 const bookingStore = useBookingStore()
 const authStore = useAuthStore()
+const i18n = useI18nStore()
+
+// Stable English key for a room type. Used as the room's <option>/radio value
+// and when persisting snapshots, so stored values stay compatible.
+function roomKey(room: RoomType): string {
+  return typeof room.name === 'string' ? room.name : room.name.en ?? ''
+}
+// Resolve a stored room value (may be a localized object or a legacy string).
+function roomLabel(value: string): string {
+  const room = roomOptions.value.find((r) => roomKey(r) === value)
+  return room ? i18n.pick(room.name) : value
+}
 
 // ---- Wizard state -----------------------------------------------------------
 const steps = [
-  { title: 'Dates & Guests', icon: CalendarDays },
-  { title: 'Destination & Hotel', icon: MapPin },
-  { title: 'Room Type', icon: BedDouble },
-  { title: 'Confirm', icon: CircleCheck },
+  { titleKey: 'booking.step1', icon: CalendarDays },
+  { titleKey: 'booking.step2', icon: MapPin },
+  { titleKey: 'booking.step3', icon: BedDouble },
+  { titleKey: 'booking.step4', icon: CircleCheck },
 ]
 const currentStep = ref(0)
 const isSubmitting = ref(false)
@@ -66,10 +79,10 @@ onMounted(() => {
 
   // If we landed with a specific hotel, set its room. Otherwise, if a place
   // was chosen (destination/activity) but no hotel, pick the first one nearby.
-  if (typeof room === 'string' && roomOptions.value.some((item) => item.name === room)) {
+  if (typeof room === 'string' && roomOptions.value.some((item) => roomKey(item) === room)) {
     form.roomType = room
   } else if (getHotelById(form.hotelId)) {
-    form.roomType = roomOptions.value[0]?.name ?? ''
+    form.roomType = roomOptions.value[0] ? roomKey(roomOptions.value[0]) : ''
   } else if (form.destinationId) {
     onDestinationChange()
   }
@@ -83,7 +96,7 @@ onMounted(() => {
 // ---- Derived data -----------------------------------------------------------
 const destinationName = computed(() => {
   const match = destinations.find((item) => item.id === form.destinationId)
-  return match ? `${match.name}, ${match.country}` : ''
+  return match ? `${i18n.pick(match.name)}, ${i18n.t('countries.' + match.country)}` : ''
 })
 
 // If the user came from an activity page, remember which one so we can show
@@ -94,7 +107,9 @@ const selectedActivity = computed(() => {
   return typeof activity === 'string' ? getActivityById(Number(activity)) : undefined
 })
 
-const activityName = computed(() => selectedActivity.value?.name ?? '')
+const activityName = computed(() =>
+  selectedActivity.value ? i18n.pick(selectedActivity.value.name) : '',
+)
 
 const hotelOptions = computed(() =>
   hotels.filter((hotel) => hotel.destinationId === form.destinationId),
@@ -112,14 +127,14 @@ function onDestinationChange(): void {
   const first = hotelOptions.value.find((hotel) => hotel.available)
   if (first) {
     form.hotelId = first.id
-    form.roomType = first.roomTypes[0]?.name ?? ''
+    form.roomType = first.roomTypes[0] ? roomKey(first.roomTypes[0]) : ''
   }
 }
 
 // Pick a specific nearby hotel and reset the room to its first option.
 function chooseHotel(hotel: HotelType): void {
   form.hotelId = hotel.id
-  form.roomType = hotel.roomTypes[0]?.name ?? ''
+  form.roomType = hotel.roomTypes[0] ? roomKey(hotel.roomTypes[0]) : ''
 }
 
 const nights = computed(() => {
@@ -129,7 +144,7 @@ const nights = computed(() => {
 
 // Hotel part: the chosen room's nightly rate times the number of nights.
 const stayTotal = computed(() => {
-  const room = roomOptions.value.find((item) => item.name === form.roomType)
+  const room = roomOptions.value.find((item) => roomKey(item) === form.roomType)
   const pricePerNight = room?.price ?? selectedHotel.value?.pricePerNight ?? 0
   return pricePerNight * nights.value
 })
@@ -147,25 +162,25 @@ const today = new Date().toISOString().split('T')[0]
 function stepIsValid(step: number): boolean {
   if (step === 0) {
     if (!form.checkIn || !form.checkOut || nights.value <= 0) {
-      notify('Please pick valid check-in and check-out dates.', 'error')
+      notify(i18n.t('booking.errDates'), 'error')
       return false
     }
     if (form.guests < 1) {
-      notify('Please enter at least 1 guest.', 'error')
+      notify(i18n.t('booking.errGuests'), 'error')
       return false
     }
     return true
   }
   if (step === 1) {
     if (!form.destinationId || !form.hotelId) {
-      notify('Please choose a destination and a hotel.', 'error')
+      notify(i18n.t('booking.errChoosePlace'), 'error')
       return false
     }
     return true
   }
   if (step === 2) {
     if (!form.roomType) {
-      notify('Please choose a room type.', 'error')
+      notify(i18n.t('booking.errChooseRoom'), 'error')
       return false
     }
     return true
@@ -198,7 +213,7 @@ function goTo(step: number): void {
 function submitBooking(): void {
   if (!stepIsValid(2)) return
   if (!form.customerName || !form.email.includes('@')) {
-    notify('Please enter your name and a valid email address.', 'error')
+    notify(i18n.t('booking.errNameEmail'), 'error')
     return
   }
   if (!selectedHotel.value) return
@@ -207,8 +222,8 @@ function submitBooking(): void {
   setTimeout(() => {
     bookingStore.addBooking({
       destination: destinationName.value,
-      hotelName: selectedHotel.value!.name,
-      activityName: selectedActivity.value?.name ?? '',
+      hotelName: i18n.pick(selectedHotel.value!.name),
+      activityName: activityName.value,
       checkIn: form.checkIn,
       checkOut: form.checkOut,
       guests: form.guests,
@@ -218,7 +233,7 @@ function submitBooking(): void {
       totalPrice: totalPrice.value,
     })
 
-    notify('Booking confirmed! Check your My Trips page.')
+    notify(i18n.t('booking.confirmed'))
     router.push('/my-trips')
   }, 600)
 }
@@ -230,15 +245,15 @@ const inputClass =
 <template>
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
     <div class="mb-8 text-center">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Book Your Stay</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ i18n.t('booking.title') }}</h1>
       <p class="mx-auto mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
-        A simple four-step process. This is a demo - no real payment happens.
+        {{ i18n.t('booking.subtitle') }}
       </p>
     </div>
 
     <!-- Stepper -->
     <nav class="mx-auto mb-10 flex max-w-3xl items-center">
-      <template v-for="(step, index) in steps" :key="step.title">
+      <template v-for="(step, index) in steps" :key="step.titleKey">
         <button
           type="button"
           class="flex flex-col items-center gap-2"
@@ -263,7 +278,7 @@ const inputClass =
             class="text-xs font-medium sm:text-sm"
             :class="index === currentStep ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'"
           >
-            {{ step.title }}
+            {{ i18n.t(step.titleKey) }}
           </span>
         </button>
 
@@ -285,13 +300,13 @@ const inputClass =
       >
         <!-- Step 1: Dates & guests -->
         <div v-if="currentStep === 0">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">When are you travelling?</h2>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Pick your dates and party size.</p>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.t('booking.step1Title') }}</h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('booking.step1Text') }}</p>
 
           <div class="mt-6 grid gap-5 sm:grid-cols-2">
             <label class="block">
               <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                <CalendarDays :size="16" class="text-teal-600 dark:text-teal-400" /> Check-in
+                <CalendarDays :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.checkIn') }}
               </span>
               <input
                 v-model="form.checkIn"
@@ -303,7 +318,7 @@ const inputClass =
             </label>
             <label class="block">
               <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                <CalendarDays :size="16" class="text-teal-600 dark:text-teal-400" /> Check-out
+                <CalendarDays :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.checkOut') }}
               </span>
               <input
                 v-model="form.checkOut"
@@ -317,7 +332,7 @@ const inputClass =
 
           <label class="mt-5 block max-w-xs">
             <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-              <Users :size="16" class="text-teal-600 dark:text-teal-400" /> Guests
+              <Users :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.guests') }}
             </span>
             <input
               v-model.number="form.guests"
@@ -331,30 +346,30 @@ const inputClass =
 
         <!-- Step 2: Destination & hotel -->
         <div v-else-if="currentStep === 1">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Where would you like to stay?</h2>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Pick a place you are visiting, then choose a hotel nearby.</p>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.t('booking.step2Title') }}</h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('booking.step2Text') }}</p>
 
           <div
             v-if="activityName"
             class="mt-4 flex items-center gap-2 rounded-xl bg-teal-50 px-4 py-3 text-sm font-medium text-teal-700 dark:bg-teal-500/10 dark:text-teal-300"
           >
             <Compass :size="16" class="shrink-0" />
-            Book a hotel near your activity: {{ activityName }}
+            {{ i18n.t('booking.bookNearActivity', { name: activityName }) }}
           </div>
 
           <!-- Place (destination) picker -->
           <label class="mt-5 block">
             <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-              <MapPin :size="16" class="text-teal-600 dark:text-teal-400" /> Place you are visiting
+              <MapPin :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.placeVisiting') }}
             </span>
             <select
               v-model="form.destinationId"
               :class="inputClass"
               @change="onDestinationChange"
             >
-              <option :value="0" disabled>Select a place (e.g. Bali)</option>
+              <option :value="0" disabled>{{ i18n.t('booking.selectPlace') }}</option>
               <option v-for="item in destinations" :key="item.id" :value="item.id">
-                {{ item.name }}, {{ item.country }}
+                {{ i18n.pick(item.name) }}, {{ i18n.t('countries.' + item.country) }}
               </option>
             </select>
           </label>
@@ -363,7 +378,7 @@ const inputClass =
           <template v-if="form.destinationId !== 0">
             <h3 class="mt-6 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               <BedDouble :size="16" class="text-teal-600 dark:text-teal-400" />
-              Hotels near {{ destinationName }}
+              {{ i18n.t('booking.hotelsNear', { name: destinationName }) }}
             </h3>
 
             <div v-if="hotelOptions.length > 0" class="mt-3 grid gap-3 sm:grid-cols-2">
@@ -383,18 +398,18 @@ const inputClass =
               >
                 <img
                   :src="hotel.image"
-                  :alt="hotel.name"
+                  :alt="i18n.pick(hotel.name)"
                   class="h-20 w-20 shrink-0 rounded-lg object-cover"
                 />
                 <span class="min-w-0 flex-1">
                   <span class="flex items-center justify-between gap-2">
                     <span class="truncate text-sm font-bold text-slate-800 dark:text-slate-100">
-                      {{ hotel.name }}
+                      {{ i18n.pick(hotel.name) }}
                     </span>
                   </span>
                   <span class="mt-0.5 flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
                     <MapPin :size="12" class="text-teal-600 dark:text-teal-400" />
-                    {{ hotel.location }}
+                    {{ i18n.pick(hotel.location) }}
                   </span>
                   <span class="mt-1.5 flex items-center justify-between gap-2">
                     <span
@@ -404,14 +419,14 @@ const inputClass =
                       {{ hotel.rating }}
                     </span>
                     <span class="text-sm font-bold text-teal-600 dark:text-teal-400">
-                      ${{ hotel.pricePerNight }}<span class="text-xs font-medium text-slate-400">/night</span>
+                      ${{ hotel.pricePerNight }}<span class="text-xs font-medium text-slate-400">{{ i18n.t('common.night') }}</span>
                     </span>
                   </span>
                   <span
                     v-if="!hotel.available"
                     class="mt-1 inline-block rounded-full bg-rose-100 px-1.5 py-0.5 text-[10px] font-semibold text-rose-600 dark:bg-rose-500/10 dark:text-rose-400"
                   >
-                    Sold out
+                    {{ i18n.t('common.soldOut') }}
                   </span>
                 </span>
               </button>
@@ -421,25 +436,25 @@ const inputClass =
               v-else
               class="mt-4 rounded-xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
             >
-              No hotels listed near {{ destinationName }} yet.
+              {{ i18n.t('booking.noHotelsNear', { name: destinationName }) }}
             </p>
           </template>
         </div>
 
         <!-- Step 3: Room type -->
         <div v-else-if="currentStep === 2">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Choose your room</h2>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.t('booking.step3Title') }}</h2>
           <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            {{ selectedHotel?.name }} has {{ roomOptions.length }} room options.
+            {{ i18n.t('booking.step3Text', { name: selectedHotel?.name ? i18n.pick(selectedHotel.name) : '', count: roomOptions.length }) }}
           </p>
 
           <div class="mt-6 space-y-3">
             <label
               v-for="room in roomOptions"
-              :key="room.name"
+              :key="roomKey(room)"
               class="flex cursor-pointer items-center justify-between rounded-xl border p-4 transition"
               :class="
-                form.roomType === room.name
+                form.roomType === roomKey(room)
                   ? 'border-teal-500 bg-teal-50 dark:bg-teal-500/10'
                   : 'border-slate-200 hover:border-teal-300 dark:border-slate-700'
               "
@@ -449,28 +464,28 @@ const inputClass =
                   v-model="form.roomType"
                   type="radio"
                   name="room"
-                  :value="room.name"
+                  :value="roomKey(room)"
                   class="accent-teal-600"
                 />
                 <span>
-                  <span class="block text-sm font-semibold text-slate-800 dark:text-slate-100">{{ room.name }}</span>
+                  <span class="block text-sm font-semibold text-slate-800 dark:text-slate-100">{{ i18n.pick(room.name) }}</span>
                   <span class="block text-xs text-slate-500 dark:text-slate-400">{{ room.size }} m²</span>
                 </span>
               </span>
-              <span class="text-sm font-bold text-teal-600 dark:text-teal-400">${{ room.price }}/night</span>
+              <span class="text-sm font-bold text-teal-600 dark:text-teal-400">${{ room.price }}{{ i18n.t('common.night') }}</span>
             </label>
           </div>
         </div>
 
         <!-- Step 4: Confirm -->
         <div v-else>
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Your details</h2>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Last step - just add your name and email.</p>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.t('booking.step4Title') }}</h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('booking.step4Text') }}</p>
 
           <div class="mt-6 grid gap-5 sm:grid-cols-2">
             <label class="block">
               <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                <User :size="16" class="text-teal-600 dark:text-teal-400" /> Full Name
+                <User :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.fullName') }}
               </span>
               <input
                 v-model="form.customerName"
@@ -481,7 +496,7 @@ const inputClass =
             </label>
             <label class="block">
               <span class="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                <Mail :size="16" class="text-teal-600 dark:text-teal-400" /> Email
+                <Mail :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.email') }}
               </span>
               <input
                 v-model="form.email"
@@ -495,30 +510,30 @@ const inputClass =
           <!-- Booking summary -->
           <div class="mt-6 space-y-2 rounded-xl bg-slate-50 p-4 text-sm dark:bg-slate-800/60">
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-              <span class="flex items-center gap-1.5"><MapPin :size="15" class="text-teal-600" />Destination</span>
+              <span class="flex items-center gap-1.5"><MapPin :size="15" class="text-teal-600" />{{ i18n.t('booking.destination') }}</span>
               <span class="font-medium">{{ destinationName || '—' }}</span>
             </p>
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-              <span class="flex items-center gap-1.5"><HotelIcon :size="15" class="text-teal-600" />Hotel</span>
-              <span class="font-medium">{{ selectedHotel?.name || '—' }}</span>
+              <span class="flex items-center gap-1.5"><HotelIcon :size="15" class="text-teal-600" />{{ i18n.t('booking.hotel') }}</span>
+              <span class="font-medium">{{ selectedHotel?.name ? i18n.pick(selectedHotel.name) : '—' }}</span>
             </p>
             <p
               v-if="selectedActivity"
               class="flex items-center justify-between text-slate-600 dark:text-slate-300"
             >
-              <span class="flex items-center gap-1.5"><Compass :size="15" class="text-teal-600" />Activity</span>
-              <span class="font-medium">{{ selectedActivity.name }}</span>
+              <span class="flex items-center gap-1.5"><Compass :size="15" class="text-teal-600" />{{ i18n.t('booking.activity') }}</span>
+              <span class="font-medium">{{ i18n.pick(selectedActivity.name) }}</span>
             </p>
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-              <span class="flex items-center gap-1.5"><BedDouble :size="15" class="text-teal-600" />Room</span>
-              <span class="font-medium">{{ form.roomType || '—' }}</span>
+              <span class="flex items-center gap-1.5"><BedDouble :size="15" class="text-teal-600" />{{ i18n.t('booking.room') }}</span>
+              <span class="font-medium">{{ roomLabel(form.roomType) || '—' }}</span>
             </p>
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-              <span class="flex items-center gap-1.5"><CalendarDays :size="15" class="text-teal-600" />Dates</span>
+              <span class="flex items-center gap-1.5"><CalendarDays :size="15" class="text-teal-600" />{{ i18n.t('booking.dates') }}</span>
               <span class="font-medium">{{ form.checkIn }} → {{ form.checkOut }}</span>
             </p>
             <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-              <span class="flex items-center gap-1.5"><Users :size="15" class="text-teal-600" />Guests</span>
+              <span class="flex items-center gap-1.5"><Users :size="15" class="text-teal-600" />{{ i18n.t('booking.guests') }}</span>
               <span class="font-medium">{{ form.guests }}</span>
             </p>
           </div>
@@ -533,7 +548,7 @@ const inputClass =
             @click="prev"
           >
             <ArrowLeft :size="16" />
-            Back
+            {{ i18n.t('booking.back') }}
           </button>
           <span v-else></span>
 
@@ -542,7 +557,7 @@ const inputClass =
             type="submit"
             class="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
           >
-            Continue
+            {{ i18n.t('booking.continue') }}
             <ArrowRight :size="16" />
           </button>
           <button
@@ -552,7 +567,7 @@ const inputClass =
             :disabled="isSubmitting"
           >
             <CircleCheck :size="18" />
-            {{ isSubmitting ? 'Booking...' : 'Confirm Booking' }}
+            {{ isSubmitting ? i18n.t('booking.booking') : i18n.t('booking.confirmBooking') }}
           </button>
         </div>
       </form>
@@ -560,32 +575,32 @@ const inputClass =
       <!-- Price summary sidebar -->
       <aside data-aos="fade-up" data-aos-delay="100" class="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-soft dark:border-slate-800 dark:bg-slate-900">
         <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Price summary
+          {{ i18n.t('booking.priceSummary') }}
         </h3>
         <div class="mt-4 space-y-3 text-sm">
           <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-            <span>Room</span>
-            <span class="font-medium">{{ selectedHotel?.name || 'Not selected' }}</span>
+            <span>{{ i18n.t('booking.room') }}</span>
+            <span class="font-medium">{{ selectedHotel?.name ? i18n.pick(selectedHotel.name) : i18n.t('booking.notSelected') }}</span>
           </p>
-          <p v-if="roomOptions.find((r) => r.name === form.roomType)" class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-            <span>{{ form.roomType }}</span>
-            <span>${{ roomOptions.find((r) => r.name === form.roomType)?.price }}/night</span>
+          <p v-if="roomOptions.find((r) => roomKey(r) === form.roomType)" class="flex items-center justify-between text-slate-600 dark:text-slate-300">
+            <span>{{ roomLabel(form.roomType) }}</span>
+            <span>${{ roomOptions.find((r) => roomKey(r) === form.roomType)?.price }}{{ i18n.t('common.night') }}</span>
           </p>
           <p
             v-if="selectedActivity"
             class="flex items-center justify-between text-slate-600 dark:text-slate-300"
           >
-            <span>Activity</span>
-            <span class="font-medium">{{ selectedActivity.name }}</span>
+            <span>{{ i18n.t('booking.activity') }}</span>
+            <span class="font-medium">{{ i18n.pick(selectedActivity.name) }}</span>
           </p>
           <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-            <span>Nights</span>
+            <span>{{ i18n.t('booking.nights') }}</span>
             <span>
-              {{ nights > 0 ? `${nights} ${nights === 1 ? 'night' : 'nights'}` : '—' }}
+              {{ nights > 0 ? `${nights} ${nights === 1 ? i18n.t('booking.night') : i18n.t('booking.nightsPlural')}` : '—' }}
             </span>
           </p>
           <p class="flex items-center justify-between text-slate-600 dark:text-slate-300">
-            <span>Guests</span>
+            <span>{{ i18n.t('booking.guests') }}</span>
             <span>{{ form.guests }}</span>
           </p>
         </div>
@@ -595,30 +610,30 @@ const inputClass =
             v-if="selectedActivity"
             class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
           >
-            <span>Activity ({{ selectedActivity.name }})</span>
+            <span>{{ i18n.t('booking.activityCost', { name: i18n.pick(selectedActivity.name) }) }}</span>
             <span>${{ selectedActivity.price }} &times; {{ form.guests }}</span>
           </p>
           <p
             v-if="nights > 0"
             class="mt-1 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
           >
-            <span>Hotel stay ({{ nights }} {{ nights === 1 ? 'night' : 'nights' }})</span>
+            <span>{{ i18n.t('booking.hotelStay', { nights: nights }) }}</span>
             <span>${{ stayTotal }}</span>
           </p>
           <p class="mt-2 flex items-center justify-between text-slate-600 dark:text-slate-300">
             <span class="flex items-center gap-1.5 font-semibold">
-              <Info :size="16" class="text-teal-600 dark:text-teal-400" /> Total
+              <Info :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('booking.total') }}
             </span>
             <span class="text-2xl font-extrabold text-teal-700 dark:text-teal-300">${{ totalPrice }}</span>
           </p>
           <p v-if="nights === 0" class="mt-1 text-xs text-slate-400">
-            Total updates after you pick dates and a room.
+            {{ i18n.t('booking.totalUpdates') }}
           </p>
         </div>
 
         <p class="mt-4 flex items-start justify-center gap-1.5 text-center text-xs text-slate-400 dark:text-slate-500">
           <ShieldCheck :size="14" class="mt-0.5 shrink-0" />
-          Frontend-only demo. No real booking or payment is created.
+          {{ i18n.t('booking.demoNotice') }}
         </p>
       </aside>
     </div>

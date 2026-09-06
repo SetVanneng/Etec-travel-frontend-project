@@ -5,12 +5,14 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Mail, Heart, CalendarDays, Pencil, LogOut, ArrowRight, User } from '@lucide/vue'
 import { useAuthStore } from '../stores/authStore'
+import { useI18nStore } from '../stores/i18n'
 import { useFavoriteStore } from '../stores/favoriteStore'
 import { useBookingStore } from '../stores/bookingStore'
 import { notify } from '../utils/toast'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const i18n = useI18nStore()
 const favoriteStore = useFavoriteStore()
 const bookingStore = useBookingStore()
 
@@ -44,17 +46,17 @@ function startEditing(): void {
 function saveProfile(): void {
   const name = editName.value.trim()
   if (!name) {
-    notify('Name cannot be empty.', 'error')
+    notify(i18n.t('profile.errEmptyName'), 'error')
     return
   }
   authStore.updateProfile({ name, avatar: avatarFor(name) })
   editing.value = false
-  notify('Profile updated successfully.')
+  notify(i18n.t('profile.updated'))
 }
 
 function doLogout(): void {
   authStore.logout()
-  notify('You have been logged out.', 'info')
+  notify(i18n.t('profile.loggedOut'), 'info')
   router.push('/')
 }
 </script>
@@ -64,13 +66,13 @@ function doLogout(): void {
     <!-- Not logged in -->
     <div v-if="!authStore.user" class="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 py-24 text-center dark:border-slate-700">
       <User :size="52" class="text-slate-300 dark:text-slate-600" />
-      <h1 class="text-xl font-bold text-slate-700 dark:text-slate-200">You are not logged in</h1>
-      <p class="text-sm text-slate-500 dark:text-slate-400">Log in to see your profile, favorites and trips.</p>
+      <h1 class="text-xl font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('profile.notLoggedIn') }}</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('profile.notLoggedInText') }}</p>
       <router-link
         to="/login"
         class="mt-2 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
       >
-        Go to Login
+        {{ i18n.t('profile.goToLogin') }}
         <ArrowRight :size="16" />
       </router-link>
     </div>
@@ -96,14 +98,14 @@ function doLogout(): void {
                   class="rounded-xl bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
                   @click="saveProfile"
                 >
-                  Save
+                  {{ i18n.t('profile.save') }}
                 </button>
                 <button
                   type="button"
                   class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                   @click="editing = false"
                 >
-                  Cancel
+                  {{ i18n.t('profile.cancel') }}
                 </button>
               </div>
             </template>
@@ -123,7 +125,7 @@ function doLogout(): void {
             @click="startEditing"
           >
             <Pencil :size="16" />
-            Edit Profile
+            {{ i18n.t('profile.editProfile') }}
           </button>
         </div>
 
@@ -140,7 +142,7 @@ function doLogout(): void {
             </span>
             <div>
               <p class="text-2xl font-extrabold text-slate-900 dark:text-white">{{ favoriteStore.favoriteCount }}</p>
-              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Favorites</p>
+              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ i18n.t('profile.favorites') }}</p>
             </div>
           </router-link>
 
@@ -155,7 +157,7 @@ function doLogout(): void {
             </span>
             <div>
               <p class="text-2xl font-extrabold text-slate-900 dark:text-white">{{ myBookingCount }}</p>
-              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Bookings</p>
+              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ i18n.t('profile.bookings') }}</p>
             </div>
           </router-link>
         </div>
@@ -167,26 +169,26 @@ function doLogout(): void {
           to="/favorites"
           class="flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-teal-500 hover:text-teal-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-teal-400"
         >
-          <Heart :size="17" /> View Favorites
+          <Heart :size="17" /> {{ i18n.t('profile.viewFavorites') }}
         </router-link>
         <router-link
           to="/my-trips"
           class="flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-teal-500 hover:text-teal-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-teal-400"
         >
-          <CalendarDays :size="17" /> View Bookings
+          <CalendarDays :size="17" /> {{ i18n.t('profile.viewBookings') }}
         </router-link>
         <router-link
           to="/booking"
           class="flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-teal-500 hover:text-teal-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-teal-400"
         >
-          <CalendarDays :size="17" /> Book a Trip
+          <CalendarDays :size="17" /> {{ i18n.t('profile.bookATrip') }}
         </router-link>
         <button
           type="button"
           class="flex items-center justify-center gap-2 rounded-xl border border-rose-300 px-5 py-3 text-sm font-semibold text-rose-600 transition hover:bg-rose-50 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/30"
           @click="doLogout"
         >
-          <LogOut :size="17" /> Logout
+          <LogOut :size="17" /> {{ i18n.t('profile.logout') }}
         </button>
       </div>
     </div>

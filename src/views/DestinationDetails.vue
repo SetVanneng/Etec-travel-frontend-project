@@ -13,11 +13,13 @@ import { getDestinationById } from '../data/destinations'
 import { getHotelsByDestination } from '../data/hotels'
 import HotelCard from '../components/HotelCard.vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
+import { useI18nStore } from '../stores/i18n'
 import { notify } from '../utils/toast'
 
 const route = useRoute()
 const router = useRouter()
 const favoriteStore = useFavoriteStore()
+const i18n = useI18nStore()
 
 // Loading state displayed while we "fetch" the data.
 const isLoading = ref(true)
@@ -46,9 +48,9 @@ function toggleFavorite(): void {
   if (destination.value) {
     favoriteStore.toggleFavorite(destination.value)
     if (favoriteStore.isFavorite(destination.value.id)) {
-      notify(`${destination.value.name} was added to your favorites.`)
+      notify(i18n.t('destinations.addedToFavorites', { name: i18n.pick(destination.value.name) }))
     } else {
-      notify(`${destination.value.name} was removed from favorites.`)
+      notify(i18n.t('destinations.removedFromFavorites', { name: i18n.pick(destination.value.name) }))
     }
   }
 }
@@ -106,7 +108,7 @@ function initMap(): void {
 
   L.marker([dest.latitude, dest.longitude], { icon: pinIcon })
     .addTo(mapInstance)
-    .bindPopup(`<b>${dest.name}</b><br/>${dest.location}`)
+    .bindPopup(`<b>${i18n.pick(dest.name)}</b><br/>${i18n.pick(dest.location)}`)
     .openPopup()
 
   // Make the map fill its container correctly now that it is visible.
@@ -146,14 +148,14 @@ function openInMaps(): void {
     <!-- Not found -->
     <div v-else-if="!destination" class="flex flex-col items-center gap-4 py-24 text-center">
       <AlertCircle :size="48" class="text-slate-300 dark:text-slate-600" />
-      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Destination not found</h1>
-      <p class="text-sm text-slate-500 dark:text-slate-400">We could not find that destination.</p>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">{{ i18n.t('destinations.notFoundTitle') }}</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.notFoundText') }}</p>
       <button
         type="button"
         class="mt-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
         @click="goBack"
       >
-        Back to destinations
+        {{ i18n.t('destinations.backToDestinations') }}
       </button>
     </div>
 
@@ -166,29 +168,37 @@ function openInMaps(): void {
         @click="goBack"
       >
         <ArrowLeft :size="16" />
-        Back to all destinations
+        {{ i18n.t('destinations.backToAll') }}
       </button>
 
       <!-- Hero image -->
       <div class="relative h-72 overflow-hidden rounded-3xl sm:h-96">
-        <img :src="destination.image" :alt="destination.name" class="h-full w-full object-cover" />
+        <img :src="destination.image" :alt="i18n.pick(destination.name)" class="h-full w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
         <div class="absolute bottom-0 flex items-end justify-between gap-4 p-6">
           <div>
             <span class="rounded-full bg-teal-600 px-3 py-1 text-xs font-semibold text-white">
-              {{ destination.category }}
+              {{ i18n.categoryLabel(destination.category) }}
             </span>
-            <h1 class="mt-3 text-3xl font-extrabold text-white sm:text-4xl">{{ destination.name }}</h1>
+            <h1 class="mt-3 text-3xl font-extrabold text-white sm:text-4xl">{{ i18n.pick(destination.name) }}</h1>
             <p class="mt-1 flex items-center gap-1.5 text-sm text-slate-200">
               <MapPin :size="15" class="text-teal-400" />
-              {{ destination.location }}
+              {{ i18n.pick(destination.location) }}
             </p>
           </div>
           <button
             type="button"
             class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/90 shadow backdrop-blur transition hover:scale-110"
-            :aria-label="favoriteStore.isFavorite(destination.id) ? 'Remove from favorites' : 'Add to favorites'"
-            :title="favoriteStore.isFavorite(destination.id) ? 'Remove from favorites' : 'Add to favorites'"
+            :aria-label="
+              favoriteStore.isFavorite(destination.id)
+                ? i18n.t('destinations.removeFromFavorites')
+                : i18n.t('destinations.addToFavorites')
+            "
+            :title="
+              favoriteStore.isFavorite(destination.id)
+                ? i18n.t('destinations.removeFromFavorites')
+                : i18n.t('destinations.addToFavorites')
+            "
             @click="toggleFavorite"
           >
             <Heart
@@ -203,39 +213,39 @@ function openInMaps(): void {
       <div class="mt-8 grid gap-4 sm:grid-cols-3">
         <div data-aos="fade-up" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-            <Star :size="16" class="text-amber-500" /> Rating
+            <Star :size="16" class="text-amber-500" /> {{ i18n.t('destinations.rating') }}
           </div>
           <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ destination.rating }} / 5</p>
         </div>
         <div data-aos="fade-up" data-aos-delay="80" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-            <Calendar :size="16" class="text-teal-600 dark:text-teal-400" /> Best time to visit
+            <Calendar :size="16" class="text-teal-600 dark:text-teal-400" /> {{ i18n.t('destinations.bestTimeToVisit') }}
           </div>
-          <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ destination.bestTimeToVisit }}</p>
+          <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ i18n.pick(destination.bestTimeToVisit) }}</p>
         </div>
         <div data-aos="fade-up" data-aos-delay="160" class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
           <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-            <DollarSign :size="16" class="text-emerald-600" /> Average budget
+            <DollarSign :size="16" class="text-emerald-600" /> {{ i18n.t('destinations.averageBudget') }}
           </div>
-          <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">${{ destination.budget }}<span class="text-sm font-medium text-slate-400">/day</span></p>
+          <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">${{ destination.budget }}<span class="text-sm font-medium text-slate-400">{{ i18n.t('common.perDay') }}</span></p>
         </div>
       </div>
 
       <div class="mt-10 grid gap-10 lg:grid-cols-3">
         <!-- Left: description and activities -->
         <div class="lg:col-span-2">
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">About {{ destination.name }}</h2>
-          <p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">{{ destination.description }}</p>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">{{ i18n.t('destinations.about', { name: i18n.pick(destination.name) }) }}</h2>
+          <p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">{{ i18n.pick(destination.description) }}</p>
 
-          <h2 class="mt-8 text-xl font-bold text-slate-900 dark:text-white">Popular Activities</h2>
+          <h2 class="mt-8 text-xl font-bold text-slate-900 dark:text-white">{{ i18n.t('destinations.popularActivities') }}</h2>
           <div class="mt-4 flex flex-wrap gap-2">
             <span
-              v-for="activity in destination.topActivities"
-              :key="activity"
+              v-for="(activity, index) in destination.topActivities"
+              :key="index"
               class="flex items-center gap-1.5 rounded-full bg-teal-600/10 px-3.5 py-1.5 text-sm font-medium text-teal-700 dark:text-teal-300"
             >
               <Compass :size="14" />
-              {{ activity }}
+              {{ i18n.pick(activity) }}
             </span>
           </div>
 
@@ -243,7 +253,7 @@ function openInMaps(): void {
             :to="`/booking?destination=${destination.id}`"
             class="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
           >
-            Book a Trip Here
+            {{ i18n.t('destinations.bookTripHere') }}
             <ArrowRight :size="16" />
           </router-link>
 
@@ -252,7 +262,7 @@ function openInMaps(): void {
             class="mt-4 inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-bold text-teal-600 transition hover:bg-teal-600 hover:text-white dark:text-teal-400 dark:hover:text-white"
           >
             <Plane :size="16" />
-            Book Flight to {{ destination.country }}
+            {{ i18n.t('destinations.bookFlightTo', { country: i18n.t('countries.' + destination.country) }) }}
             <ExternalLink :size="14" />
           </router-link>
         </div>
@@ -261,31 +271,31 @@ function openInMaps(): void {
         <aside data-aos="fade-up" class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-800/40">
           <h3 class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
             <LocateFixed :size="18" class="text-teal-600 dark:text-teal-400" />
-            Location &amp; Map
+            {{ i18n.t('destinations.locationMap') }}
           </h3>
 
           <dl class="mt-4 space-y-3 text-sm">
             <div class="flex items-start justify-between gap-3">
-              <dt class="text-slate-500 dark:text-slate-400">Destination</dt>
-              <dd class="text-right font-semibold text-slate-800 dark:text-slate-100">{{ destination.name }}</dd>
+              <dt class="text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.destination') }}</dt>
+              <dd class="text-right font-semibold text-slate-800 dark:text-slate-100">{{ i18n.pick(destination.name) }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="text-slate-500 dark:text-slate-400">Country</dt>
-              <dd class="text-right font-semibold text-slate-800 dark:text-slate-100">{{ destination.country }}</dd>
+              <dt class="text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.country') }}</dt>
+              <dd class="text-right font-semibold text-slate-800 dark:text-slate-100">{{ i18n.t('countries.' + destination.country) }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="text-slate-500 dark:text-slate-400">Location</dt>
+              <dt class="text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.location') }}</dt>
               <dd class="flex items-center gap-1 text-right text-slate-800 dark:text-slate-100">
                 <MapPin :size="14" class="shrink-0 text-teal-600 dark:text-teal-400" />
-                {{ destination.location }}
+                {{ i18n.pick(destination.location) }}
               </dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="text-slate-500 dark:text-slate-400">Latitude</dt>
+              <dt class="text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.latitude') }}</dt>
               <dd class="text-right font-mono text-slate-800 dark:text-slate-100">{{ destination.latitude.toFixed(4) }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="text-slate-500 dark:text-slate-400">Longitude</dt>
+              <dt class="text-slate-500 dark:text-slate-400">{{ i18n.t('destinations.longitude') }}</dt>
               <dd class="text-right font-mono text-slate-800 dark:text-slate-100">{{ destination.longitude.toFixed(4) }}</dd>
             </div>
           </dl>
@@ -297,7 +307,7 @@ function openInMaps(): void {
               @click="toggleMap"
             >
               <Navigation :size="16" />
-              {{ showMap ? 'Hide Map' : 'View on Map' }}
+              {{ showMap ? i18n.t('destinations.hideMap') : i18n.t('destinations.viewOnMap') }}
             </button>
             <button
               type="button"
@@ -305,7 +315,7 @@ function openInMaps(): void {
               @click="openInMaps"
             >
               <MapPin :size="16" />
-              Open in Google Maps
+              {{ i18n.t('destinations.openInGoogleMaps') }}
             </button>
           </div>
 
@@ -330,10 +340,10 @@ function openInMaps(): void {
         <div class="mb-6 flex items-center justify-between">
           <h2 class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
             <BedDouble :size="22" class="text-teal-600 dark:text-teal-400" />
-            Nearby Hotels
+            {{ i18n.t('destinations.nearbyHotels') }}
           </h2>
           <router-link to="/hotels" class="text-sm font-medium text-teal-600 hover:underline dark:text-teal-400">
-            View all hotels
+            {{ i18n.t('hotels.viewAllHotels') }}
           </router-link>
         </div>
 
@@ -346,7 +356,7 @@ function openInMaps(): void {
           />
         </div>
         <p v-else data-aos="fade-up" class="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          No hotels listed for this destination yet.
+          {{ i18n.t('destinations.noHotelsYet') }}
         </p>
       </section>
     </div>

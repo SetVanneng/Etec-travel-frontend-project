@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { AlertTriangle } from '@lucide/vue'
+import { useI18nStore } from '../stores/i18n'
 
 const router = useRouter()
+const i18n = useI18nStore()
 </script>
 
 <template>
@@ -12,13 +14,13 @@ const router = useRouter()
     </span>
     <h1 class="mt-6 text-6xl font-extrabold text-slate-900 dark:text-white">404</h1>
     <p class="mt-4 max-w-md text-lg text-slate-500 dark:text-slate-400">
-      The page you're looking for doesn't exist or has been moved.
+      {{ i18n.t('notFound.text') }}
     </p>
     <button
       class="mt-8 rounded-xl bg-teal-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
       @click="router.push('/')"
     >
-      Back to Home
+      {{ i18n.t('notFound.backToHome') }}
     </button>
   </div>
 </template>

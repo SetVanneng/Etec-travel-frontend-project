@@ -3,6 +3,7 @@
 // A reusable card that shows one travel activity.
 import { MapPin, Star, Clock, ArrowRight } from '@lucide/vue'
 import type { Activity } from '../data/activities'
+import { useI18nStore } from '../stores/i18n'
 
 const props = withDefaults(
   defineProps<{
@@ -13,6 +14,8 @@ const props = withDefaults(
     delay: 0,
   },
 )
+
+const i18n = useI18nStore()
 </script>
 
 <template>
@@ -24,20 +27,20 @@ const props = withDefaults(
     <div class="relative h-48 overflow-hidden">
       <img
         :src="props.activity.image"
-        :alt="props.activity.name"
+        :alt="i18n.pick(props.activity.name)"
         class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
       />
       <span class="absolute left-3 top-3 rounded-full bg-teal-600 px-3 py-1 text-xs font-semibold text-white">
-        {{ props.activity.category }}
+        {{ i18n.categoryLabel(props.activity.category) }}
       </span>
     </div>
 
     <div class="flex flex-1 flex-col p-5">
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ props.activity.name }}</h3>
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ i18n.pick(props.activity.name) }}</h3>
 
       <p class="mt-1 flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
         <MapPin :size="14" class="text-teal-600 dark:text-teal-400" />
-        {{ props.activity.location }}
+        {{ i18n.pick(props.activity.location) }}
       </p>
 
       <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
@@ -47,7 +50,7 @@ const props = withDefaults(
         </span>
         <span class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
           <Clock :size="14" class="text-teal-600 dark:text-teal-400" />
-          {{ props.activity.duration }}
+          {{ i18n.pick(props.activity.duration) }}
         </span>
         <span class="ml-auto font-bold text-teal-600 dark:text-teal-400">${{ props.activity.price }}</span>
       </div>
@@ -56,7 +59,7 @@ const props = withDefaults(
         :to="`/activity/${props.activity.id}`"
         class="mt-4 flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
       >
-        View Activity
+        {{ i18n.t('common.viewActivity') }}
         <ArrowRight :size="16" />
       </router-link>
     </div>

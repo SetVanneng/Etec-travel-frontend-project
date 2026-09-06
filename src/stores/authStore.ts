@@ -19,7 +19,7 @@ export interface RegisteredAccount extends User {
   password: string
 }
 
-/** Result type so views can show friendly error messages. */
+/** Result type so views can show friendly error messages (translation keys). */
 export type AuthResult = { ok: true } | { ok: false; message: string }
 
 const USER_KEY = 'authUser'
@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     return {
       name,
       email,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0d9488&color=fff&size=256`,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0d9488&color=fffg&size=256`,
     }
   }
 
@@ -65,7 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
     const cleanEmail = email.trim().toLowerCase()
 
     if (findAccount(cleanEmail)) {
-      return { ok: false, message: 'An account with this email already exists. Try logging in instead.' }
+      return { ok: false, message: 'auth.accountExists' }
     }
 
     const accounts = loadAccounts()
@@ -82,10 +82,10 @@ export const useAuthStore = defineStore('auth', () => {
   function login(email: string, password: string, remember = false): AuthResult {
     const account = findAccount(email)
     if (!account) {
-      return { ok: false, message: 'No account found with this email. Please register first.' }
+      return { ok: false, message: 'auth.noAccountFound' }
     }
     if (account.password !== password) {
-      return { ok: false, message: 'Incorrect password. Please try again.' }
+      return { ok: false, message: 'auth.incorrectPassword' }
     }
 
     const { password: _ignored, ...profile } = account

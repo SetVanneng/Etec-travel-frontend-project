@@ -7,11 +7,13 @@ import { computed } from 'vue'
 import { CalendarDays, Hotel, Users, Plane, MapPin, Clock, CircleCheck, XCircle, AlertCircle, Compass } from '@lucide/vue'
 import { useBookingStore } from '../stores/bookingStore'
 import { useAuthStore } from '../stores/authStore'
+import { useI18nStore } from '../stores/i18n'
 import { notify } from '../utils/toast'
 import type { Booking } from '../stores/bookingStore'
 
 const bookingStore = useBookingStore()
 const authStore = useAuthStore()
+const i18n = useI18nStore()
 
 const today = new Date().toISOString().split('T')[0]
 
@@ -45,7 +47,7 @@ function formatDate(iso: string): string {
 
 function cancelTrip(booking: Booking): void {
   bookingStore.cancelBooking(booking.id)
-  notify('Trip cancelled.', 'info')
+  notify(i18n.t('myTrips.cancelled'), 'info')
 }
 </script>
 
@@ -55,17 +57,17 @@ function cancelTrip(booking: Booking): void {
       <div>
         <h1 class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-white">
           <Plane :size="30" class="text-teal-600 dark:text-teal-400" />
-          My Trips
+          {{ i18n.t('myTrips.title') }}
         </h1>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Your frontend-only travel dashboard (data saved in localStorage).
+          {{ i18n.t('myTrips.subtitle') }}
         </p>
       </div>
       <router-link
         to="/booking"
         class="hidden items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700 sm:flex"
       >
-        Book New Trip
+        {{ i18n.t('myTrips.bookNewTrip') }}
       </router-link>
     </div>
 
@@ -76,15 +78,15 @@ function cancelTrip(booking: Booking): void {
       class="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 py-24 text-center dark:border-slate-700"
     >
       <CalendarDays :size="52" class="text-slate-300 dark:text-slate-600" />
-      <h2 class="text-xl font-bold text-slate-700 dark:text-slate-200">No trips yet</h2>
+      <h2 class="text-xl font-bold text-slate-700 dark:text-slate-200">{{ i18n.t('myTrips.noTripsTitle') }}</h2>
       <p class="max-w-sm text-sm text-slate-500 dark:text-slate-400">
-        Book a destination and hotel to see your upcoming trips here.
+        {{ i18n.t('myTrips.noTripsText') }}
       </p>
       <router-link
         to="/booking"
         class="mt-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
       >
-        Book Your First Trip
+        {{ i18n.t('myTrips.bookFirstTrip') }}
       </router-link>
     </div>
 
@@ -93,11 +95,11 @@ function cancelTrip(booking: Booking): void {
       <section class="mb-10">
         <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
           <MapPin :size="20" class="text-teal-600 dark:text-teal-400" />
-          Upcoming Trips
+          {{ i18n.t('myTrips.upcomingTrips') }}
         </h2>
 
         <div v-if="upcomingTrips.length === 0" class="rounded-xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          No upcoming trips. Book something exciting!
+          {{ i18n.t('myTrips.noUpcoming') }}
         </div>
 
         <div class="space-y-4">
@@ -125,7 +127,7 @@ function cancelTrip(booking: Booking): void {
                   class="mt-1 flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
                 >
                   <Compass :size="15" class="text-teal-600 dark:text-teal-400" />
-                  Activity: {{ trip.activityName }}
+                  {{ i18n.t('myTrips.activity', { name: trip.activityName }) }}
                 </p>
 
                 <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
@@ -135,7 +137,7 @@ function cancelTrip(booking: Booking): void {
                   </span>
                   <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <Users :size="15" class="text-teal-600 dark:text-teal-400" />
-                    {{ trip.guests }} {{ trip.guests === 1 ? 'guest' : 'guests' }}
+                    {{ trip.guests }} {{ trip.guests === 1 ? i18n.t('myTrips.guest') : i18n.t('myTrips.guests') }}
                   </span>
                   <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <Hotel :size="15" class="text-teal-600 dark:text-teal-400" />
@@ -153,7 +155,7 @@ function cancelTrip(booking: Booking): void {
                 class="shrink-0 rounded-xl border border-rose-300 px-4 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-50 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/30"
                 @click="cancelTrip(trip)"
               >
-                Cancel
+                {{ i18n.t('myTrips.cancel') }}
               </button>
             </div>
           </article>
@@ -164,11 +166,11 @@ function cancelTrip(booking: Booking): void {
       <section>
         <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
           <Clock :size="20" class="text-slate-400" />
-          Previous &amp; Cancelled
+          {{ i18n.t('myTrips.previousCancelled') }}
         </h2>
 
         <div v-if="previousTrips.length === 0" class="rounded-xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          Nothing here yet.
+          {{ i18n.t('myTrips.nothingYet') }}
         </div>
 
         <div class="space-y-3">
@@ -214,7 +216,7 @@ function cancelTrip(booking: Booking): void {
 
       <p class="mt-10 flex items-center justify-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
         <AlertCircle :size="14" />
-        All trip data is stored in your browser with localStorage - nothing is sent anywhere.
+        {{ i18n.t('myTrips.dataNote') }}
       </p>
     </div>
   </div>
