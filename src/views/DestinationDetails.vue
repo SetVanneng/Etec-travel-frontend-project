@@ -31,6 +31,9 @@ const destinationId = computed(() => Number(route.params.id))
 const destination = computed(() => getDestinationById(destinationId.value))
 const nearbyHotels = computed(() => getHotelsByDestination(destinationId.value))
 
+// Index of the photo currently shown in the hero (0 = main image).
+const activeImage = ref(0)
+
 // Simulate a short loading delay, then show the content.
 onMounted(() => {
   setTimeout(() => {
@@ -173,7 +176,7 @@ function openInMaps(): void {
 
       <!-- Hero image -->
       <div class="relative h-72 overflow-hidden rounded-3xl sm:h-96">
-        <img :src="destination.image" :alt="i18n.pick(destination.name)" class="h-full w-full object-cover" />
+        <img :src="destination.gallery[activeImage]" :alt="i18n.pick(destination.name)" class="h-full w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
         <div class="absolute bottom-0 flex items-end justify-between gap-4 p-6">
           <div>
@@ -207,6 +210,21 @@ function openInMaps(): void {
             />
           </button>
         </div>
+      </div>
+
+      <!-- Thumbnail row: the 3 pics under the main pic -->
+      <div class="mt-3 grid grid-cols-3 gap-3">
+        <button
+          v-for="(image, index) in destination.gallery"
+          :key="image + index"
+          type="button"
+          class="overflow-hidden rounded-xl border-2 transition"
+          :class="activeImage === index ? 'border-teal-500' : 'border-transparent opacity-70 hover:opacity-100'"
+          :aria-label="`${i18n.pick(destination.name)} photo ${index + 1}`"
+          @click="activeImage = index"
+        >
+          <img :src="image" :alt="`${i18n.pick(destination.name)} photo ${index + 1}`" class="h-24 w-full object-cover sm:h-28" />
+        </button>
       </div>
 
       <!-- Quick facts -->
@@ -249,22 +267,24 @@ function openInMaps(): void {
             </span>
           </div>
 
-          <router-link
-            :to="`/booking?destination=${destination.id}`"
-            class="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
-          >
-            {{ i18n.t('destinations.bookTripHere') }}
-            <ArrowRight :size="16" />
-          </router-link>
+          <div class="mt-8 flex w-full flex-col gap-3 sm:flex-row">
+            <router-link
+              :to="`/booking?destination=${destination.id}`"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-teal-700"
+            >
+              {{ i18n.t('destinations.bookTripHere') }}
+              <ArrowRight :size="16" />
+            </router-link>
 
-          <router-link
-            :to="`/airline-booking?country=${destination.country}`"
-            class="mt-4 inline-flex items-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-bold text-teal-600 transition hover:bg-teal-600 hover:text-white dark:text-teal-400 dark:hover:text-white"
-          >
-            <Plane :size="16" />
-            {{ i18n.t('destinations.bookFlightTo', { country: i18n.t('countries.' + destination.country) }) }}
-            <ExternalLink :size="14" />
-          </router-link>
+            <router-link
+              :to="`/airline-booking?country=${destination.country}`"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-teal-600 px-6 py-3 text-sm font-bold text-teal-600 transition hover:bg-teal-600 hover:text-white dark:text-teal-400 dark:hover:text-white"
+            >
+              <Plane :size="16" />
+              {{ i18n.t('destinations.bookFlightTo', { country: i18n.t('countries.' + destination.country) }) }}
+              <ExternalLink :size="14" />
+            </router-link>
+          </div>
         </div>
 
         <!-- Right: location / map card -->

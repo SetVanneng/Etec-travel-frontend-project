@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // HotelCard.vue
 // A reusable card that shows one hotel.
-import { MapPin, Star, ArrowRight, BedDouble } from '@lucide/vue'
+import { MapPin, Star, ArrowRight, BedDouble, CalendarCheck } from '@lucide/vue'
 import { computed } from 'vue'
 import type { Hotel } from '../data/hotels'
 import { useI18nStore } from '../stores/i18n'
@@ -82,13 +82,32 @@ const topFacilities = computed(() =>
         </span>
       </div>
 
-      <router-link
-        :to="`/hotel/${props.hotel.id}`"
-        class="mt-4 flex items-center justify-center gap-2 rounded-xl border border-teal-600 px-4 py-2.5 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
-      >
-        {{ i18n.t('common.viewHotel') }}
-        <ArrowRight :size="16" />
-      </router-link>
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <router-link
+          :to="`/hotel/${props.hotel.id}`"
+          class="flex items-center justify-center gap-2 rounded-xl border border-teal-600 px-4 py-2.5 text-sm font-semibold text-teal-600 transition hover:bg-teal-600 hover:text-white"
+        >
+          {{ i18n.t('common.viewHotel') }}
+          <ArrowRight :size="16" />
+        </router-link>
+        <router-link
+          v-if="props.hotel.available"
+          :to="`/booking?hotel=${props.hotel.id}`"
+          class="flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+        >
+          <CalendarCheck :size="16" />
+          {{ i18n.t('common.bookNow') }}
+        </router-link>
+        <button
+          v-else
+          type="button"
+          disabled
+          class="flex cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-400 dark:bg-slate-800"
+        >
+          <CalendarCheck :size="16" />
+          {{ i18n.t('common.bookNow') }}
+        </button>
+      </div>
     </div>
   </article>
 </template>

@@ -75,7 +75,15 @@ onMounted(() => {
     }
   }
   if (typeof destination === 'string') form.destinationId = Number(destination)
-  if (typeof hotel === 'string') form.hotelId = Number(hotel)
+  if (typeof hotel === 'string') {
+    form.hotelId = Number(hotel)
+    // A chosen hotel is more specific than a bare destination/activity, so
+    // derive its nearby destination to prefill the dropdown.
+    const hotelInfo = getHotelById(form.hotelId)
+    if (hotelInfo) {
+      form.destinationId = hotelInfo.destinationId
+    }
+  }
 
   // If we landed with a specific hotel, set its room. Otherwise, if a place
   // was chosen (destination/activity) but no hotel, pick the first one nearby.

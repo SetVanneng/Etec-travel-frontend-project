@@ -111,8 +111,8 @@ const typeLabelKeys: Record<string, string> = {
         class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-teal-600"
       >
         <div class="flex items-center gap-3">
-          <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600/10">
-            <Plane :size="22" class="text-teal-600 dark:text-teal-400" />
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
+            <img :src="`https://pics.avs.io/100/100/${airline.iata}.png`" :alt="`${airline.name} logo`" class="h-full w-full object-contain" loading="lazy" />
           </span>
           <div class="min-w-0 flex-1">
             <h3 class="truncate text-sm font-bold text-slate-900 dark:text-white">{{ airline.name }}</h3>

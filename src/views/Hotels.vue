@@ -1,9 +1,13 @@
 <script setup lang="ts">
 // Hotels.vue
-// Lists all hotels with a search box and simulated loading.
+// Lists all hotels with a search box, facility filter chips and simulated loading.
 import { computed, onMounted, ref } from 'vue'
-import { Hotel, Building2, SearchX } from '@lucide/vue'
+import {
+  Hotel, Building2, SearchX, Waves, Sparkles, Coffee, Wifi, Car, Umbrella, Dumbbell, UtensilsCrossed,
+} from '@lucide/vue'
+import type { Component } from 'vue'
 import { hotels } from '../data/hotels'
+import type { LocalizedText } from '../data/localized'
 import SearchBar from '../components/SearchBar.vue'
 import HotelCard from '../components/HotelCard.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
@@ -11,8 +15,51 @@ import { useI18nStore } from '../stores/i18n'
 
 const i18n = useI18nStore()
 
+// Each chip matches a hotel when ANY of its keywords appears in one of the
+// hotel's (English) facilities, e.g. "Infinity pool" counts for "Pool".
+// The visible label comes from the "hotels.facilityFilters.*" translation keys.
+interface FacilityFilter {
+  key: string
+  labelKey: string
+  keywords: string[]
+  icon: Component
+}
+
+const facilityFilters: FacilityFilter[] = [
+  { key: 'pool', labelKey: 'hotels.facilityFilters.pool', keywords: ['pool'], icon: Waves },
+  { key: 'spa', labelKey: 'hotels.facilityFilters.spa', keywords: ['spa', 'onsen', 'sauna', 'hot tub', 'jacuzzi', 'hot springs'], icon: Sparkles },
+  { key: 'breakfast', labelKey: 'hotels.facilityFilters.breakfast', keywords: ['breakfast'], icon: Coffee },
+  { key: 'wifi', labelKey: 'hotels.facilityFilters.wifi', keywords: ['wi-fi', 'wifi'], icon: Wifi },
+  { key: 'parking', labelKey: 'hotels.facilityFilters.parking', keywords: ['parking'], icon: Car },
+  { key: 'beach', labelKey: 'hotels.facilityFilters.beach', keywords: ['beach'], icon: Umbrella },
+  { key: 'gym', labelKey: 'hotels.facilityFilters.gym', keywords: ['gym', 'fitness'], icon: Dumbbell },
+  { key: 'dining', labelKey: 'hotels.facilityFilters.dining', keywords: ['restaurant', 'bar', 'dining', 'bbq'], icon: UtensilsCrossed },
+]
+
 const searchText = ref('')
+const selectedFacilities = ref<string[]>([])
 const isLoading = ref(true)
+
+const hasActiveFacilities = computed(() => selectedFacilities.value.length > 0)
+
+function toggleFacility(key: string): void {
+  const index = selectedFacilities.value.indexOf(key)
+  if (index === -1) {
+    selectedFacilities.value.push(key)
+  } else {
+    selectedFacilities.value.splice(index, 1)
+  }
+}
+
+function clearAll(): void {
+  searchText.value = ''
+  selectedFacilities.value = []
+}
+
+// Facilities are localized objects; filtering uses their stable English text.
+function facilityEnglish(facility: LocalizedText): string {
+  return typeof facility === 'string' ? facility : facility.en ?? ''
+}
 
 onMounted(() => {
   setTimeout(() => {
@@ -20,17 +67,28 @@ onMounted(() => {
   }, 600)
 })
 
-// Filter hotels by name, city or country.
+// Filter hotels by name/city/country AND by every selected facility chip.
 const filteredHotels = computed(() => {
   const query = searchText.value.trim().toLowerCase()
-  if (query === '') return hotels
 
-  return hotels.filter(
-    (hotel) =>
+  return hotels.filter((hotel) => {
+    const matchesSearch =
+      query === '' ||
       i18n.pick(hotel.name).toLowerCase().includes(query) ||
       hotel.city.toLowerCase().includes(query) ||
-      i18n.t('countries.' + hotel.country).toLowerCase().includes(query),
-  )
+      i18n.t('countries.' + hotel.country).toLowerCase().includes(query)
+
+    const matchesFacilities = selectedFacilities.value.every((key) => {
+      const filter = facilityFilters.find((f) => f.key === key)
+      if (!filter) return true
+      return hotel.facilities.some((facility) => {
+        const en = facilityEnglish(facility).toLowerCase()
+        return filter.keywords.some((keyword) => en.includes(keyword))
+      })
+    })
+
+    return matchesSearch && matchesFacilities
+  })
 })
 </script>
 
@@ -46,8 +104,40 @@ const filteredHotels = computed(() => {
       </p>
     </div>
 
-    <div class="mx-auto mb-10 max-w-xl">
+    <div class="mx-auto mb-10 max-w-2xl">
       <SearchBar v-model="searchText" :placeholder="i18n.t('hotels.searchPlaceholder')" />
+
+      <!-- Facility filters -->
+      <p class="mt-6 mb-2 text-center text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        {{ i18n.t('hotels.facilities') }}
+      </p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <button
+          v-for="filter in facilityFilters"
+          :key="filter.key"
+          type="button"
+          class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition"
+          :class="
+            selectedFacilities.includes(filter.key)
+              ? 'bg-teal-600 text-white shadow-soft'
+              : 'border border-slate-300 text-slate-600 hover:border-teal-500 hover:text-teal-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-teal-400'
+          "
+          :aria-pressed="selectedFacilities.includes(filter.key)"
+          @click="toggleFacility(filter.key)"
+        >
+          <component :is="filter.icon" :size="15" />
+          {{ i18n.t(filter.labelKey) }}
+        </button>
+      </div>
+      <div v-if="hasActiveFacilities" class="mt-3 flex justify-center">
+        <button
+          type="button"
+          class="text-sm font-medium text-teal-600 hover:underline dark:text-teal-400"
+          @click="clearAll"
+        >
+          {{ i18n.t('common.clearFilters') }}
+        </button>
+      </div>
     </div>
 
     <LoadingSpinner v-if="isLoading" :text="i18n.t('hotels.checkingAvailability')" />
@@ -56,6 +146,13 @@ const filteredHotels = computed(() => {
       <SearchX :size="48" class="text-slate-300 dark:text-slate-600" />
       <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">{{ i18n.t('hotels.noResultsTitle') }}</h3>
       <p class="text-sm text-slate-500 dark:text-slate-400">{{ i18n.t('hotels.noResultsText') }}</p>
+      <button
+        type="button"
+        class="mt-2 rounded-xl bg-teal-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
+        @click="clearAll"
+      >
+        {{ i18n.t('common.clearFilters') }}
+      </button>
     </div>
 
     <div v-else>

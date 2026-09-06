@@ -2,7 +2,7 @@
 // Navbar.vue
 // Responsive navigation bar with: logo, links, favorites badge,
 // dark/light theme toggle and login / profile button.
-import { ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Plane, Heart, Sun, Moon, Menu, X, LogIn, Languages } from '@lucide/vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
@@ -17,6 +17,30 @@ const router = useRouter()
 
 // When "mobileOpen" is true the hamburger menu is shown on small screens.
 const mobileOpen = ref(false)
+
+// Closing the mobile menu whenever the route changes keeps it in sync.
+watch(() => route.fullPath, closeMenu)
+
+// Close the menu with the Escape key.
+function onKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Escape') closeMenu()
+}
+
+// Close the menu when clicking/tapping outside of the header.
+function onClickOutside(event: MouseEvent): void {
+  const el = document.getElementById('navbar')
+  if (el && !el.contains(event.target as Node)) closeMenu()
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', onKeydown)
+  document.addEventListener('click', onClickOutside)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('click', onClickOutside)
+})
 
 // Theme state starts from whatever index.html already applied,
 // so there is no flash of the wrong theme.
@@ -59,8 +83,8 @@ function closeMenu(): void {
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+  <header id="navbar" class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-6 sm:gap-4">
       <!-- Logo -->
       <router-link to="/" class="flex items-center gap-2" @click="closeMenu">
         <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shadow-soft">
@@ -93,10 +117,10 @@ function closeMenu(): void {
 
       <!-- Right side: theme toggle + language + login/profile -->
       <div class="flex items-center gap-2">
-        <!-- Language toggle -->
+        <!-- Language toggle (shown on desktop where links are visible) -->
         <button
           type="button"
-          class="flex h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          class="hidden h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 lg:flex dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
           :aria-label="i18n.t('nav.toggleLanguage')"
           :title="i18n.t('nav.toggleLanguage')"
           @click="i18n.setLocale(i18n.locale === 'km' ? 'en' : 'km')"
@@ -144,7 +168,7 @@ function closeMenu(): void {
           type="button"
           class="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
           :aria-label="i18n.t('nav.toggleMenu')"
-          @click="mobileOpen = !mobileOpen"
+          @click.stop="mobileOpen = !mobileOpen"
         >
           <Menu v-if="!mobileOpen" :size="20" />
           <X v-else :size="20" />
@@ -153,28 +177,57 @@ function closeMenu(): void {
     </nav>
 
     <!-- Mobile dropdown menu (v-if / v-else example) -->
-    <div
-      v-if="mobileOpen"
-      class="border-t border-slate-200 bg-white px-4 pb-4 pt-2 lg:hidden dark:border-slate-800 dark:bg-slate-900"
-    >
-      <router-link
-        v-for="link in navLinks"
-        :key="link.path"
-        :to="link.path"
-        class="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition"
-        :class="isActive(link.path) ? activeClasses : normalClasses"
-        @click="closeMenu"
+    <transition name="menu">
+      <div
+        v-if="mobileOpen"
+        class="border-t border-slate-200 bg-white px-4 pb-4 pt-2 lg:hidden dark:border-slate-800 dark:bg-slate-900"
       >
-        <span>
-          {{ i18n.t(link.labelKey) }}
-          <span
-            v-if="link.path === '/favorites' && favoriteStore.favoriteCount > 0"
-            class="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 text-xs font-bold text-white"
-          >
-            <Heart :size="12" class="mr-0.5" />{{ favoriteStore.favoriteCount }}
+        <router-link
+          v-for="link in navLinks"
+          :key="link.path"
+          :to="link.path"
+          class="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition"
+          :class="isActive(link.path) ? activeClasses : normalClasses"
+          @click="closeMenu"
+        >
+          <span>
+            {{ i18n.t(link.labelKey) }}
+            <span
+              v-if="link.path === '/favorites' && favoriteStore.favoriteCount > 0"
+              class="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 text-xs font-bold text-white"
+            >
+              <Heart :size="12" class="mr-0.5" />{{ favoriteStore.favoriteCount }}
+            </span>
           </span>
-        </span>
-      </router-link>
-    </div>
+        </router-link>
+
+        <!-- Language switcher inside the mobile menu, styled like the desktop one -->
+        <div class="mt-2 border-t border-slate-200 pt-3 dark:border-slate-800">
+          <button
+            type="button"
+            class="flex w-full items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+            :aria-label="i18n.t('nav.toggleLanguage')"
+            @click="i18n.setLocale(i18n.locale === 'km' ? 'en' : 'km')"
+          >
+            <Languages :size="18" class="text-teal-600 dark:text-teal-400" />
+            <span v-if="i18n.locale === 'km'">🇰🇭 ខ្មែរ</span>
+            <span v-else>🇬🇧 English</span>
+          </button>
+        </div>
+      </div>
+    </transition>
   </header>
 </template>
+
+<style scoped>
+.menu-enter-active,
+.menu-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+</style>

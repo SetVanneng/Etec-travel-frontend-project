@@ -28,6 +28,8 @@ export interface Destination {
   // A short label shown on the card, e.g. "Bali, Indonesia"
   location: LocalizedText
   image: string
+  /** Extra photos of the destination shown below the hero image. */
+  gallery: string[]
   description: LocalizedText
   category: DestinationCategory
   rating: number
@@ -48,6 +50,11 @@ export const destinations: Destination[] = [
     country: 'Indonesia',
     location: localized('Bali, Indonesia', 'បាលី, ឥណ្ឌូនេស៊ី'),
     image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The Island of the Gods is famous for lush rice terraces, sacred temples, golden beaches and a friendly local culture. It is one of the most loved island destinations for solo travellers, couples and families.',
       'កោះព្រះដ៏ល្បីល្បាញ ដោយសារស្រែបោះជំហានដ៏ស្រស់ស្អាត ប្រាសាទបរិសុទ្ធ ឆ្នេរខ្សាច់មាស និងវប្បធម៌ក្នុងស្រុកដ៏រាក់ទាក់។ វាជាកោះមួយក្នុងចំណោមគោលដៅកោះដែលគេស្រឡាញ់ជាងគេ សម្រាប់អ្នកធ្វើដំណើរតែម្នាក់ឯង គូស្វាមីភរិយា និងក្រុមគ្រួសារ។'
@@ -71,6 +78,11 @@ export const destinations: Destination[] = [
     country: 'Greece',
     location: localized('Santorini, Greece', 'សាន់តូរីនី, ក្រិក'),
     image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1601581875039-e899893d520c?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A volcanic island with white-washed villages, blue domes and famous caldera sunsets. Santorini feels like the postcard picture of Greece and is perfect for a romantic getaway.',
       'កោះភ្នំភ្លើង ដែលមានភូមិសពណ៌សដ៏បរិសុទ្ធ ដំបូលពណ៌ខៀវ និងថ្ងៃលិចលើកាល់ដេរ៉ាដ៏ល្បីល្បាញ។ សាន់តូរីនី ប្រៀបដូចរូបប៉ុស្តាល់របស់ក្រិក ហើយល្អឥតខ្ចោះសម្រាប់ដំណើរកម្សាន្តរ៉ូមែនទិក។'
@@ -94,6 +106,11 @@ export const destinations: Destination[] = [
     country: 'Switzerland',
     location: localized('Zermatt, Switzerland', 'សឺរម៉ាត, ស្វីស'),
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Snow-capped peaks, crystal lakes and charming villages make the Swiss Alps a dream for nature lovers. Great hiking in summer and world class skiing in winter.',
       'កំពូលភ្នំគ្របដោយព្រិល បឹងថ្លាដូចគ្រីស្តាល់ និងភូមិដ៏គួរឱ្យស្រឡាញ់ ធ្វើឱ្យភ្នំអាល់ស្វីសក្លាយជាក្តីស្រមៃរបស់អ្នកស្រឡាញ់ធម្មជាតិ។ សាកសមសម្រាប់ការឡើងភ្នំនៅរដូវក្តៅ និងការជិះស្គីលំដាប់ពិភពលោកនៅរដូវរងារ។'
@@ -117,6 +134,11 @@ export const destinations: Destination[] = [
     country: 'Canada',
     location: localized('Banff, Canada', 'បានហ្វ, កាណាដា'),
     image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1534954553104-88cb75be7648?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A town inside Banff National Park, home to turquoise lakes, towering peaks and plenty of wildlife. One of the most beautiful places on Earth to unwind in nature.',
       'ក្រុងតូចមួយនៅក្នុងឧទ្យានជាតិបានហ្វ ជាជម្រកបឹងថ្លាពណ៌ខៀវខ្ចី កំពូលភ្នំខ្ពស់ៗ និងសត្វព្រៃសម្បូរបែប។ ជាកន្លែងស្អាតបំផុតមួយនៅលើផែនដី សម្រាប់សម្រាកលំហែក្នុងធម្មជាតិ។'
@@ -140,6 +162,11 @@ export const destinations: Destination[] = [
     country: 'France',
     location: localized('Paris, France', 'ប៉ារីស, បារាំង'),
     image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1520939817895-060bdaf4fe1b?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The City of Light needs little introduction. Iconic monuments, world-famous museums, cozy cafes and the romantic Seine river make Paris a must visit.',
       'ទីក្រុងពន្លឺ មិនត្រូវការការណែនាំច្រើនទេ។ វិមានល្បីៗ សារមន្ទីរល្បីលើពិភពលោក ហាងកាហ្វេកក់ក្តៅ និងទន្លេសេនដ៏រ៉ូមែនទិក ធ្វើឱ្យប៉ារីសក្លាយជាទីក្រុងដែលត្រូវតែទៅទស្សនា។'
@@ -163,6 +190,11 @@ export const destinations: Destination[] = [
     country: 'Japan',
     location: localized('Tokyo, Japan', 'តូក្យូ, ជប៉ុន'),
     image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A dazzling mix of neon streets, old temples, incredible food and futuristic technology. Tokyo is an unforgettable city where tradition meets the future.',
       'ការលាយបញ្ចូលគ្នាដ៏អស្ចារ្យនៃផ្លូវបំភ្លឺអ៊ីយូន ប្រាសាទបុរាណ អាហារដ៏អស្ចារ្យ និងបច្ចេកវិទ្យាទំនើប។ តូក្យូជាទីក្រុងដែលមិនអាចបំភ្លេចបាន ដែលប្រពៃណីជួបជាមួយអនាគត។'
@@ -186,6 +218,11 @@ export const destinations: Destination[] = [
     country: 'Italy',
     location: localized('Rome, Italy', 'រ៉ូម, អ៊ីតាលី'),
     image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The Eternal City is an open-air museum. Walk where gladiators fought, throw a coin in Trevi fountain and eat the best pizza and gelato of your life.',
       'ទីក្រុងអមតៈ ជាសារមន្ទីរបើកចំហរ។ ដើរលើទីលានដែលអ្នកប្រដាល់គ្លាឌីអេតធ្លាប់ប្រណាំង បោះកាក់ក្នុងប្រភពទឹកទ្រេវី ហើយភ្លក់ភីហ្សា និងកាឡាតូឆ្ងាញ់បំផុតក្នុងជីវិតរបស់អ្នក។'
@@ -209,6 +246,11 @@ export const destinations: Destination[] = [
     country: 'Cambodia',
     location: localized('Siem Reap, Cambodia', 'សៀមរាប, កម្ពុជា'),
     image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Home of the magnificent Angkor temples, including the famous Angkor Wat. Siem Reap is a magical, affordable destination full of history and warmth.',
       'ឋានសួគ៌នៃប្រាសាទអង្គរដ៏អស្ចារ្យ រួមទាំងអង្គរវត្តដ៏ល្បីល្បាញ។ សៀមរាបជាគោលដៅវេទមន្ត តម្លៃសមរម្យ ពោរពេញដោយប្រវត្តិសាស្ត្រ និងភាពកក់ក្តៅ។'
@@ -232,6 +274,11 @@ export const destinations: Destination[] = [
     country: 'New Zealand',
     location: localized('Queenstown, New Zealand', 'ឃ្វីនស្តាន, នូវែលសេឡង់'),
     image: 'https://images.unsplash.com/photo-1469796466635-455ede028aca?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1469796466635-455ede028aca?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1530577197743-7adf14294584?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518674660708-0e2a0479e374?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The adventure capital of the world. Surrounded by mountains and a huge lake, Queenstown offers bungee jumping, jet boats, hikes and stunning drives.',
       'រដ្ឋធានីនៃកីឡាផ្សងព្រេងរបស់ពិភពលោក។ ព័ទ្ធជុំវិញដោយភ្នំ និងបឹងដ៏ធំ ឃ្វីនស្តានផ្តល់ជូននូវការលោតបង់ហ្សី ទូកជេត ការឡើងភ្នំ និងការបើកបរមើលទេសភាពដ៏ស្រស់ស្អាត។'
@@ -255,6 +302,11 @@ export const destinations: Destination[] = [
     country: 'Maldives',
     location: localized('Maldives, Maldives', 'ម៉ាល់ឌីវ, ម៉ាល់ឌីវ'),
     image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Overwater bungalows, turquoise lagoons and spectacular marine life. The Maldives is the ultimate tropical paradise for pure relaxation.',
       'ផ្ទះឈើលើទឹក បឹងឈូងសមុទ្រថ្លាពណ៌ខៀវ និងជីវិតក្រោមទឹកដ៏អស្ចារ្យ។ ម៉ាល់ឌីវជាឋានសួគ៌ត្រូពិចដ៏ល្អឥតខ្ចោះ សម្រាប់ការសម្រាកលំហែរពិតប្រាកដ។'
@@ -278,6 +330,11 @@ export const destinations: Destination[] = [
     country: 'Morocco',
     location: localized('Marrakech, Morocco', 'ម៉ារ៉ាកេស, ម៉ារ៉ុក'),
     image: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518708909088-7e61a8d834a0?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A colourful city of markets, palaces and gardens. Get lost in the souks, sip mint tea and enjoy the vibrant energy of Moroccos cultural heart.',
       'ទីក្រុងចម្រុះពណ៌នៃផ្សារ វិមាន និងសួនច្បារ។ វង្វេងនៅក្នុងផ្សារស៊ុក ផឹកតែជីអង្កាម ហើយរីករាយជាមួយថាមពលវប្បធម៌របស់ម៉ារ៉ុក។'
@@ -301,6 +358,11 @@ export const destinations: Destination[] = [
     country: 'Costa Rica',
     location: localized('Costa Rica, Central America', 'កូស្តារីកា, អាមេរិកកណ្តាល'),
     image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1501621965066-497a73f4e33e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Rainforests, volcanoes, beaches and amazing biodiversity. Costa Rica is a nature lover\u2019s paradise packed with adventurous things to do.',
       'ព្រៃត្រូពិច ភ្នំភ្លើង ឆ្នេរ និងជីវចម្រុះដ៏អស្ចារ្យ។ កូស្តារីកាជាឋានសួគ៌របស់អ្នកស្រឡាញ់ធម្មជាតិ ពោរពេញដោយសកម្មភាពផ្សងព្រេង។'
@@ -324,6 +386,11 @@ export const destinations: Destination[] = [
     country: 'Iceland',
     location: localized('Reykjavik, Iceland', 'រេកយ៉ាវិក, អ៊ីស្លង់'),
     image: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1516633631893-03d3cfba5b3e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1508513453698-66a062cf7657?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The world\u2019s northernmost capital sits between dramatic mountains and the sea. Golden waterfalls, black-sand beaches, hot springs and the northern lights are all within easy reach.',
       'រដ្ឋធានីភាគខាងជើងបំផុតរបស់ពិភពលោក ស្ថិតនៅចន្លោះភ្នំ និងសមុទ្រ។ ទឹកធ្លាក់ពណ៌មាស ឆ្នេរខ្សាច់ខ្មៅ ទឹកក្តៅធម្មជាតិ និងពន្លឺប៉ូលែស សុទ្ធតែអាចធ្វើដំណើរទៅបានយ៉ាងងាយស្រួល។'
@@ -347,6 +414,11 @@ export const destinations: Destination[] = [
     country: 'Vietnam',
     location: localized('Hanoi, Vietnam', 'ហាណូយ, វៀតណាម'),
     image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1528988835290-110e8ac03af1?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A thousand-year-old capital of tree-lined boulevards, lively old quarter streets, lakes and delicious street food. A perfect base to explore northern Vietnam.',
       'រដ្ឋធានីអាយុរាប់ពាន់ឆ្នាំ នៃមហាវិថីដែលមានដើមឈើ ផ្លូវទីក្រុងចាស់ដ៏រស់រវើក បឹង និងអាហារតាមដងផ្លូវឆ្ងាញ់ៗ។ ជាកន្លែងល្អឥតខ្ចោះសម្រាប់រុករកវៀតណាមខាងជើង។'
@@ -370,6 +442,11 @@ export const destinations: Destination[] = [
     country: 'Portugal',
     location: localized('Lisbon, Portugal', 'លីសបូន, ព័រទុយហ្គាល់'),
     image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1531835551805-16d864c8d311?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A sun-soaked city of seven hills, trams, azulejo tiles and pastel de nata. Mix old-town charm with Atlantic beaches just a train ride away.',
       'ទីក្រុងពោរពេញដោយពន្លឺព្រះអាទិត្យ នៃភ្នំទាំងប្រាំពីរ រថភ្លើងវ៉ាង ក្បឿងអាហ្សូឡេជូ និងប៉ាស្តេល ដឺ ណាតា។ លាយភាពទាក់ទាញរបស់ទីក្រុងចាស់ ជាមួយឆ្នេរអាត្លង់ទិក ដែលគ្រាន់តែជិះរថភ្លើងបន្តិចទៀតប៉ុណ្ណោះ។'
@@ -393,6 +470,11 @@ export const destinations: Destination[] = [
     country: 'Cambodia',
     location: localized('Siem Reap, Cambodia', 'សៀមរាប, កម្ពុជា'),
     image: 'https://i.pinimg.com/736x/4d/98/24/4d982407f7ce85444489210a2bff4847.jpg',
+    gallery: [
+      'https://i.pinimg.com/736x/4d/98/24/4d982407f7ce85444489210a2bff4847.jpg',
+      'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1493787039806-2edcbe808750?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The majestic Angkor temple complex in Cambodia is one of the greatest archaeological wonders in the world. Watch sunrise over Angkor Wat, explore jungle temples and soak up the rich Khmer culture.',
       'ប្រាសាទអង្គរដ៏អស្ចារ្យនៅកម្ពុជា ជាអច្ឆរិយៈបុរាណវិទ្យាដ៏អស្ចារ្យបំផុតមួយនៅលើពិភពលោក។ មើលថ្ងៃរះលើអង្គរវត្ត រុករកប្រាសាទក្នុងព្រៃ និងរីករាយជាមួយវប្បធម៌ខ្មែរដ៏សម្បូរបែប។'
@@ -416,6 +498,11 @@ export const destinations: Destination[] = [
     country: 'South Africa',
     location: localized('Cape Town, South Africa', 'ខេបថោន, អាហ្វ្រិកខាងត្បូង'),
     image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1531147646552-1eec6810a09f?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1513036191774-b2badb8fcb76?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A stunning coastal city framed by Table Mountain and the Atlantic. Penguins, vineyards and dramatic coastline combine in one unforgettable place.',
       'ទីក្រុងឆ្នេរសមុទ្រដ៏ស្រស់ស្អាត ព័ទ្ធជុំវិញដោយភ្នំតេបល និងសមុទ្រអាត្លង់ទិក។ ភេនឃ្វីន ចំការទំពាំងបាយជូរ និងឆ្នេរដ៏អស្ចារ្យ ផ្សំគ្នាក្នុងកន្លែងដែលមិនអាចបំភ្លេចបាន។'
@@ -439,6 +526,11 @@ export const destinations: Destination[] = [
     country: 'Japan',
     location: localized('Kyoto, Japan', 'ក្យូតូ, ជប៉ុន'),
     image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Japan\u2019s ancient capital of serene temples, zen gardens, bamboo groves and graceful geisha districts. A timeless cultural heart.',
       'រដ្ឋធានីបុរាណរបស់ជប៉ុន នៃប្រាសាទស្ងប់ស្ងាត់ សួនសេន ព្រៃឫស្សី និងតំបន់ហ្គីសាដ៏រុងរឿង។ បេះដូងវប្បធម៌អមតៈ។'
@@ -462,6 +554,11 @@ export const destinations: Destination[] = [
     country: 'United Arab Emirates',
     location: localized('Dubai, UAE', 'ឌូបៃ, អារ៉ាប់រួម'),
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A futuristic desert metropolis with the world\u2019s tallest building, luxury malls, artificial islands and golden sand dunes. Dubai blends tradition with jaw-dropping ambition.',
       'ទីក្រុងទំនើបបែបអនាគតក្នុងវាលខ្សាច់ ជាមួយអគារខ្ពស់ជាងគេលើពិភពលោក ផ្សារទំនើបប្រណិត កោះសិប្បនិម្មិត និងវាលខ្សាច់មាស។ ឌូបៃបញ្ចូលគ្នារវាងប្រពៃណី និងមហិច្ឆតាដ៏អស្ចារ្យ។'
@@ -485,6 +582,11 @@ export const destinations: Destination[] = [
     country: 'Spain',
     location: localized('Barcelona, Spain', 'បារសេឡូណា, អេស្ប៉ាញ'),
     image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'A Mediterranean city of Gaud\u00ed masterpieces, tapas bars, sandy beaches and buzzing street life on the famous La Rambla.',
       'ទីក្រុងមេឌីទែរ៉ាណេ នៃស្នាដៃហ្គោឌី ហាងតាបាស ឆ្នេរខ្សាច់ និងជីវិតតាមផ្លូវដ៏រស់រវើកនៅលើផ្លូវឡារ៉ាមប្លាដ៏ល្បី។'
@@ -508,6 +610,11 @@ export const destinations: Destination[] = [
     country: 'Australia',
     location: localized('Sydney, Australia', 'ស៊ីដនី, អូស្ត្រាលី'),
     image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1516642898673-edd1ced08e87?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Australia\u2019s harbour city with the iconic Opera House, golden Bondi beaches, a huge harbour bridge and a relaxed outdoor culture.',
       'ទីក្រុងកំពង់ផែរបស់អូស្ត្រាលី ជាមួយអូប៉េរ៉ាហាវស៍ដ៏ល្បី ឆ្នេរបោនឌីមាស ស្ពានកំពង់ផែដ៏ធំ និងវប្បធម៌ក្រៅផ្ទះដ៏សម្រាកលំហែរ។'
@@ -531,6 +638,11 @@ export const destinations: Destination[] = [
     country: 'USA',
     location: localized('New York City, USA', 'ញូវយ៉កស៊ីធី, សហរដ្ឋអាមេរិក'),
     image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The city that never sleeps: skyscraper canyons, world-class museums, Central Park, Broadway shows and food from every corner of the planet.',
       'ទីក្រុងដែលមិនដែលដេក៖ អគារខ្ពស់ៗដូចជ្រលងភ្នំ សារមន្ទីរលំដាប់ពិភពលោក សេនត្រាល់ផាក កម្មវិធីប្រូដវេយ និងអាហារពីគ្រប់ទិសទីលើផែនដី។'
@@ -554,6 +666,11 @@ export const destinations: Destination[] = [
     country: 'Peru',
     location: localized('Machu Picchu, Peru', 'ម៉ាជូភីជូ, ប៉េរូ'),
     image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1534158914592-062992fbe900?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1519925610903-381054cc2a1c?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The lost city of the Incas perched high in the Andes. Mysterious ruins, cloud forests and llamas make it a once-in-a-lifetime bucket list icon.',
       'ទីក្រុងសម្ងាត់របស់អ៊ីងកា ដែលស្ថិតខ្ពស់នៅលើភ្នំអង់ដេស។ ប្រាសាទអាថ៌កំបាំង ព្រៃអ័ព្ទ និងសត្វឡាម៉ា ធ្វើឱ្យវាក្លាយជាទីកន្លែងដែលត្រូវទៅមួយដងក្នុងមួយជីវិត។'
@@ -577,6 +694,11 @@ export const destinations: Destination[] = [
     country: 'Chile',
     location: localized('Patagonia, Chile & Argentina', 'ប៉ាតាហ្គោនៀ, ឈីលី និង អាហ្សង់ទីន'),
     image: 'https://images.unsplash.com/photo-1502239604432-4ba6989930a0?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1502239604432-4ba6989930a0?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Wild, windswept and dramatic, Patagonia\u2019s granite peaks, glaciers and steppe are an adventurer\u2019s paradise at the end of the world.',
       'ពិបាក ព្យុះខ្យល់ និងអស្ចារ្យ កំពូលភ្នំថ្មក្រានីត ផ្ទាំងទឹកកក និងវាលស្មៅស្តេភ របស់ប៉ាតាហ្គោនៀ គឺជាឋានសួគ៌របស់អ្នកផ្សងព្រេងនៅចុងបំផុតនៃពិភពលោក។'
@@ -600,6 +722,11 @@ export const destinations: Destination[] = [
     country: 'Thailand',
     location: localized('Phuket, Thailand', 'ភូកេត, ថៃ'),
     image: 'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Thailand\u2019s largest island: longtail boats, limestone cliffs, turquoise bays and lively beach towns. The perfect base for island hopping.',
       'កោះធំបំផុតរបស់ថៃ៖ ទូកងាវវែង ច្រាំងថ្មកំបោរ ឈូងសមុទ្រថ្លាពណ៌ខៀវ និងទីក្រុងឆ្នេរដ៏រស់រវើក។ ជាកន្លែងល្អឥតខ្ចោះសម្រាប់ដើរកម្សាន្តពីកោះមួយទៅកោះមួយ។'
@@ -623,6 +750,11 @@ export const destinations: Destination[] = [
     country: 'Jordan',
     location: localized('Petra, Jordan', 'ប៉េត្រា, ហ្ស៊កដានី'),
     image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1519480115025-a5fa4be36f3e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1529768167808-8fdf332f290f?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'The rose-red city carved into desert cliffs by the Nabataeans over 2000 years ago. Walk through the Siq to the stunning Treasury at sunrise.',
       'ទីក្រុងពណ៌ក្រហមផ្កាឈូក ឆ្លាក់នៅលើច្រាំងថ្មភ្នំវាលខ្សាច់ ដោយជនជាតិណាបាតេន កាលពីជាង ២០០០ ឆ្នាំមុន។ ដើរកាត់ស៊ីក ទៅកាន់វិហារហ្វាំងតាស្គូរី នៅពេលថ្ងៃរះ។'
@@ -646,6 +778,11 @@ export const destinations: Destination[] = [
     country: 'Italy',
     location: localized('Positano, Italy', 'ប៉ូហ្សីតាណូ, អ៊ីតាលី'),
     image: 'https://images.unsplash.com/photo-1533055640609-24b498dfd74c?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1533055640609-24b498dfd74c?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1534008757030-27299c4371b6?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1543348750-466b88f32a2a?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Pastel villages clinging to dramatic cliffs over the turquoise Tyrrhenian Sea. Lemons, gelato, boat trips and unforgettable coastal drives.',
       'ភូមិពណ៌ប៉ាស្តេល ប្រកាន់លើច្រាំងថ្មភ្នំដ៏អស្ចារ្យ ពីលើសមុទ្រទីរ៉េនៀនថ្លាពណ៌ខៀវ។ ក្រូចឆ្មារ កាឡាតូ ដំណើរទូក និងការបើកបរតាមឆ្នេរដែលមិនអាចបំភ្លេចបាន។'
@@ -669,6 +806,11 @@ export const destinations: Destination[] = [
     country: 'USA',
     location: localized('Yosemite, California', 'យ៉ូហ្សេមីទី, កាលីហ្វ័រញ៉ា'),
     image: 'https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=900&q=80',
+    ],
     description: localized(
       'Iconic granite cliffs, giant sequoias and thundering waterfalls in a Californian wilderness that inspired national parks worldwide.',
       'ច្រាំងថ្មក្រានីតដ៏ល្បីល្បាញ ដើមសេវ៉ូយ៉ាយក្ស និងទឹកធ្លាក់ខ្លាំងៗ នៅក្នុងព្រៃកាលីហ្វ័រញ៉ា ដែលជាប្រភពបំផុសគំនិតនៃឧទ្យានជាតិជាច្រើននៅលើពិភពលោក។'
@@ -685,6 +827,286 @@ export const destinations: Destination[] = [
     ],
     latitude: 37.8651,
     longitude: -119.5383,
+  },
+  {
+    id: 29,
+    name: localized('Hong Kong', 'ហុងកុង'),
+    country: 'Hong Kong',
+    location: localized('Hong Kong, China', 'ហុងកុង, ចិន'),
+    image: 'https://images.unsplash.com/photo-1526485838821-91ed4dbf3e20?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1526485838821-91ed4dbf3e20?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1557126435-6a77e5d760b0?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A dazzling skyline of neon skyscrapers, dim sum markets, temple-strewn hills and a legendary harbour. Hong Kong blends ultra-modern energy with deep tradition.',
+      'ជើងមេឃដ៏អស្ចារ្យនៃអគារខ្ពស់ៗបំភ្លឺអ៊ីយូន ផ្សារឌីមសាំ ភ្នំមានប្រាសាទ និងកំពង់ផែដ៏ល្បីល្បាញ។ ហុងកុងរួមបញ្ចូលគ្នានូវថាមពលទំនើបបំផុត ជាមួយប្រពៃណីដ៏ជ្រាលជ្រៅ។'
+    ),
+    category: 'Cities',
+    rating: 4.7,
+    budget: 240,
+    bestTimeToVisit: localized('October to December', 'ខែតុលា ដល់ ខែធ្នូ'),
+    topActivities: [
+      localized('Victoria Peak tram', 'ជិះរទេះភ្នំវិកតូរី៉ាភីក'),
+      localized('Star Ferry across the harbour', 'ជិះទូកស្តារហ្វើរីឆ្លងកំពង់ផែ'),
+      localized('Dim sum breakfast', 'អាហារពេលព្រឹកឌីមសាំ'),
+      localized('Temple Street night market', 'ផ្សាររាត្រីថេមផលស្ត្រីត'),
+    ],
+    latitude: 22.3193,
+    longitude: 114.1694,
+  },
+  {
+    id: 30,
+    name: localized('Singapore', 'សិង្ហបុរី'),
+    country: 'Singapore',
+    location: localized('Singapore, Singapore', 'សិង្ហបុរី, សិង្ហបុរី'),
+    image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1559333616-bc41cf8ab3bb?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1530115032402-8cac6fe89c02?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A futuristic garden city of gleaming towers, hawker food stalls and the iconic Marina Bay waterfront. Clean, green and endlessly delicious.',
+      'ទីក្រុងសួនបែបអនាគត នៃអគារខ្ពស់ៗភ្លឺរលោង តូបអាហារតាមផ្លូវ និងមាត់ទឹកម៉ារីណាបេដ៏ល្បីល្បាញ។ ស្អាត បៃតង និងមានម្ហូបឆ្ងាញ់គ្មានទីបញ្ចប់។'
+    ),
+    category: 'Cities',
+    rating: 4.8,
+    budget: 210,
+    bestTimeToVisit: localized('February to April, July to September', 'ខែកុម្ភៈ ដល់ ខែមេសា ខែកក្កដា ដល់ ខែកញ្ញា'),
+    topActivities: [
+      localized('Marina Bay Sands infinity pool', 'អាងហែលទឹកម៉ារីណាបេសែនស៍'),
+      localized('Gardens by the Bay', 'សួនហ្គាដេនស៍បៃធេបេ'),
+      localized('Hawker food tour', 'ដំណើរអាហារតាមតូប'),
+      localized('Sentosa Island', 'កោះសេនតូសា'),
+    ],
+    latitude: 1.3521,
+    longitude: 103.8198,
+  },
+  {
+    id: 31,
+    name: localized('Mexico City', 'ម៉ិកស៊ិកស៊ីធី'),
+    country: 'Mexico',
+    location: localized('Mexico City, Mexico', 'ម៉ិកស៊ិកស៊ីធី, ម៉ិកស៊ិក'),
+    image: 'https://images.unsplash.com/photo-1518739585-c1dbd5e1d5e0?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1518739585-c1dbd5e1d5e0?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1515549844734-33bcbcd02e69?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1506674254513-7ec1cdf2cc33?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A sprawling capital packed with Aztec ruins, colourful colonial plazas, world-class museums and incredible street food.',
+      'រដ្ឋធានីដ៏ធំល្វឹងល្វើយ ពោរពេញដោយប្រាសាទអាហ្សតេ ទីលានអាណានិគមចម្រុះពណ៌ សារមន្ទីរលំដាប់ពិភពលោក និងអាហារតាមដងផ្លូវដ៏អស្ចារ្យ។'
+    ),
+    category: 'Cities',
+    rating: 4.7,
+    budget: 120,
+    bestTimeToVisit: localized('March to May', 'ខែមីនា ដល់ ខែឧសភា'),
+    topActivities: [
+      localized('Zócalo and cathedral', 'ទីលានហ្សូកាឡូ និងវិហារ'),
+      localized('Teotihuacan pyramids', 'ប្រាសាទពីរ៉ាមីតធីអូទីហ៊័រកាន'),
+      localized('Frida Kahlo museum', 'សារមន្ទីរហ្វ្រីដាកាឡូ'),
+      localized('Xochimilco canals', 'ប្រឡាយសូឈីមីលកូ'),
+    ],
+    latitude: 19.4326,
+    longitude: -99.1332,
+  },
+  {
+    id: 32,
+    name: localized('Rio de Janeiro', 'រីយ៉ូដេហ្សាណេអ៊ីរ៉ូ'),
+    country: 'Brazil',
+    location: localized('Rio de Janeiro, Brazil', 'រីយ៉ូដេហ្សាណេអ៊ីរ៉ូ, ប្រេស៊ីល'),
+    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'Sugarloaf and Christ the Redeemer overlook golden Copacabana beaches. Carnival, samba and the Caríoca joy make Rio unforgettable.',
+      'ភ្នំស្ករឡូហ្វ និងរូបព្រះគ្រីស្តអ្នកប្រោសលោះ មើលពីលើឆ្នេរកូប៉ាកាបាណាមាស។ កាណេវ៉ាល សាមបា និងភាពរីករាយរបស់អ្នកក្រុងការីអូកា ធ្វើឱ្យរីយ៉ូមិនអាចបំភ្លេចបាន។'
+    ),
+    category: 'Beaches',
+    rating: 4.7,
+    budget: 140,
+    bestTimeToVisit: localized('December to March', 'ខែធ្នូ ដល់ ខែមីនា'),
+    topActivities: [
+      localized('Christ the Redeemer', 'រូបព្រះគ្រីស្តអ្នកប្រោសលោះ'),
+      localized('Sugarloaf cable car', 'ជិះរទេះភ្នំស្ករឡូហ្វ'),
+      localized('Copacabana beach', 'ឆ្នេរកូប៉ាកាបាណា'),
+      localized('Samba in Lapa', 'រាំសាមបានៅឡាប៉ា'),
+    ],
+    latitude: -22.9068,
+    longitude: -43.1729,
+  },
+  {
+    id: 33,
+    name: localized('Istanbul', 'អ៊ីស្តង់ប៊ុល'),
+    country: 'Turkey',
+    location: localized('Istanbul, Turkey', 'អ៊ីស្តង់ប៊ុល, ទួរគី'),
+    image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'The city straddling two continents, where Byzantine mosaics meet Ottoman palaces, bazaars and the sparkling Bosphorus.',
+      'ទីក្រុងដែលលាតសន្ធឹងលើពីរទ្វីប ដែលវិចិត្រសិល្បៈប៊ីហ្សីនទីន ជួបនឹងវិមានអូតូម៉ង់ ផ្សារ និងទន្លេបូសផូរូសភ្លឺចែងចាំង។'
+    ),
+    category: 'Historical',
+    rating: 4.8,
+    budget: 110,
+    bestTimeToVisit: localized('April to June, September to November', 'ខែមេសា ដល់ ខែមិថុនា ខែកញ្ញា ដល់ ខែវិច្ឆិកា'),
+    topActivities: [
+      localized('Hagia Sophia', 'ហាហ្គីយ៉ាសូហ្វៀ'),
+      localized('Topkapi Palace', 'វិមានតូបកាពី'),
+      localized('Grand Bazaar', 'ផ្សារហ្គ្រេនបាហ្សារ'),
+      localized('Bosphorus cruise', 'ជិះទូកទន្លេបូសផូរូស'),
+    ],
+    latitude: 41.0082,
+    longitude: 28.9784,
+  },
+  {
+    id: 34,
+    name: localized('Dublin', 'ដាប់លីន'),
+    country: 'Ireland',
+    location: localized('Dublin, Ireland', 'ដាប់លីន, អៀរឡង់'),
+    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1515488764276-beab7607c1e6?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524037414532-2e6a1a8f7a7c?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A friendly capital of Georgian squares, literary pubs, ancient cathedrals and a buzzing riverside. The gateway to the Emerald Isle.',
+      'រដ្ឋធានីដ៏រាក់ទាក់ នៃទីលានហ្សកហ្សៀន ក្លឹបភេសជ្ជៈផ្នែកអក្សរសាស្ត្រ វិហារបុរាណ និងមាត់ទន្លេដ៏រស់រវើក។ ជាច្រកទ្វារទៅកាន់កោះអេមឺរ៉ាល់។'
+    ),
+    category: 'Cities',
+    rating: 4.6,
+    budget: 160,
+    bestTimeToVisit: localized('May to September', 'ខែឧសភា ដល់ ខែកញ្ញា'),
+    topActivities: [
+      localized('Trinity College and Book of Kells', 'មហាវិទ្យាល័យទ្រីនីធី និងសៀវភៅខេលស៍'),
+      localized('Guinness Storehouse', 'រោងចក្រហ្គីនីសស្តូហាវស៍'),
+      localized('Temple Bar district', 'តំបន់ថេមបលបា'),
+      localized('Killiney Hill view', 'ទស្សនាភ្នំគីលីនី'),
+    ],
+    latitude: 53.3498,
+    longitude: -6.2603,
+  },
+  {
+    id: 35,
+    name: localized('Prague', 'ប្រាក'),
+    country: 'Czech Republic',
+    location: localized('Prague, Czech Republic', 'ប្រាក, សាធារណរដ្ឋឆែក'),
+    image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1559406047-4f0a3304d1cb?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A storybook city of spires, cobblestone lanes and the Charles Bridge over the Vltava. Gothic, baroque and fairytale all at once.',
+      'ទីក្រុងបែបរឿងនិទាន នៃប៉មសាជី ផ្លូវថ្ម និងស្ពានឆាលស៍ ឆ្លងទន្លេវឡាតាវ៉ា។ រចនាប័ទ្មហ្គោធិក បារ៉ុក និងរឿងនិទានក្នុងពេលតែមួយ។'
+    ),
+    category: 'Cities',
+    rating: 4.8,
+    budget: 120,
+    bestTimeToVisit: localized('April to June, September to October', 'ខែមេសា ដល់ ខែមិថុនា ខែកញ្ញា ដល់ ខែតុលា'),
+    topActivities: [
+      localized('Old Town Square', 'ទីលានអូលថោន'),
+      localized('Charles Bridge', 'ស្ពានឆាលស៍'),
+      localized('Prague Castle', 'ប្រាសាទប្រាក'),
+      localized('Astronomical clock', 'នាឡិកាតារាសាស្ត្រ'),
+    ],
+    latitude: 50.0755,
+    longitude: 14.4378,
+  },
+  {
+    id: 36,
+    name: localized('Oslo', 'អូស្លូ'),
+    country: 'Norway',
+    location: localized('Oslo, Norway', 'អូស្លូ, ន័រវេស'),
+    image: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8b4f?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1507874457470-272b3c8d8b4f?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1516642898673-edd1ced08e87?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A green capital beside a deep fjord, ringed by forests and peppered with striking modern art and Viking history.',
+      'រដ្ឋធានីពណ៌បៃតង ជាប់នឹងច្រកសមុទ្រជ្រៅ ព័ទ្ធជុំវិញដោយព្រៃឈើ និងពោរពេញដោយសិល្បៈទំនើបគួរឱ្យចាប់អារម្មណ៍ និងប្រវត្តិវីក៍គីង។'
+    ),
+    category: 'Nature',
+    rating: 4.6,
+    budget: 200,
+    bestTimeToVisit: localized('May to September', 'ខែឧសភា ដល់ ខែកញ្ញា'),
+    topActivities: [
+      localized('Opera House rooftop', 'លើដំបូលអូប៉េរ៉ាហាវស៍'),
+      localized('Vilhunmuseet Viking museum', 'សារមន្ទីរវីក៍គីង'),
+      localized('Fjord cruise', 'ជិះទូកច្រកសមុទ្រ'),
+      localized('Vigeland sculpture park', 'ឧទ្យានចម្លាក់វីហ្គេឡង់'),
+    ],
+    latitude: 59.9139,
+    longitude: 10.7522,
+  },
+  {
+    id: 37,
+    name: localized('Cairo', 'កៃរ៉ូ'),
+    country: 'Egypt',
+    location: localized('Cairo, Egypt', 'កៃរ៉ូ, អេហ្ស៊ីប'),
+    image: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1570592563350-5c5b060f0b7b?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'The sprawling capital beside the Nile, a gateway to the Pyramids of Giza, packed with mosques, museums and bazaars.',
+      'រដ្ឋធានីដ៏ធំល្វឹងល្វើយ ជាប់នឹងទន្លេនីល ជាច្រកទ្វារទៅកាន់ពីរ៉ាមីតហ្គីហ្សា ពោរពេញដោយវិហារអ៊ីស្លាម សារមន្ទីរ និងផ្សារ។'
+    ),
+    category: 'Historical',
+    rating: 4.6,
+    budget: 100,
+    bestTimeToVisit: localized('October to April', 'ខែតុលា ដល់ ខែមេសា'),
+    topActivities: [
+      localized('Pyramids of Giza', 'ពីរ៉ាមីតហ្គីហ្សា'),
+      localized('Egyptian Museum', 'សារមន្ទីរអេហ្ស៊ីប'),
+      localized('Khan el-Khalili bazaar', 'ផ្សារខាន់អេលកាលីលី'),
+      localized('Nile felucca ride', 'ជិះទូកក្ដោងនីល'),
+    ],
+    latitude: 30.0444,
+    longitude: 31.2357,
+  },
+  {
+    id: 38,
+    name: localized('Seoul', 'សេអ៊ូល'),
+    country: 'South Korea',
+    location: localized('Seoul, South Korea', 'សេអ៊ូល, កូរ៉េខាងត្បូង'),
+    image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=900&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1506816561089-6ce765253ab4?auto=format&fit=crop&w=900&q=80',
+    ],
+    description: localized(
+      'A hyper-modern metropolis of K-pop vibes, palaces, street food and the Han River. Seoul is endlessly exciting by day and night.',
+      'ទីក្រុងទំនើបបំផុត នៃរសជាតិខេប៉ុប វិមាន អាហារតាមដងផ្លូវ និងទន្លេហាន។ សេអ៊ូលគួរឱ្យរំភើបមិនចេះចប់ទាំងថ្ងៃ និងយប់។'
+    ),
+    category: 'Cities',
+    rating: 4.7,
+    budget: 170,
+    bestTimeToVisit: localized('March to May, September to November', 'ខែមីនា ដល់ ខែឧសភា ខែកញ្ញា ដល់ ខែវិច្ឆិកា'),
+    topActivities: [
+      localized('Gyeongbokgung Palace', 'វិមានក្យុងបូកគុង'),
+      localized('N Seoul Tower', 'ប៉មអិនសេអ៊ូល'),
+      localized('Myeongdong shopping', 'ដើរទិញឥវក្នុងម្យ៉ុងដុង'),
+      localized('Bukchon Hanok village', 'ភូមិប៊ុកឆុនហាណុក'),
+    ],
+    latitude: 37.5665,
+    longitude: 126.978,
   },
 ]
 
