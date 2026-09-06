@@ -16,6 +16,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/destinations', name: 'destinations', component: () => import('../views/Destinations.vue') },
   { path: '/destination/:id', name: 'destination-details', component: () => import('../views/DestinationDetails.vue') },
   { path: '/hotels', name: 'hotels', component: () => import('../views/Hotels.vue') },
+  { path: '/compare', name: 'compare', component: () => import('../views/Compare.vue') },
   { path: '/hotel/:id', name: 'hotel-details', component: () => import('../views/HotelDetails.vue') },
   { path: '/activities', name: 'activities', component: () => import('../views/Activities.vue') },
   { path: '/activity/:id', name: 'activity-details', component: () => import('../views/ActivityDetails.vue') },

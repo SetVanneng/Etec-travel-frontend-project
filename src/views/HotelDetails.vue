@@ -10,6 +10,7 @@ import {
 } from '@lucide/vue'
 import type { Component } from 'vue'
 import { getHotelById, type RoomType } from '../data/hotels'
+import ReviewSection from '../components/ReviewSection.vue'
 import { notify } from '../utils/toast'
 import { useBookingStore } from '../stores/bookingStore'
 import { useAuthStore } from '../stores/authStore'
@@ -207,6 +208,9 @@ function goBack(): void {
           </p>
         </aside>
       </div>
+
+      <!-- Reviews & ratings -->
+      <ReviewSection target-type="hotel" :target-id="hotel.id" />
     </div>
   </div>
 </template>

@@ -12,6 +12,7 @@ import {
 import { getDestinationById } from '../data/destinations'
 import { getHotelsByDestination } from '../data/hotels'
 import HotelCard from '../components/HotelCard.vue'
+import ReviewSection from '../components/ReviewSection.vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
 import { useI18nStore } from '../stores/i18n'
 import { notify } from '../utils/toast'
@@ -354,6 +355,9 @@ function openInMaps(): void {
           </div>
         </aside>
       </div>
+
+      <!-- Reviews & ratings -->
+      <ReviewSection target-type="destination" :target-id="destination.id" />
 
       <!-- Nearby hotels -->
       <section class="mt-12">

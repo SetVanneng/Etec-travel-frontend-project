@@ -8,6 +8,7 @@ import {
   CheckCircle2, AlertCircle,
 } from '@lucide/vue'
 import { getActivityById } from '../data/activities'
+import ReviewSection from '../components/ReviewSection.vue'
 import { useAuthStore } from '../stores/authStore'
 import { useI18nStore } from '../stores/i18n'
 import { notify } from '../utils/toast'
@@ -124,6 +125,9 @@ function bookActivity(): void {
           </p>
         </aside>
       </div>
+
+      <!-- Reviews & ratings -->
+      <ReviewSection target-type="activity" :target-id="activity.id" />
     </div>
   </div>
 </template>

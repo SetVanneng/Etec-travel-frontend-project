@@ -3,7 +3,7 @@
 // Lists all hotels with a search box, facility filter chips and simulated loading.
 import { computed, onMounted, ref } from 'vue'
 import {
-  Hotel, Building2, SearchX, Waves, Sparkles, Coffee, Wifi, Car, Umbrella, Dumbbell, UtensilsCrossed,
+  Hotel, Building2, SearchX, Waves, Sparkles, Coffee, Wifi, Car, Umbrella, Dumbbell, UtensilsCrossed, Scale, Trash2, ArrowRight,
 } from '@lucide/vue'
 import type { Component } from 'vue'
 import { hotels } from '../data/hotels'
@@ -12,8 +12,10 @@ import SearchBar from '../components/SearchBar.vue'
 import HotelCard from '../components/HotelCard.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 import { useI18nStore } from '../stores/i18n'
+import { useCompareStore } from '../stores/compareStore'
 
 const i18n = useI18nStore()
+const compareStore = useCompareStore()
 
 // Each chip matches a hotel when ANY of its keywords appears in one of the
 // hotel's (English) facilities, e.g. "Infinity pool" counts for "Pool".
@@ -171,6 +173,35 @@ const filteredHotels = computed(() => {
           :hotel="hotel"
           :delay="index * 60"
         />
+      </div>
+    </div>
+
+    <!-- Floating compare bar -->
+    <div
+      v-if="compareStore.compareCount > 0"
+      class="fixed bottom-6 left-1/2 z-40 -translate-x-1/2"
+    >
+      <div class="flex items-center gap-1 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+        <Scale :size="18" class="text-teal-600 dark:text-teal-400" />
+        <span class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-200">
+          {{ i18n.t('compare.bar', { count: compareStore.compareCount }) }}
+        </span>
+        <router-link
+          to="/compare"
+          class="ml-2 inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
+        >
+          {{ i18n.t('compare.compareNow') }}
+          <ArrowRight :size="15" />
+        </router-link>
+        <button
+          type="button"
+          class="ml-1 flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-rose-50 hover:text-rose-500 dark:hover:bg-rose-900/30"
+          :aria-label="i18n.t('compare.clearAll')"
+          :title="i18n.t('compare.clearAll')"
+          @click="compareStore.clear()"
+        >
+          <Trash2 :size="15" />
+        </button>
       </div>
     </div>
   </div>

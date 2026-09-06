@@ -1,11 +1,13 @@
 <script setup lang="ts">
 // HotelCard.vue
 // A reusable card that shows one hotel.
-import { MapPin, Star, Heart, ArrowRight, BedDouble, CalendarCheck } from '@lucide/vue'
+import { MapPin, Star, Heart, Scale, ArrowRight, BedDouble, CalendarCheck } from '@lucide/vue'
 import { computed } from 'vue'
 import type { Hotel } from '../data/hotels'
+import { useCompareStore, MAX_COMPARE } from '../stores/compareStore'
 import { useFavoriteStore } from '../stores/favoriteStore'
 import { useI18nStore } from '../stores/i18n'
+import { notify } from '../utils/toast'
 
 const props = withDefaults(
   defineProps<{
@@ -19,6 +21,7 @@ const props = withDefaults(
 
 const i18n = useI18nStore()
 const favoriteStore = useFavoriteStore()
+const compareStore = useCompareStore()
 
 // First three facilities, resolved to the active language.
 // Kept as { key, label } so list keys stay stable across language switches.
@@ -28,6 +31,17 @@ const topFacilities = computed(() =>
     label: i18n.pick(facility),
   })),
 )
+
+function toggleCompare(): void {
+  const result = compareStore.toggle(props.hotel)
+  if (result === 'added') {
+    notify(i18n.t('compare.added', { name: i18n.pick(props.hotel.name) }), 'info')
+  } else if (result === 'removed') {
+    notify(i18n.t('compare.removed', { name: i18n.pick(props.hotel.name) }), 'info')
+  } else {
+    notify(i18n.t('compare.maxReached', { max: String(MAX_COMPARE) }), 'error')
+  }
+}
 </script>
 
 <template>
@@ -134,6 +148,25 @@ const topFacilities = computed(() =>
           {{ i18n.t('common.bookNow') }}
         </button>
       </div>
+
+      <!-- Compare toggle -->
+      <button
+        type="button"
+        class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition"
+        :class="
+          compareStore.isCompared(props.hotel.id)
+            ? 'border-teal-600 bg-teal-600/10 text-teal-700 dark:text-teal-300'
+            : 'border-slate-300 text-slate-600 hover:border-teal-500 hover:text-teal-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-teal-400'
+        "
+        @click="toggleCompare"
+      >
+        <Scale :size="16" />
+        {{
+          compareStore.isCompared(props.hotel.id)
+            ? i18n.t('compare.remove')
+            : i18n.t('compare.add')
+        }}
+      </button>
     </div>
   </article>
 </template>
