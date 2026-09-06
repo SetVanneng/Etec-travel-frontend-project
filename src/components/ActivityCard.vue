@@ -1,8 +1,9 @@
 <script setup lang="ts">
 // ActivityCard.vue
 // A reusable card that shows one travel activity.
-import { MapPin, Star, Clock, ArrowRight } from '@lucide/vue'
+import { MapPin, Star, Heart, Clock, ArrowRight } from '@lucide/vue'
 import type { Activity } from '../data/activities'
+import { useFavoriteStore } from '../stores/favoriteStore'
 import { useI18nStore } from '../stores/i18n'
 
 const props = withDefaults(
@@ -16,6 +17,7 @@ const props = withDefaults(
 )
 
 const i18n = useI18nStore()
+const favoriteStore = useFavoriteStore()
 </script>
 
 <template>
@@ -33,6 +35,27 @@ const i18n = useI18nStore()
       <span class="absolute left-3 top-3 rounded-full bg-teal-600 px-3 py-1 text-xs font-semibold text-white">
         {{ i18n.categoryLabel(props.activity.category) }}
       </span>
+      <!-- Favorite heart -->
+      <button
+        type="button"
+        class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow backdrop-blur transition hover:scale-110 dark:bg-slate-900/90"
+        :aria-label="
+          favoriteStore.isActivityFavorite(props.activity.id)
+            ? i18n.t('activities.removeFromFavorites')
+            : i18n.t('activities.addToFavorites')
+        "
+        :title="
+          favoriteStore.isActivityFavorite(props.activity.id)
+            ? i18n.t('activities.removeFromFavorites')
+            : i18n.t('activities.addToFavorites')
+        "
+        @click.stop="favoriteStore.toggleActivityFavorite(props.activity)"
+      >
+        <Heart
+          :size="20"
+          :class="favoriteStore.isActivityFavorite(props.activity.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-500'"
+        />
+      </button>
     </div>
 
     <div class="flex flex-1 flex-col p-5">

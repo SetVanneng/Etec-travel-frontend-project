@@ -120,7 +120,7 @@
     "averageBudget": "ថវិកាជាមធ្យម",
     "about": "អំពី {name}",
     "popularActivities": "សកម្មភាពពេញនិយម",
-    "bookTripHere": "កក់ដំណើរនៅទីនេះ",
+    "bookTripHere": "កក់ដំណើរ និង សណ្ថាគារ​​នៅទីនេះ",
     "bookFlightTo": "កក់ជើងហោះហើរទៅ {country}",
     "locationMap": "ទីតាំង និងផែនទី",
     "country": "ប្រទេស",
@@ -169,7 +169,9 @@
     "bookThisRoom": "កក់បន្ទប់នេះ",
     "notTakingBookings": "សណ្ឋាគារនេះមិនទាន់ទទួលការកក់នៅពេលនេះទេ។",
     "pleaseLogin": "សូមចុះឈ្មោះចូលមុនពេលកក់។",
-    "selectedRoom": "បានជ្រើសរើស {room} នៅ {hotel}។"
+    "selectedRoom": "បានជ្រើសរើស {room} នៅ {hotel}។",
+    "addToFavorites": "បន្ថែមទៅចំណូលចិត្ត",
+    "removeFromFavorites": "ដកចេញពីចំណូលចិត្ត"
   },
   "activities": {
     "title": "រុករកសកម្មភាព",
@@ -186,7 +188,9 @@
     "bookThisActivity": "កក់សកម្មភាពនេះ",
     "frontendOnly": "ការកក់គ្រាន់តែជាមុខងារសាកល្បង - មិនមានការបង់ប្រាក់ពិតទេ។",
     "pleaseLogin": "សូមចុះឈ្មោះចូលមុនពេលកក់សកម្មភាពនេះ។",
-    "bookingHotelNear": "កំពុងកក់សណ្ឋាគារនៅជិត {name}។"
+    "bookingHotelNear": "កំពុងកក់សណ្ឋាគារនៅជិត {name}។",
+    "addToFavorites": "បន្ថែមទៅចំណូលចិត្ត",
+    "removeFromFavorites": "ដកចេញពីចំណូលចិត្ត"
   },
   "airlines": {
     "title": "ក្រុមហ៊ុនអាកាសចរណ៍",
@@ -347,9 +351,21 @@
   "favorites": {
     "title": "ចំណូលចិត្តរបស់ខ្ញុំ",
     "saved": "បានរក្សាទុក {count} ទិសដៅ",
+    "savedTotal": "បានរក្សាទុក {count} មុខទំនិញ",
+    "savedHotels": "បានរក្សាទុក {count} សណ្ឋាគារ",
+    "savedActivities": "បានរក្សាទុក {count} សកម្មភាព",
+    "tabDestinations": "ទិសដៅ",
+    "tabHotels": "សណ្ឋាគារ",
+    "tabActivities": "សកម្មភាព",
     "noTitle": "មិនទាន់មានចំណូលចិត្តទេ",
     "noText": "ចុចលើរូបបេះដូងនៅលើទិសដៅណាមួយដើម្បីរក្សាទុកនៅទីនេះ។",
+    "noHotelsTitle": "មិនទាន់មានសណ្ឋាគារដែលបានរក្សាទុកទេ",
+    "noHotelsText": "ចុចលើរូបបេះដូងនៅលើសណ្ឋាគារណាមួយដើម្បីរក្សាទុកនៅទីនេះ។",
+    "noActivitiesTitle": "មិនទាន់មានសកម្មភាពដែលបានរក្សាទុកទេ",
+    "noActivitiesText": "ចុចលើរូបបេះដូងនៅលើសកម្មភាពណាមួយដើម្បីរក្សាទុកនៅទីនេះ។",
     "discover": "ស្វែងរកទិសដៅ",
+    "discoverHotels": "មើលសណ្ឋាគារ",
+    "discoverActivities": "រុករកសកម្មភាព",
     "clearAll": "សម្អាតទាំងអស់",
     "allRemoved": "ចំណូលចិត្តទាំងអស់ត្រូវបានដកចេញ។"
   },

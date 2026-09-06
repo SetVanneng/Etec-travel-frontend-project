@@ -49,9 +49,9 @@ const stats = [
 
 // Team members (mock data).
 const team = [
-  { name: 'Kapepelele', roleKey: 'about.roleFounder', color: 'bg-rose-500' },
-  { name: 'Van Neng', roleKey: 'about.roleEditor', color: 'bg-teal-500' },
-  { name: 'Ley Jesda', roleKey: 'about.roleDesigner', color: 'bg-sky-500' },
+  { name: 'Van Neng', roleKey: 'about.roleFounder', color: 'bg-rose-500' },
+  { name: 'Peak Nita', roleKey: 'about.roleEditor', color: 'bg-teal-500' },
+  { name: 'Kapelele', roleKey: 'about.roleDesigner', color: 'bg-sky-500' },
 ]
 </script>
 

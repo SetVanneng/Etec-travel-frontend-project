@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // favoriteStore.ts (Pinia store)
-// Manages the list of favorite destinations.
+// Manages the lists of favorite destinations, hotels and activities.
 // We save the favorites into localStorage with JSON.stringify so they stay
 // saved even after the user closes the browser. localStorage can only store
 // strings, so we must convert the array into a string (JSON.stringify) when
@@ -9,62 +9,108 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { Destination } from '../data/destinations'
+import type { Hotel } from '../data/hotels'
+import type { Activity } from '../data/activities'
 
-const STORAGE_KEY = 'favoriteDestinations'
+const DESTINATIONS_KEY = 'favoriteDestinations'
+const HOTELS_KEY = 'favoriteHotels'
+const ACTIVITIES_KEY = 'favoriteActivities'
 
 export const useFavoriteStore = defineStore('favorites', () => {
-  // The list of favorite destinations. Loaded once from localStorage.
-  const favorites = ref<Destination[]>(loadFromStorage())
-
-  /** Total number of favorites (shown in the navbar badge). */
-  const favoriteCount = computed(() => favorites.value.length)
-
-  /** Is this destination already in the favorites list? */
-  const isFavorite = (id: number): boolean =>
-    favorites.value.some((destination) => destination.id === id)
-
-  /** Add or remove a destination from favorites. */
-  function toggleFavorite(destination: Destination): void {
-    if (isFavorite(destination.id)) {
-      // Remove it (filter keeps every destination EXCEPT the one we remove).
-      favorites.value = favorites.value.filter(
-        (item) => item.id !== destination.id,
-      )
-    } else {
-      favorites.value.push(destination)
-    }
-    saveToStorage()
-  }
-
-  /** Remove all favorites. */
-  function clearFavorites(): void {
-    favorites.value = []
-    saveToStorage()
-  }
-
   // --- localStorage helpers -----------------------------------------------
 
-  function loadFromStorage(): Destination[] {
+  function load<T>(key: string): T[] {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = localStorage.getItem(key)
       // If nothing is stored yet we start with an empty list.
-      return raw ? (JSON.parse(raw) as Destination[]) : []
+      return raw ? (JSON.parse(raw) as T[]) : []
     } catch {
       // If the stored text is corrupted, start fresh instead of crashing.
       return []
     }
   }
 
-  function saveToStorage(): void {
+  function save(key: string, value: unknown[]): void {
     // localStorage only accepts strings, so we turn the array into JSON text.
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites.value))
+    localStorage.setItem(key, JSON.stringify(value))
+  }
+
+  // The lists of favorites. Each type is loaded once from its own localStorage key.
+  const destinations = ref<Destination[]>(load<Destination>(DESTINATIONS_KEY))
+  const hotels = ref<Hotel[]>(load<Hotel>(HOTELS_KEY))
+  const activities = ref<Activity[]>(load<Activity>(ACTIVITIES_KEY))
+
+  /** Total number of favorites across all types (shown in the navbar badge). */
+  const favoriteCount = computed(
+    () => destinations.value.length + hotels.value.length + activities.value.length,
+  )
+
+  /** Is this destination already in the favorites list? */
+  const isFavorite = (id: number): boolean =>
+    destinations.value.some((destination) => destination.id === id)
+
+  /** Is this hotel already in the favorites list? */
+  const isHotelFavorite = (id: number): boolean =>
+    hotels.value.some((hotel) => hotel.id === id)
+
+  /** Is this activity already in the favorites list? */
+  const isActivityFavorite = (id: number): boolean =>
+    activities.value.some((activity) => activity.id === id)
+
+  /** Add or remove a destination from favorites. */
+  function toggleFavorite(destination: Destination): void {
+    if (isFavorite(destination.id)) {
+      // Remove it (filter keeps every destination EXCEPT the one we remove).
+      destinations.value = destinations.value.filter(
+        (item) => item.id !== destination.id,
+      )
+    } else {
+      destinations.value.push(destination)
+    }
+    save(DESTINATIONS_KEY, destinations.value)
+  }
+
+  /** Add or remove a hotel from favorites. */
+  function toggleHotelFavorite(hotel: Hotel): void {
+    if (isHotelFavorite(hotel.id)) {
+      hotels.value = hotels.value.filter((item) => item.id !== hotel.id)
+    } else {
+      hotels.value.push(hotel)
+    }
+    save(HOTELS_KEY, hotels.value)
+  }
+
+  /** Add or remove an activity from favorites. */
+  function toggleActivityFavorite(activity: Activity): void {
+    if (isActivityFavorite(activity.id)) {
+      activities.value = activities.value.filter((item) => item.id !== activity.id)
+    } else {
+      activities.value.push(activity)
+    }
+    save(ACTIVITIES_KEY, activities.value)
+  }
+
+  /** Remove all favorites of every type. */
+  function clearFavorites(): void {
+    destinations.value = []
+    hotels.value = []
+    activities.value = []
+    save(DESTINATIONS_KEY, destinations.value)
+    save(HOTELS_KEY, hotels.value)
+    save(ACTIVITIES_KEY, activities.value)
   }
 
   return {
-    favorites,
+    destinations,
+    hotels,
+    activities,
     favoriteCount,
     isFavorite,
+    isHotelFavorite,
+    isActivityFavorite,
     toggleFavorite,
+    toggleHotelFavorite,
+    toggleActivityFavorite,
     clearFavorites,
   }
 })

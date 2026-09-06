@@ -169,7 +169,9 @@
     "bookThisRoom": "Book This Room",
     "notTakingBookings": "This hotel is not taking bookings right now.",
     "pleaseLogin": "Please log in before booking.",
-    "selectedRoom": "Selected {room} at {hotel}."
+    "selectedRoom": "Selected {room} at {hotel}.",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites"
   },
   "activities": {
     "title": "Explore Activities",
@@ -186,7 +188,9 @@
     "bookThisActivity": "Book This Activity",
     "frontendOnly": "Frontend-only booking - no real payment.",
     "pleaseLogin": "Please log in to book a hotel for this activity.",
-    "bookingHotelNear": "Booking a hotel near {name}."
+    "bookingHotelNear": "Booking a hotel near {name}.",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites"
   },
   "airlines": {
     "title": "Airlines",
@@ -347,9 +351,21 @@
   "favorites": {
     "title": "My Favorites",
     "saved": "{count} saved destinations",
+    "savedTotal": "{count} saved items",
+    "savedHotels": "{count} saved hotels",
+    "savedActivities": "{count} saved activities",
+    "tabDestinations": "Destinations",
+    "tabHotels": "Hotels",
+    "tabActivities": "Activities",
     "noTitle": "No favorites yet",
     "noText": "Tap the heart on any destination to save it here.",
+    "noHotelsTitle": "No saved hotels yet",
+    "noHotelsText": "Tap the heart on any hotel to save it here.",
+    "noActivitiesTitle": "No saved activities yet",
+    "noActivitiesText": "Tap the heart on any activity to save it here.",
     "discover": "Discover Destinations",
+    "discoverHotels": "Browse Hotels",
+    "discoverActivities": "Explore Activities",
     "clearAll": "Clear All",
     "allRemoved": "All favorites were removed."
   },

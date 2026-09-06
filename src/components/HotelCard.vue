@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // HotelCard.vue
 // A reusable card that shows one hotel.
-import { MapPin, Star, ArrowRight, BedDouble, CalendarCheck } from '@lucide/vue'
+import { MapPin, Star, Heart, ArrowRight, BedDouble, CalendarCheck } from '@lucide/vue'
 import { computed } from 'vue'
 import type { Hotel } from '../data/hotels'
+import { useFavoriteStore } from '../stores/favoriteStore'
 import { useI18nStore } from '../stores/i18n'
 
 const props = withDefaults(
@@ -17,6 +18,7 @@ const props = withDefaults(
 )
 
 const i18n = useI18nStore()
+const favoriteStore = useFavoriteStore()
 
 // First three facilities, resolved to the active language.
 // Kept as { key, label } so list keys stay stable across language switches.
@@ -45,16 +47,40 @@ const topFacilities = computed(() =>
       >
         ${{ props.hotel.pricePerNight }}{{ i18n.t('common.night') }}
       </span>
-      <!-- Availability badge (v-if / v-else example) -->
+      <!-- Availability badge -->
       <span
         v-if="props.hotel.available"
-        class="absolute right-3 top-3 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white"
+        class="absolute bottom-3 right-3 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white"
       >
         {{ i18n.t('common.available') }}
       </span>
-      <span v-else class="absolute right-3 top-3 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">
+      <span
+        v-else
+        class="absolute bottom-3 right-3 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white"
+      >
         {{ i18n.t('common.soldOut') }}
       </span>
+      <!-- Favorite heart -->
+      <button
+        type="button"
+        class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow backdrop-blur transition hover:scale-110 dark:bg-slate-900/90"
+        :aria-label="
+          favoriteStore.isHotelFavorite(props.hotel.id)
+            ? i18n.t('hotels.removeFromFavorites')
+            : i18n.t('hotels.addToFavorites')
+        "
+        :title="
+          favoriteStore.isHotelFavorite(props.hotel.id)
+            ? i18n.t('hotels.removeFromFavorites')
+            : i18n.t('hotels.addToFavorites')
+        "
+        @click.stop="favoriteStore.toggleHotelFavorite(props.hotel)"
+      >
+        <Heart
+          :size="20"
+          :class="favoriteStore.isHotelFavorite(props.hotel.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-500'"
+        />
+      </button>
     </div>
 
     <div class="flex flex-1 flex-col p-5">
