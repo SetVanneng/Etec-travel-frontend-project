@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="km">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
@@ -27,7 +27,7 @@
       var savedLocale = localStorage.getItem('language') || localStorage.getItem('locale')
       if (savedLocale === 'kh') savedLocale = 'km' // legacy value migration
       document.documentElement.lang =
-        savedLocale === 'en' || savedLocale === 'km' ? savedLocale : 'en'
+        savedLocale === 'en' || savedLocale === 'km' ? savedLocale : 'km'
     </script>
   </head>
   <body>

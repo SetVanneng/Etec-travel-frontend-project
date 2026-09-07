@@ -45,7 +45,7 @@ export const activities: Activity[] = [
     price: 85,
     duration: localized('8 hours', '៨ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1589305449003-94c2d4b7010f?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'A guided full-day hike through alpine meadows with panoramic views of the Matterhorn. Includes a mountain guide and packed lunch.',
       'ការឡើងភ្នំពេញមួយថ្ងៃដែលមានមគ្គុទេសក៍ ឆ្លងកាត់វាលស្មៅភ្នំអាល់ ជាមួយទិដ្ឋភាពប៉ាណូរ៉ាម៉ានៃភ្នំម៉ាត់តឺហន។ រួមមានមគ្គុទេសក៍ភ្នំ និងអាហារថ្ងៃត្រង់កញ្ចប់។'
@@ -423,7 +423,7 @@ export const activities: Activity[] = [
     price: 75,
     duration: localized('6 hours', '៦ ម៉ោង'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'A pre-dawn trek up an active volcano to watch sunrise over Mount Agung, with breakfast cooked by volcanic steam.',
       'ដំណើរឡើងភ្នំមុនថ្ងៃរះលើភ្នំភ្លើងសកម្ម ដើម្បីមើលថ្ងៃរះលើភ្នំអាហ្គុង ជាមួយអាហារពេលព្រឹកដែលចម្អិនដោយចំហាយក្តៅភ្នំភ្លើង។'
@@ -444,7 +444,7 @@ export const activities: Activity[] = [
     price: 55,
     duration: localized('3.5 hours', '៣ ម៉ោងកន្លះ'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'Follow your senses through spice stalls and food carts of the medina, tasting tagine, mint tea and street sweets.',
       'ដើរតាមក្លិនក្រអូបកាត់តូបគ្រឿងទេស និងរទេះអាហារក្នុងមេឌីណា ភ្លក់តាហ្ស៊ីន តែជីអង្កាម និងបង្អែមតាមដងផ្លូវ។'
@@ -465,7 +465,7 @@ export const activities: Activity[] = [
     price: 110,
     duration: localized('5 hours', '៥ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1468413253725-0d5181091126?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'Cruise Lake Wakatipu, ride the Skyline gondola up Bob\'s Peak, then race a gravity luge down the mountain with alpine views.',
       'ជិះទូកបឹងវ៉ាកាទីពូ ជិះហ្គុនដូឡាស្កាយឡាញឡើងភ្នំបបសភីក បន្ទាប់មករត់ប្រណាំងល្វូជចុះពីលើភ្នំជាមួយទិដ្ឋភាពភ្នំអាល់។'
@@ -549,7 +549,7 @@ export const activities: Activity[] = [
     price: 140,
     duration: localized('7 hours', '៧ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'Hike the lesser-known trek to the Sun Gate for a first sunrise glimpse of Machu Picchu, surrounded by misty cloud forest.',
       'ឡើងផ្លូវតិចគេស្គាល់ទៅខ្លោងទ្វារព្រះអាទិត្យ សម្រាប់ការមើលឃើញម៉ាជូភីជូដំបូងនៅពេលថ្ងៃរះ ព័ទ្ធជុំវិញដោយព្រៃពពកដ៏អាប់ស្រអាប់។'
@@ -591,7 +591,7 @@ export const activities: Activity[] = [
     price: 130,
     duration: localized('3 hours', '៣ ម៉ោង'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1498623116890-37e912163d5d?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'Set out from the whale capital of Hermanus to glimpse southern right whales, dolphins and seals along the Cape coast.',
       'ចេញដំណើរពីរាជធានីត្រីបាឡែនហឺម៉ាណូស ដើម្បីមើលត្រីបាឡែនខាងស្តាំខាងត្បូង ផ្សោត និងត្រានៅតាមឆ្នេរខេប។'
@@ -612,7 +612,7 @@ export const activities: Activity[] = [
     price: 180,
     duration: localized('2 days', '២ ថ្ងៃ'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=900&q=80',
     description: localized(
       'Sleep on a junk boat among limestone karsts, kayak through hidden lagoons and visit a floating fishing village.',
       'គេងលើទូកជុងក្នុងចំណោមកំពូលថ្មកំបោរ ជិះកាយ៉ាកកាត់វាលបឹងលាក់កំបាំង និងទស្សនាភូមិនេសាទអណ្តែតទឹក។'
