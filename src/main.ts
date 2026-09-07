@@ -17,10 +17,12 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 AOS.init({
-  duration: 700,
-  easing: 'ease-out-cubic',
+  duration: 650,
+  easing: 'ease-out-quart',
   once: true,
-  offset: 80,
+  offset: 60,
+  startEvent: 'DOMContentLoaded',
+  throttleDelay: 40,
 })
 
 const app = createApp(App)

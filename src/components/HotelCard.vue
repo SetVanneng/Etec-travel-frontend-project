@@ -48,13 +48,13 @@ function toggleCompare(): void {
   <article
     data-aos="fade-up"
     :data-aos-delay="props.delay"
-    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900"
+    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-500 ease-smooth hover:-translate-y-1.5 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900"
   >
     <div class="relative h-48 overflow-hidden">
       <img
         :src="props.hotel.image"
         :alt="i18n.pick(props.hotel.name)"
-        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        class="h-full w-full object-cover transition duration-700 ease-smooth group-hover:scale-110"
       />
       <span
         class="absolute left-3 top-3 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold text-white backdrop-blur"
@@ -77,7 +77,7 @@ function toggleCompare(): void {
       <!-- Favorite heart -->
       <button
         type="button"
-        class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow backdrop-blur transition hover:scale-110 dark:bg-slate-900/90"
+        class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow backdrop-blur transition duration-300 ease-smooth hover:scale-110 active:scale-95 dark:bg-slate-900/90"
         :aria-label="
           favoriteStore.isHotelFavorite(props.hotel.id)
             ? i18n.t('hotels.removeFromFavorites')

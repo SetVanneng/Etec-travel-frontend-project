@@ -47,14 +47,16 @@ const styles: Record<ToastType, { icon: typeof Check; class: string }> = {
 /* Fade + slide animation for the toast messages. */
 .toast-enter-active,
 .toast-leave-active {
-  transition: all 0.3s ease;
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .toast-enter-from {
   opacity: 0;
-  transform: translateX(20px);
+  transform: translateX(40px) scale(0.95);
 }
 .toast-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(0.97);
 }
 </style>

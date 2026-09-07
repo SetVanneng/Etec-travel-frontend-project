@@ -28,6 +28,8 @@
     sans-serif;
   --font-khmer-display: 'Kantumruy Pro', 'Noto Sans Khmer', system-ui,
     sans-serif;
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Smooth scrolling when we jump to anchors. */
@@ -97,7 +99,7 @@ img {
 /* Fade the full-screen loading overlay in/out. */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.35s var(--ease-smooth);
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -107,13 +109,43 @@ img {
 /* Crossfade + subtle slide when navigating or switching language. */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.4s var(--ease-smooth),
+    transform 0.4s var(--ease-smooth);
+  will-change: opacity, transform;
 }
 .page-enter-from {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(16px);
 }
 .page-leave-to {
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translateY(-8px);
+}
+
+/* ---------------------------------------------------------------------------
+   AOS (animate on scroll) smoothing overrides
+   - Shorten the travel distance so the motion feels grounded, not floaty.
+   - Keep the fade + translate but with the smooth easing curve.
+   - Reduce the initial drop so cards don't jump as far in.
+--------------------------------------------------------------------------- */
+
+/* Standard fade-up / fade-down variants used across the app. */
+[data-aos='fade-up'] {
+  transform: translate3d(0, 40px, 0);
+}
+[data-aos='fade-down'] {
+  transform: translate3d(0, -40px, 0);
+}
+[data-aos='fade-right'] {
+  transform: translate3d(-40px, 0, 0);
+}
+[data-aos='fade-left'] {
+  transform: translate3d(40px, 0, 0);
+}
+
+/* Use the app's smoother easing for AOS transitions. */
+[data-aos] {
+  transition-timing-function: var(--ease-smooth) !important;
+  will-change: opacity, transform;
 }

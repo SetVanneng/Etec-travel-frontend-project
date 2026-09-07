@@ -10,9 +10,13 @@ export default {
         khmer: ['var(--font-khmer)'],
         'khmer-display': ['var(--font-khmer-display)'],
       },
-      boxShadow: {
-        soft: '0 10px 40px -12px rgba(2, 6, 23, 0.18)',
-      },
+          boxShadow: {
+            soft: '0 10px 40px -12px rgba(2, 6, 23, 0.18)',
+          },
+          transitionTimingFunction: {
+            smooth: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+          },
     },
   },
   plugins: [],

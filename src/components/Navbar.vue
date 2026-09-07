@@ -220,12 +220,23 @@ function closeMenu(): void {
 <style scoped>
 .menu-enter-active,
 .menu-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .menu-enter-from,
 .menu-leave-to {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-12px);
+  max-height: 0;
+  overflow: hidden;
+}
+
+.menu-enter-to,
+.menu-leave-from {
+  max-height: 500px;
 }
 </style>

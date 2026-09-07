@@ -74,19 +74,19 @@ const inspiration = [
       <div class="absolute inset-0 bg-slate-950/60" />
 
       <div class="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center">
-        <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-teal-200 backdrop-blur">
+        <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-teal-200 backdrop-blur" data-aos="fade-down">
           <Sparkles :size="16" />
           {{ i18n.t('home.badge') }}
         </p>
-        <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-6xl">
+        <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-6xl" data-aos="fade-up" data-aos-delay="100">
           {{ i18n.t('home.titleStart') }} <span class="text-teal-400">{{ i18n.t('home.titleHighlight') }}</span>
         </h1>
-        <p class="mx-auto mt-4 max-w-xl text-base text-slate-200 sm:text-lg">
+        <p class="mx-auto mt-4 max-w-xl text-base text-slate-200 sm:text-lg" data-aos="fade-up" data-aos-delay="200">
           {{ i18n.t('home.subtitle') }}
         </p>
 
         <!-- Hero search form -->
-        <form class="mt-8 flex flex-col gap-3 sm:flex-row" @submit.prevent="goToSearch">
+        <form class="mt-8 flex flex-col gap-3 sm:flex-row" data-aos="fade-up" data-aos-delay="300" @submit.prevent="goToSearch">
           <div class="flex-1">
             <SearchBar v-model="heroSearch" :placeholder="i18n.t('home.searchPlaceholder')" />
           </div>
@@ -99,7 +99,7 @@ const inspiration = [
           </button>
         </form>
 
-        <p class="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300">
+        <p class="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300" data-aos="fade-up" data-aos-delay="400">
           <MapPin :size="15" class="text-teal-400" />
           {{ i18n.t('home.stats', { destinations: destinations.length, hotels: hotels.length, activities: activities.length }) }}
         </p>
@@ -217,7 +217,7 @@ const inspiration = [
             data-aos="fade-up"
             class="group relative h-64 overflow-hidden rounded-2xl"
           >
-            <img :src="item.image" :alt="i18n.t('countries.' + item.country)" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+            <img :src="item.image" :alt="i18n.t('countries.' + item.country)" class="h-full w-full object-cover transition duration-700 ease-smooth group-hover:scale-110" />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
             <div class="absolute bottom-0 flex items-end justify-between p-5">
               <div>
