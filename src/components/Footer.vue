@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Footer.vue
 // Simple site footer with quick links, popular destinations and contact info.
-import { Plane, MapPin, Mail, Phone, Globe, AtSign, Share2, Send } from '@lucide/vue'
+import { MapPin, Mail, Phone, Globe, AtSign, Share2, Send } from '@lucide/vue'
 import { destinations } from '../data/destinations'
 import { useI18nStore } from '../stores/i18n'
 
@@ -27,9 +27,7 @@ const contactItems = [
       <!-- Brand -->
       <div>
         <div class="flex items-center gap-2">
-          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white">
-            <Plane :size="22" />
-          </span>
+          <img src="/logo.jpg" alt="Logo" class="h-10 w-10 rounded-xl object-cover" />
           <span class="text-lg font-bold text-white">{{ i18n.t('app.name') }}</span>
         </div>
         <p class="mt-4 text-sm leading-relaxed text-slate-400">

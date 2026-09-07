@@ -4,7 +4,7 @@
 // dark/light theme toggle and login / profile button.
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Plane, Heart, Sun, Moon, Menu, X, LogIn, Languages } from '@lucide/vue'
+import { Heart, Sun, Moon, Menu, X, LogIn, Languages } from '@lucide/vue'
 import { useFavoriteStore } from '../stores/favoriteStore'
 import { useAuthStore } from '../stores/authStore'
 import { useI18nStore } from '../stores/i18n'
@@ -87,9 +87,7 @@ function closeMenu(): void {
     <nav class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-6 sm:gap-4">
       <!-- Logo -->
       <router-link to="/" class="flex items-center gap-2" @click="closeMenu">
-        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shadow-soft">
-          <Plane :size="22" />
-        </span>
+        <img src="/logo.jpg" alt="Logo" class="h-10 w-10 rounded-xl object-cover shadow-soft" />
         <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
           {{ i18n.t('app.name') }}
         </span>
