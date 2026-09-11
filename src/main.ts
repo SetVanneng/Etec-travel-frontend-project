@@ -17,8 +17,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 AOS.init({
-  duration: 650,
-  easing: 'ease-out-quart',
+  duration: 450,
+  easing: 'ease-out-cubic',
   once: true,
   offset: 60,
   startEvent: 'DOMContentLoaded',

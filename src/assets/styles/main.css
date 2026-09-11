@@ -132,16 +132,16 @@ img {
 
 /* Standard fade-up / fade-down variants used across the app. */
 [data-aos='fade-up'] {
-  transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 24px, 0);
 }
 [data-aos='fade-down'] {
-  transform: translate3d(0, -40px, 0);
+  transform: translate3d(0, -24px, 0);
 }
 [data-aos='fade-right'] {
-  transform: translate3d(-40px, 0, 0);
+  transform: translate3d(-24px, 0, 0);
 }
 [data-aos='fade-left'] {
-  transform: translate3d(40px, 0, 0);
+  transform: translate3d(24px, 0, 0);
 }
 
 /* Use the app's smoother easing for AOS transitions. */

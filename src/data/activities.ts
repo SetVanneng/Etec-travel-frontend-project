@@ -45,7 +45,7 @@ export const activities: Activity[] = [
     price: 85,
     duration: localized('8 hours', '៨ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1589305449003-94c2d4b7010f?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/9a/a9/d2/9aa9d26df99cb5ea74180298b7c613f1.jpg',
     description: localized(
       'A guided full-day hike through alpine meadows with panoramic views of the Matterhorn. Includes a mountain guide and packed lunch.',
       'ការឡើងភ្នំពេញមួយថ្ងៃដែលមានមគ្គុទេសក៍ ឆ្លងកាត់វាលស្មៅភ្នំអាល់ ជាមួយទិដ្ឋភាពប៉ាណូរ៉ាម៉ានៃភ្នំម៉ាត់តឺហន។ រួមមានមគ្គុទេសក៍ភ្នំ និងអាហារថ្ងៃត្រង់កញ្ចប់។'
@@ -87,7 +87,7 @@ export const activities: Activity[] = [
     price: 45,
     duration: localized('3 hours', '៣ ម៉ោង'),
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1493780474015-ba834fd0ce2f?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/b4/ae/4f/b4ae4fdf22dc57e762f7c8e8a1ab1240.jpg',
     description: localized(
       'Walk through hidden courtyards, along the Seine and past the Eiffel Tower with a local storyteller who shares Parisian secrets.',
       'ដើរកាត់រានហាលលាក់កំបាំង តាមដងទន្លេសេន និងកាត់អគ្គិសនីអេហ្វ្វែល ជាមួយអ្នកនិទានរឿងក្នុងស្រុក ដែលចែករំលែកអាថ៌កំបាំងរបស់ប៉ារីស។'
@@ -213,7 +213,7 @@ export const activities: Activity[] = [
     price: 55,
     duration: localized('4 hours', '៤ ម៉ោង'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1526485838821-91ed4dbf3e20?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/9a/f2/c2/9af2c250d9f9d34a427d22f803cc253e.jpg',
     description: localized(
       'Ride the historic Peak Tram up Victoria Peak, then hike the Lung Yeh trail for uninterrupted skyline views across the harbour.',
       'ជិះរទេះភ្នំប្រវត្តិសាស្ត្រឡើងដល់វិកតូរី៉ាភីក បន្ទាប់មកដើរផ្លូវឡាំងយ៉ែ សម្រាប់ទិដ្ឋភាពស្កាយឡាញមិនដាច់ឆ្លងកំពង់ផែ។'
@@ -255,7 +255,7 @@ export const activities: Activity[] = [
     price: 160,
     duration: localized('5 hours', '៥ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1518739585-c1dbd5e1d5e0?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/236x/c4/1a/2f/c41a2f768f54c75587892b7b8694bcd1.jpg',
     description: localized(
       'Float above the Pyramids of the Sun and Moon at sunrise, then land for a hot breakfast and a guided walk along the Avenue of the Dead.',
       'អណ្តែតពីលើពីរ៉ាមីតនៃព្រះអាទិត្យ និងព្រះច័ន្ទនៅពេលថ្ងៃរះ បន្ទាប់មកចុះមកអាហារពេលព្រឹកក្តៅ និងដើរជាមួយមគ្គុទេសក៍តាមបណ្តោយអាវេនូនៃអ្នកស្លាប់។'
@@ -318,7 +318,7 @@ export const activities: Activity[] = [
     price: 65,
     duration: localized('4 hours', '៤ ម៉ោង'),
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/18/18/f3/1818f3fa1ada9656ceb045f806dbd146.jpg',
     description: localized(
       'Visit five classic pubs for a pint and tasting plates of Irish stew, seafood chowder and boxty while a local shares pub folklore.',
       'ទៅលេងក្លឹបបុរាណចំនួន ៥ សម្រាប់ផឹកបៀរ និងភ្លក់ស្ងោរអៀរឡង់ ស៊ុបត្រី និងបុឡក់ស៊ីធី ខណៈអ្នកក្នុងស្រុករៀបរាប់រឿងនិទានក្លឹប។'
@@ -360,7 +360,7 @@ export const activities: Activity[] = [
     price: 95,
     duration: localized('4 hours', '៤ ម៉ោង'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8b4f?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/1200x/85/04/44/8504441683b4ca53db033924b2b5b62f.jpg',
     description: localized(
       'Paddle past islands, lighthouses and floating saunas into the Oslofjord, with a coffee break on a small island beach.',
       'ចែវកាយ៉ាកកាត់កោះតូចៗ ប៉មពន្លឺ និងសូណាអណ្តែតទឹកចូលច្រកសមុទ្រអូស្លូ ជាមួយការឈប់ផឹកកាហ្វេនៅលើឆ្នេរកោះតូចមួយ។'
@@ -528,7 +528,7 @@ export const activities: Activity[] = [
     price: 80,
     duration: localized('3 hours', '៣ ម៉ោង'),
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/1200x/48/f9/20/48f9206fb5464eb55b0446cbd1ea8ac0.jpg',
     description: localized(
       'Learn the art of matcha in a traditional tea house, then stroll Gion\'s lantern-lit streets in search of elegant maiko.',
       'រៀនសិល្បៈម៉ាចានៅក្នុងផ្ទះតែប្រពៃណី បន្ទាប់មកដើរតាមផ្លូវហ្គីអុនភ្លឺដោយគោម ស្វែងរកហ្គីសាដ៏ឆើតឆាយ។'
@@ -570,7 +570,7 @@ export const activities: Activity[] = [
     price: 120,
     duration: localized('5 hours', '៥ ម៉ោង'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/72/b1/46/72b146e98671cddaf4e6b89575499ccb.jpg',
     description: localized(
       'Drive out of the city lights with an aurora expert, chasing clear skies for the best chance to see the northern lights dance.',
       'បើកឡានចេញពីពន្លឺទីក្រុងជាមួយអ្នកជំនាញអូរ៉ូរ៉ា ស្វែងរកមេឃភ្លឺច្បាស់សម្រាប់ឱកាសល្អបំផុតដើម្បីមើលអូរ៉ូរ៉ារាំ។'
@@ -612,7 +612,7 @@ export const activities: Activity[] = [
     price: 180,
     duration: localized('2 days', '២ ថ្ងៃ'),
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/736x/a9/b8/42/a9b84274b7300c460e78488ee565a50e.jpg',
     description: localized(
       'Sleep on a junk boat among limestone karsts, kayak through hidden lagoons and visit a floating fishing village.',
       'គេងលើទូកជុងក្នុងចំណោមកំពូលថ្មកំបោរ ជិះកាយ៉ាកកាត់វាលបឹងលាក់កំបាំង និងទស្សនាភូមិនេសាទអណ្តែតទឹក។'
