@@ -80,12 +80,16 @@ const filteredDestinations = computed(() => {
       activeCategory.value === 'All' || destination.category === activeCategory.value
 
     // Search matches name, country or description (case-insensitive).
+    // We match every language variant (en + km) so searching while the
+    // active locale is Khmer still finds destinations by their English names.
     const query = searchText.value.trim().toLowerCase()
     const matchesSearch =
       query === '' ||
-      i18n.pick(destination.name).toLowerCase().includes(query) ||
-      i18n.t('countries.' + destination.country).toLowerCase().includes(query) ||
-      i18n.pick(destination.description).toLowerCase().includes(query)
+      i18n.variants(destination.name)
+        .concat(i18n.variants(destination.location))
+        .concat(i18n.variants(destination.description))
+        .concat([destination.country, i18n.t('countries.' + destination.country)])
+        .some((text) => text.toLowerCase().includes(query))
 
     return matchesCategory && matchesSearch
   })

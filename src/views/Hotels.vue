@@ -76,8 +76,9 @@ const filteredHotels = computed(() => {
   return hotels.filter((hotel) => {
     const matchesSearch =
       query === '' ||
-      i18n.pick(hotel.name).toLowerCase().includes(query) ||
+      i18n.variants(hotel.name).some((text) => text.toLowerCase().includes(query)) ||
       hotel.city.toLowerCase().includes(query) ||
+      hotel.country.toLowerCase().includes(query) ||
       i18n.t('countries.' + hotel.country).toLowerCase().includes(query)
 
     const matchesFacilities = selectedFacilities.value.every((key) => {

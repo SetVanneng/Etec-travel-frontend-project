@@ -75,6 +75,16 @@ export const useI18nStore = defineStore('i18n', () => {
     return value[locale.value] ?? value.en ?? value.km ?? ''
   }
 
+  /** Every display variant of a localized field (used for search matching). */
+  function variants(value: LocalizedText | null | undefined): string[] {
+    if (typeof value === 'string') return [value]
+    if (!value) return []
+    const result: string[] = []
+    if (value.en) result.push(value.en)
+    if (value.km) result.push(value.km)
+    return result
+  }
+
   // Keep the <html lang="..."> attribute in sync with the active locale.
   document.documentElement.lang = locale.value
 
@@ -84,5 +94,6 @@ export const useI18nStore = defineStore('i18n', () => {
     setLocale,
     categoryLabel,
     pick,
+    variants,
   }
 })

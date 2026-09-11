@@ -245,9 +245,9 @@ export const destinations: Destination[] = [
     name: localized('Siem Reap', 'សៀមរាប'),
     country: 'Cambodia',
     location: localized('Siem Reap, Cambodia', 'សៀមរាប, កម្ពុជា'),
-    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/1200x/18/45/c5/1845c5e580149e6a26965206a701d7d6.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/1200x/18/45/c5/1845c5e580149e6a26965206a701d7d6.jpg',
       'https://i.pinimg.com/736x/a0/31/ec/a031ecde58127aba73a1d77e0bc1f630.jpg',
       'https://i.pinimg.com/1200x/f3/36/9d/f3369d8f9141efdc68e2118f490009a0.jpg',
     ],
