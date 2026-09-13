@@ -16,7 +16,7 @@ const socials = [
 
 const contactItems = [
   { icon: MapPin, text: '123 Wanderlust Street, Dream City, DW 0001' },
-  { icon: Mail, text: 'hello@travelexplore.demo' },
+  { icon: Mail, text: 'hello@wanderly.demo' },
   { icon: Phone, text: '+885 975576908' },
 ]
 </script>

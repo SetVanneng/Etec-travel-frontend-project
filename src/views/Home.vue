@@ -2,9 +2,9 @@
 // Home.vue
 // The landing page: hero with search, popular destinations,
 // featured hotels, popular activities and travel inspiration.
-import { ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Search, MapPin, ArrowRight, Star, Sparkles, Compass, TrendingUp, Plane } from '@lucide/vue'
+import { Search, MapPin, ArrowRight, Star, Sparkles, Compass, TrendingUp, Plane, ChevronLeft, ChevronRight } from '@lucide/vue'
 import SearchBar from '../components/SearchBar.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import DestinationCard from '../components/DestinationCard.vue'
@@ -26,6 +26,67 @@ const heroSearch = ref('')
 const popularDestinations = [...destinations].sort((a, b) => b.rating - a.rating).slice(0, 6)
 const featuredHotels = [...hotels].sort((a, b) => b.rating - a.rating).slice(0, 3)
 const popularActivities = [...activities].sort((a, b) => b.rating - a.rating).slice(0, 4)
+
+// ---------------------------------------------------------------
+// Hero neighbour: an auto-playing image carousel ("showcase") that
+// mixes favourite destinations, hotels and activities.
+// ---------------------------------------------------------------
+interface ShowcaseSlide {
+  image: string
+  title: string
+  subtitle: string
+  to: string
+}
+
+const slides = computed<ShowcaseSlide[]>(() => {
+  const destinationSlides = popularDestinations.map((destination, index) => ({
+    image: destination.gallery[index % destination.gallery.length] ?? destination.image,
+    title: i18n.pick(destination.name),
+    subtitle: i18n.pick(destination.location),
+    to: `/destination/${destination.id}`,
+  }))
+  const hotelSlides = featuredHotels.map((hotel) => ({
+    image: hotel.gallery[0] ?? hotel.image,
+    title: i18n.pick(hotel.name),
+    subtitle: i18n.pick(hotel.location),
+    to: `/hotel/${hotel.id}`,
+  }))
+  const activitySlides = popularActivities.map((activity) => ({
+    image: activity.image,
+    title: i18n.pick(activity.name),
+    subtitle: i18n.pick(activity.location),
+    to: `/activity/${activity.id}`,
+  }))
+  return [...destinationSlides, ...hotelSlides, ...activitySlides]
+})
+
+const currentSlide = ref(0)
+const paused = ref(false)
+let carouselTimer: ReturnType<typeof setInterval> | null = null
+
+function nextSlide(): void {
+  currentSlide.value = (currentSlide.value + 1) % slides.value.length
+}
+
+function prevSlide(): void {
+  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length
+}
+
+function goToSlide(index: number): void {
+  currentSlide.value = index
+}
+
+function startCarousel(): void {
+  if (carouselTimer) clearInterval(carouselTimer)
+  carouselTimer = setInterval(() => {
+    if (!paused.value) nextSlide()
+  }, 5000)
+}
+
+onMounted(startCarousel)
+onBeforeUnmount(() => {
+  if (carouselTimer) clearInterval(carouselTimer)
+})
 
 // When the user submits the hero search we navigate to the destinations
 // page and pass the text through the URL query (?search=...).
@@ -67,11 +128,55 @@ const inspiration = [
   <div>
     <!-- ================= HERO ================= -->
     <section
-      class="relative flex min-h-[520px] items-center justify-center overflow-hidden bg-cover bg-center"
-      style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1920&q=80')"
+      class="relative flex min-h-[520px] items-center justify-center overflow-hidden"
+      @mouseenter="paused = true"
+      @mouseleave="paused = false"
     >
+      <!-- Rotating hero background images -->
+      <div class="absolute inset-0">
+        <Transition name="slide-fade">
+          <img
+            :key="slides[currentSlide].to"
+            :src="slides[currentSlide].image"
+            :alt="slides[currentSlide].title"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+        </Transition>
+      </div>
+
       <!-- Dark overlay so the white text is readable -->
       <div class="absolute inset-0 bg-slate-950/60" />
+
+      <!-- Prev / next arrows -->
+      <button
+        type="button"
+        class="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white/40 active:scale-95 sm:flex"
+        :aria-label="i18n.t('home.previousSlide')"
+        @click.prevent="prevSlide"
+      >
+        <ChevronLeft :size="22" />
+      </button>
+      <button
+        type="button"
+        class="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white/40 active:scale-95 sm:flex"
+        :aria-label="i18n.t('home.nextSlide')"
+        @click.prevent="nextSlide"
+      >
+        <ChevronRight :size="22" />
+      </button>
+
+      <!-- Carousel dots -->
+      <div class="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5">
+        <button
+          v-for="(slide, index) in slides"
+          :key="slide.to"
+          type="button"
+          class="h-2 rounded-full transition-all"
+          :class="index === currentSlide ? 'w-6 bg-teal-400' : 'w-2 bg-white/40 hover:bg-white/70'"
+          :aria-label="i18n.t('home.goToSlide', { index: index + 1 })"
+          @click.prevent="goToSlide(index)"
+        />
+      </div>
 
       <div class="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center">
         <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-teal-200 backdrop-blur" data-aos="fade-down">
@@ -292,3 +397,15 @@ const inspiration = [
     </section>
   </div>
 </template>
+
+<style scoped>
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: opacity 0.7s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+</style>

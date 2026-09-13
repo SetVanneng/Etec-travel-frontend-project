@@ -75,7 +75,7 @@ function submitMessage(): void {
             </li>
             <li class="flex items-center gap-3">
               <Mail :size="18" class="shrink-0 text-teal-400" />
-              hello@travelexplore.demo
+              hello@wanderly.demo
             </li>
           </ul>
 
