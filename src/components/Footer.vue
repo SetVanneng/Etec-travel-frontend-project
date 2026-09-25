@@ -26,8 +26,7 @@ const contactItems = [
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
       <!-- Brand -->
       <div>
-        <div class="flex items-center gap-2">
-          <img src="/logo.jpg" alt="Logo" class="h-10 w-10 rounded-xl object-cover" />
+        <div class="flex items-center">
           <span class="text-lg font-bold text-white">{{ i18n.t('app.name') }}</span>
         </div>
         <p class="mt-4 text-sm leading-relaxed text-slate-400">

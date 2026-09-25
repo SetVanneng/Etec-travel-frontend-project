@@ -85,9 +85,7 @@ function closeMenu(): void {
 <template>
   <header id="navbar" class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
     <nav class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-6 sm:gap-4">
-      <!-- Logo -->
-      <router-link to="/" class="flex items-center gap-2" @click="closeMenu">
-        <img src="/logo.jpg" alt="Logo" class="h-10 w-10 rounded-xl object-cover shadow-soft" />
+      <router-link to="/" class="flex items-center" @click="closeMenu">
         <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
           {{ i18n.t('app.name') }}
         </span>
