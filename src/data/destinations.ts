@@ -273,7 +273,7 @@ export const destinations: Destination[] = [
     name: localized('Queenstown', 'ឃ្វីនស្តាន'),
     country: 'New Zealand',
     location: localized('Queenstown, New Zealand', 'ឃ្វីនស្តាន, នូវែលសេឡង់'),
-    image: 'https://images.unsplash.com/photo-1469796466635-455ede028aca?auto=format&fit=crop&w=900&q=80',
+    image: 'https://www.pelago.com/img/destinations/queenstown/0915-0900_queenstown.jpg',
     gallery: [
       'https://images.unsplash.com/photo-1469796466635-455ede028aca?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1530577197743-7adf14294584?auto=format&fit=crop&w=900&q=80',
