@@ -586,9 +586,9 @@ export const hotels: Hotel[] = [
     country: 'Australia',
     rating: 4.7,
     pricePerNight: 200,
-    image: 'https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=900&q=80',
+    image: 'https://i.pinimg.com/1200x/a1/06/c7/a106c7e0256afac9d2e4295c42bf0163.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/1200x/a1/06/c7/a106c7e0256afac9d2e4295c42bf0163.jpg',
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=80',
     ],
